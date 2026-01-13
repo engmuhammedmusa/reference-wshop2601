@@ -549,8 +549,8 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           
           {/* Top Badge: Date */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-sm font-bold mb-8 animate-in fade-in slide-in-from-bottom-3 font-sans" dir="ltr">
-             <Calendar className="w-4 h-4 text-[#b11e22]" />
+          <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-lg font-bold mb-8 animate-in fade-in slide-in-from-bottom-3 font-sans" dir="ltr">
+             <Calendar className="w-5 h-5 text-[#b11e22]" />
              <span>19 – 23 January, 2026</span>
           </div>
 
@@ -561,7 +561,7 @@ export default function App() {
 
           {/* Main Title */}
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-[#284e7f] tracking-tight leading-[1.1] mb-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans">
-            <span className="block text-xl md:text-2xl font-bold text-gray-500 mb-2 opacity-80">تحديد الاحتياجات التدريبية</span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-2 opacity-80">تحديد الاحتياجات التدريبية</span>
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
               باستخدام الذكاء الاصطناعي
             </span>
@@ -853,49 +853,51 @@ export default function App() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#1a3558] text-white pt-20 pb-10 border-t-4 border-[#b11e22]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-16">
-            <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center gap-4 mb-8">
+      {/* Footer - Redesigned */}
+      <footer className="relative pt-20 pb-10 overflow-hidden">
+        {/* Glass Container */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-[2.5rem] shadow-2xl p-8 md:p-10">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+              
+              {/* Logo & Info */}
+              <div className="text-center md:text-right">
                  <img 
                    src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
                    alt="Reference Training Center" 
-                   className="h-24 w-auto object-contain brightness-0 invert opacity-90"
+                   className="h-16 w-auto object-contain mx-auto md:mx-0 mb-4"
                  />
+                 <p className="text-gray-500 text-sm max-w-xs font-sans">
+                   نمكن المؤسسات من بناء مستقبلها من خلال حلول تدريبية ذكية ومبتكرة.
+                 </p>
               </div>
-              <p className="text-blue-200 max-w-md leading-loose text-lg font-light font-sans">
-                برنامج تدريبي متكامل يهدف لتمكين المؤسسات من استخدام تقنيات المستقبل في بناء رأس المال البشري.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-bold text-xl mb-8 text-white font-sans">روابط سريعة</h4>
-              <ul className="space-y-5">
-                <li><a href="#" className="text-blue-200 hover:text-white transition-colors flex items-center gap-3 group font-sans"><div className="w-1.5 h-1.5 bg-[#b11e22] rounded-full group-hover:scale-150 transition-transform" /> الرئيسية</a></li>
-                <li><a href="#axes" className="text-blue-200 hover:text-white transition-colors flex items-center gap-3 group font-sans"><div className="w-1.5 h-1.5 bg-[#b11e22] rounded-full group-hover:scale-150 transition-transform" /> المحاور</a></li>
-                <li><a href="#trainers" className="text-blue-200 hover:text-white transition-colors flex items-center gap-3 group font-sans"><div className="w-1.5 h-1.5 bg-[#b11e22] rounded-full group-hover:scale-150 transition-transform" /> المدربين</a></li>
-              </ul>
+
+              {/* Links - Simplified */}
+              <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-sm font-bold text-[#284e7f] font-sans">
+                 <a href="#" className="hover:text-[#b11e22] transition-colors">الرئيسية</a>
+                 <a href="#axes" className="hover:text-[#b11e22] transition-colors">المحاور</a>
+                 <a href="#trainers" className="hover:text-[#b11e22] transition-colors">المدربين</a>
+                 <a href="#" className="hover:text-[#b11e22] transition-colors">سياسة الخصوصية</a>
+              </div>
+
+              {/* Contact - Compact */}
+              <div className="text-center md:text-left" dir="ltr">
+                 <div className="flex flex-col gap-2 text-sm text-gray-600 font-sans font-medium">
+                    <a href="tel:+905337642450" className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start">
+                      <Smartphone size={16} className="text-[#b11e22]" /> +90 533 764 24 50
+                    </a>
+                    <a href="mailto:info@reference-rcb.com" className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start">
+                      <Users size={16} className="text-[#b11e22]" /> info@reference-rcb.com
+                    </a>
+                 </div>
+              </div>
+
             </div>
 
-            <div>
-              <h4 className="font-bold text-xl mb-8 text-white font-sans">تواصل معنا</h4>
-              <ul className="space-y-5 text-blue-200 text-left font-light" dir="ltr">
-                <li className="flex items-center gap-3 hover:text-white transition-colors font-sans"><Smartphone size={20} className="text-[#b11e22]" /> +90 533 764 24 50</li>
-                <li className="flex items-center gap-3 hover:text-white transition-colors font-sans"><Users size={20} className="text-[#b11e22]" /> info@reference-rcb.com</li>
-                <li className="flex items-center gap-3 hover:text-white transition-colors font-sans"><Layout size={20} className="text-[#b11e22]" /> Istanbul, Turkiye</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-blue-300/60">
-            <p className="font-sans">
-              © 2026 Reference Training Center. All rights reserved.
-            </p>
-            <div className="flex items-center gap-8 font-sans">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <div className="mt-8 pt-6 border-t border-gray-200/60 text-center">
+              <p className="text-xs text-gray-400 font-sans">
+                © 2026 Reference Training Center. All rights reserved.
+              </p>
             </div>
           </div>
         </div>
