@@ -27,12 +27,15 @@ import {
   Zap,
   ClipboardCheck,
   Puzzle,
-  Scale
+  Scale,
+  Quote,
+  Lightbulb
 } from 'lucide-react';
 
 // --- Fonts & Global Styles ---
 const GlobalStyles = () => (
   <style>{`
+    /* Changed Font to Tajawal - A modern, geometric Arabic font */
     @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
     
     :root {
@@ -75,7 +78,7 @@ const GlobalStyles = () => (
 // --- Components ---
 
 const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...props }) => {
-  const baseStyle = "inline-flex items-center justify-center px-8 py-3.5 text-base font-bold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans";
+  const baseStyle = "inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-[2rem] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans";
   
   const variants = {
     primary: "border-transparent text-white bg-[#b11e22] hover:bg-[#8a1619] shadow-lg shadow-red-900/10 hover:shadow-red-900/20 hover:-translate-y-0.5",
@@ -95,9 +98,11 @@ const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...
 
 const SectionHeading = ({ subtitle, title, align = 'center' }) => (
   <div className={`mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto px-4`}>
-    <span className="inline-block py-1.5 px-4 rounded-full bg-[#284e7f]/5 text-[#284e7f] text-sm font-bold tracking-wider mb-4 border border-[#284e7f]/10 font-sans">
-      {subtitle}
-    </span>
+    {subtitle && (
+      <span className="inline-block py-2 px-5 rounded-[1.5rem] bg-[#284e7f]/5 text-[#284e7f] text-sm font-bold tracking-wider mb-4 border border-[#284e7f]/10 font-sans">
+        {subtitle}
+      </span>
+    )}
     <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#284e7f] leading-tight font-sans">
       {title}
     </h2>
@@ -105,38 +110,38 @@ const SectionHeading = ({ subtitle, title, align = 'center' }) => (
 );
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
-  <div className="relative group p-8 bg-white rounded-[2rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
-    <div className="h-14 w-14 rounded-2xl bg-[#284e7f]/5 flex items-center justify-center mb-6 group-hover:bg-[#284e7f] transition-colors duration-300">
-      <Icon className="h-7 w-7 text-[#284e7f] group-hover:text-white transition-colors duration-300" />
+  <div className="relative group p-8 bg-white rounded-[2.5rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
+    <div className="h-16 w-16 rounded-[1.5rem] bg-[#284e7f]/5 flex items-center justify-center mb-6 group-hover:bg-[#284e7f] transition-colors duration-300">
+      <Icon className="h-8 w-8 text-[#284e7f] group-hover:text-white transition-colors duration-300" />
     </div>
     
-    <h3 className="text-xl font-bold text-[#284e7f] mb-3 font-sans">{title}</h3>
-    <p className="text-gray-600 leading-relaxed font-sans">
+    <h3 className="text-xl font-extrabold text-[#284e7f] mb-3 font-sans">{title}</h3>
+    <p className="text-gray-600 leading-relaxed font-sans font-bold text-sm">
       {description}
     </p>
   </div>
 );
 
 const AxisCard = ({ number, title, description, icon: Icon }) => (
-  <div className="group relative bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden h-full flex flex-col">
+  <div className="group relative bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden h-full flex flex-col">
     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#284e7f]/5 to-transparent rounded-bl-[4rem] transition-all duration-500 group-hover:scale-110 group-hover:from-[#284e7f]/10" />
     <div className="flex justify-between items-start mb-6 relative z-10">
-      <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#284e7f] group-hover:bg-[#284e7f] group-hover:text-white transition-colors duration-300 shadow-sm">
-        <Icon size={28} strokeWidth={1.5} />
+      <div className="w-16 h-16 rounded-[1.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center text-[#284e7f] group-hover:bg-[#284e7f] group-hover:text-white transition-colors duration-300 shadow-sm">
+        <Icon size={30} strokeWidth={1.5} />
       </div>
       <span className="text-4xl font-extrabold text-slate-100 group-hover:text-slate-200/80 transition-colors font-sans select-none">
         {number}
       </span>
     </div>
     <div className="relative z-10 flex-1 flex flex-col">
-      <h3 className="text-xl font-bold text-[#284e7f] mb-3 leading-snug font-sans group-hover:text-[#b11e22] transition-colors">
+      <h3 className="text-xl font-extrabold text-[#284e7f] mb-3 leading-snug font-sans group-hover:text-[#b11e22] transition-colors">
         {title}
       </h3>
-      <p className="text-gray-500 text-sm leading-relaxed font-sans opacity-90 group-hover:opacity-100">
+      <p className="text-gray-500 text-sm leading-relaxed font-sans opacity-90 group-hover:opacity-100 font-bold">
         {description}
       </p>
     </div>
-    <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gray-100 overflow-hidden">
+    <div className="absolute bottom-0 left-0 w-full h-2 bg-gray-100 overflow-hidden">
       <div className="h-full w-full bg-gradient-to-r from-[#284e7f] to-[#b11e22] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
     </div>
   </div>
@@ -152,33 +157,41 @@ const TimelineItem = ({ number, title, description }) => (
     </div>
     <div className="pb-12 pt-2">
       <h3 className="text-xl font-bold text-[#284e7f] mb-2 group-hover:text-[#b11e22] transition-colors font-sans">{title}</h3>
-      <p className="text-gray-600 leading-relaxed max-w-xl font-sans">{description}</p>
+      <p className="text-gray-600 leading-relaxed max-w-xl font-sans font-bold text-sm">{description}</p>
     </div>
   </div>
 );
 
-const TrainerCard = ({ name, title, bio, imageId }) => (
-  <div className={`bg-white rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 h-full`}>
-    <div className="aspect-[4/5] bg-gray-50 relative overflow-hidden group">
-      <div className="absolute inset-0 bg-[#284e7f]/10 group-hover:bg-transparent transition-colors duration-300 mix-blend-multiply" />
-      <img 
-        src={`https://lh3.googleusercontent.com/d/${imageId}`}
-        onError={(e) => {
-          e.target.onerror = null; 
-          e.target.src = "https://ui-avatars.com/api/?name=" + name + "&background=284e7f&color=fff&size=500";
-        }}
-        alt={name} 
-        className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" 
-      />
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#284e7f]/90 to-transparent p-8 pt-24">
-        <h3 className="text-white font-bold text-xl font-sans">{name}</h3>
-        <p className="text-blue-100 text-sm opacity-90 font-sans">{title}</p>
-      </div>
-    </div>
-    <div className="p-8">
-      <p className="text-gray-600 text-sm leading-relaxed text-justify font-sans">
-        {bio}
-      </p>
+const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
+  <div className={`bg-white rounded-[3rem] overflow-hidden shadow-[0_10px_40px_rgb(0,0,0,0.06)] border border-gray-100 transition-all duration-700 h-full transform ${isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-50 blur-[1px]'}`}>
+    <div className="flex flex-col md:flex-row h-full">
+        {/* Image Side */}
+        <div className="w-full md:w-2/5 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-[#284e7f]/20 group-hover:bg-transparent transition-colors duration-500 mix-blend-multiply z-10" />
+            <img 
+                src={`https://lh3.googleusercontent.com/d/${imageId}`}
+                onError={(e) => {
+                e.target.onerror = null; 
+                e.target.src = "https://ui-avatars.com/api/?name=" + name + "&background=284e7f&color=fff&size=500";
+                }}
+                alt={name} 
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110 min-h-[320px]" 
+            />
+        </div>
+        
+        {/* Content Side */}
+        <div className="w-full md:w-3/5 p-8 md:p-10 flex flex-col justify-center bg-white relative">
+            <Quote className="absolute top-8 right-8 text-gray-100 w-16 h-16 -z-0 rotate-180" />
+            <div className="relative z-10">
+                <span className="inline-block px-4 py-1 rounded-full bg-blue-50 text-[#284e7f] text-xs font-bold mb-4 border border-blue-100">مدرب خبير</span>
+                <h3 className="text-3xl font-extrabold text-[#284e7f] mb-2 font-sans">{name}</h3>
+                <p className="text-[#b11e22] font-bold text-sm mb-6 font-sans">{title}</p>
+                <div className="h-1 w-20 bg-gray-100 rounded-full mb-6"></div>
+                <p className="text-gray-600 text-base leading-loose font-sans font-medium">
+                    {bio}
+                </p>
+            </div>
+        </div>
     </div>
   </div>
 );
@@ -207,15 +220,15 @@ const CountdownTimer = () => {
 
   const GlassUnit = ({ value, label }) => (
     <div className="group relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-2xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-      <div className="relative w-20 h-24 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-white/40 rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-[2rem] blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
+      <div className="relative w-20 h-24 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-white/40 rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
         <div className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
           {String(value).padStart(2, '0')}
         </div>
         <div className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest font-sans">
           {label}
         </div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent rounded-2xl pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent rounded-[2rem] pointer-events-none"></div>
       </div>
     </div>
   );
@@ -295,73 +308,89 @@ const AIAdvisorSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#1a1c2e] to-[#284e7f] text-white overflow-hidden relative w-full">
-      <div className="absolute top-0 right-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]"></div>
-      
-      {/* RefeAI Branding */}
-      <div className="absolute top-6 right-6 md:top-10 md:right-10 opacity-80 hover:opacity-100 transition-opacity z-20 flex flex-col items-center gap-2">
-         <div className="flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-            <Sparkles className="w-4 h-4 text-yellow-400 fill-yellow-400 animate-pulse" />
-            <span className="text-sm font-bold text-white tracking-widest font-mono">RefeAI</span>
-         </div>
+    <section className="py-24 bg-white relative w-full overflow-hidden">
+      {/* Background with abstract shapes */}
+      <div className="absolute inset-0 bg-[#f8fafc]">
+         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+         <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-[#284e7f]/5 rounded-full blur-[120px]"></div>
+         <div className="absolute top-[20%] -right-[10%] w-[40%] h-[40%] bg-[#b11e22]/5 rounded-full blur-[120px]"></div>
       </div>
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-sans">RefeAI مستشار التدريب الذكي</h2>
-          <p className="text-blue-100 max-w-2xl mx-auto text-lg font-light font-sans">
-            هل تواجه تحدياً في إدارتك؟ اكتب التحدي هنا وسيقوم الذكاء الاصطناعي بتحليله وتوضيح كيف يمكن لهذه الورشة مساعدتك.
-          </p>
-        </div>
-
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl max-w-3xl mx-auto w-full">
-          {!response ? (
-            <div className="space-y-6">
-              <div className="relative">
-                <textarea
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="اكتب التحدي هنا..."
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white placeholder-blue-200/50 focus:ring-2 focus:ring-[#b11e22] focus:border-transparent min-h-[140px] resize-none text-right transition-all font-sans"
-                  dir="rtl"
-                />
-                <div className="absolute bottom-4 left-4">
-                  <Button 
-                    variant="ai" 
-                    onClick={handleAnalyze} 
-                    disabled={loading || !query.trim()}
-                    className="!py-2 !px-6 !text-sm flex items-center gap-2 rounded-xl"
-                  >
-                    {loading ? <Loader2 className="animate-spin h-4 w-4" /> : <Sparkles className="h-4 w-4" />}
-                    {loading ? 'جاري التحليل...' : 'حلل الآن'}
-                  </Button>
-                </div>
-              </div>
-              {error && <p className="text-red-300 text-sm mt-2 bg-red-900/20 p-2 rounded-lg inline-block font-sans">{error}</p>}
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        {/* Glassy Floating Container */}
+        <div className="bg-white/60 backdrop-blur-2xl border border-white/60 rounded-[3.5rem] shadow-[0_30px_60px_-12px_rgba(40,78,127,0.15)] p-8 md:p-12 lg:p-16 relative overflow-hidden">
+            
+            {/* Branding Tag */}
+            <div className="absolute top-8 left-8 md:top-10 md:left-10 flex items-center gap-2 px-4 py-2 bg-white/50 border border-blue-100 rounded-full shadow-sm">
+                <Sparkles className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                <span className="text-xs font-bold text-[#284e7f] tracking-widest font-sans">RefeAI BETA</span>
             </div>
-          ) : (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="flex items-start gap-5 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#284e7f] to-[#b11e22] flex items-center justify-center flex-shrink-0 shadow-lg rotate-3">
-                  <Bot className="w-7 h-7 text-white" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                {/* Text Content */}
+                <div>
+                    <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#284e7f] leading-tight font-sans">
+                        مستشار التدريب <br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
+                    </h2>
+                    <p className="text-gray-600 text-lg leading-relaxed mb-8 font-sans font-medium">
+                        هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟ 
+                        <br/><br/>
+                        اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله فوراً وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
+                    </p>
+                    
+                    {/* Removed extra text div here */}
                 </div>
-                <div className="flex-1 bg-white/10 rounded-2xl rounded-tr-none p-6 border border-white/5">
-                  <h3 className="font-bold text-lg text-white mb-3 font-sans">تحليل المستشار الذكي:</h3>
-                  <div className="text-blue-50 leading-relaxed text-lg font-sans">
-                    {response}
-                  </div>
+
+                {/* Interaction Box */}
+                <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2">
+                    {!response ? (
+                        <div className="p-6">
+                            <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
+                            <textarea
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder="مثال: نجد صعوبة في قياس العائد الاستثماري من برامج التدريب الحالية..."
+                                className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-base font-medium"
+                                dir="rtl"
+                            />
+                            <div className="flex justify-end">
+                                <Button 
+                                    variant="ai" 
+                                    onClick={handleAnalyze} 
+                                    disabled={loading || !query.trim()}
+                                    className="!py-3 !px-8 !text-base flex items-center gap-3 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
+                                >
+                                    {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
+                                    {loading ? 'جاري التحليل...' : 'تحليل الآن'}
+                                </Button>
+                            </div>
+                            {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
+                        </div>
+                    ) : (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-8 text-white relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30">
+                                        <Bot className="w-6 h-6 text-white" />
+                                    </div>
+                                    <h3 className="font-bold text-xl font-sans">رأي المستشار الذكي</h3>
+                                </div>
+                                <div className="text-blue-50 leading-loose text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
+                                    {response}
+                                </div>
+                                <button 
+                                    onClick={() => setResponse('')} 
+                                    className="text-sm font-bold text-yellow-400 hover:text-white transition-colors flex items-center gap-2"
+                                >
+                                    <ArrowLeft size={16} /> تحليل تحدي آخر
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
-              </div>
-              <div className="flex justify-end">
-                <button 
-                  onClick={() => setResponse('')} 
-                  className="text-sm text-blue-200 hover:text-white transition-colors font-sans"
-                >
-                  تحليل تحدي آخر
-                </button>
-              </div>
             </div>
-          )}
         </div>
       </div>
     </section>
@@ -373,6 +402,7 @@ const AIAdvisorSection = () => {
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeTrainerIndex, setActiveTrainerIndex] = useState(0);
 
   const registerUrl = "https://forms.cloud.microsoft/r/FPLwbAsYyU";
   const handleRegister = () => window.open(registerUrl, '_blank');
@@ -381,6 +411,14 @@ export default function App() {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Trainer Carousel Loop (5s)
+  useEffect(() => {
+    const interval = setInterval(() => {
+        setActiveTrainerIndex((prev) => (prev + 1) % 3);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const navLinks = [
@@ -461,12 +499,10 @@ export default function App() {
       {/* Navigation - Responsive Logic */}
       <nav 
         className={`fixed z-50 transition-all duration-300 ease-in-out ${
-          // Mobile: Top 0, full width. Desktop: Top 4, pill shape.
           'top-0 left-0 right-0 w-full md:top-4 md:px-4'
         }`}
       >
         <div className={`mx-auto transition-all duration-300 ${
-          // Mobile Styles: Square, full width, white background if scrolled
           'md:max-w-7xl md:rounded-full ' + (isScrolled 
             ? 'bg-white/95 backdrop-blur-xl shadow-md border-b md:border md:shadow-lg border-white/20 py-2' 
             : 'bg-white/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none py-3 md:py-4')
@@ -503,7 +539,7 @@ export default function App() {
                 className="flex items-center gap-2 bg-[#1a3558] text-white px-5 py-2.5 rounded-full text-sm font-bold animate-pulse border border-blue-400/20 hover:bg-[#284e7f] transition-all shadow-lg shadow-blue-900/10 font-sans"
               >
                 <Sparkles className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-                <span>المستشار الذكي</span>
+                <span>RefeAI</span>
               </a>
 
               <button 
@@ -576,7 +612,7 @@ export default function App() {
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans px-4">
+          <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans px-4 font-bold">
             برنامج احترافي متقدم يمكّن القيادات من اتخاذ قرارات تدريبية ذكية قائمة على البيانات والذكاء الاصطناعي، وربط التدريب مباشرة بالأداء المؤسسي والاستراتيجية.
           </p>
 
@@ -591,14 +627,35 @@ export default function App() {
         </div>
       </section>
 
-      {/* Trainers Section */}
+      {/* Trainers Section (Carousel Style) */}
       <section id="trainers" className="py-20 bg-white relative overflow-hidden w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <SectionHeading subtitle="الخبراء" title="نخبة المتحدثين والمدربين" align="center" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 mt-12">
-            {trainers.map((trainer, index) => (
-               <TrainerCard key={index} {...trainer} />
-            ))}
+          
+          <div className="relative mt-12 h-[550px] md:h-[450px]">
+             {trainers.map((trainer, index) => (
+                <div 
+                    key={index}
+                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                        index === activeTrainerIndex 
+                        ? 'opacity-100 translate-x-0 z-20' 
+                        : 'opacity-0 translate-x-10 z-10'
+                    }`}
+                >
+                    <TrainerCard {...trainer} isActive={index === activeTrainerIndex} />
+                </div>
+             ))}
+             
+             {/* Carousel Indicators */}
+             <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-30">
+                {trainers.map((_, idx) => (
+                    <button 
+                        key={idx}
+                        onClick={() => setActiveTrainerIndex(idx)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${idx === activeTrainerIndex ? 'bg-[#b11e22] w-8' : 'bg-gray-300 hover:bg-gray-400'}`}
+                    />
+                ))}
+             </div>
           </div>
         </div>
       </section>
@@ -700,34 +757,57 @@ export default function App() {
          </div>
       </section>
 
-      {/* Value Proposition */}
-      <section id="about" className="py-24 bg-white relative w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="bg-[#284e7f] rounded-[2.5rem] p-12 md:p-20 text-white shadow-2xl shadow-blue-900/20 relative overflow-hidden">
-             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')]"></div>
+      {/* Value Proposition - About Section */}
+      <section id="about" className="py-24 bg-white relative w-full overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[3rem] p-8 md:p-16 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
              
-             <div className="relative z-10 text-center max-w-3xl mx-auto">
-               <h2 className="text-3xl font-bold mb-8 font-sans">لماذا هذه الورشة؟</h2>
-               <p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-12 font-light font-sans">
-                 يهدف البرنامج إلى تمكين المشاركين من فهم منهجيات تحديد الاحتياجات التدريبية الحديثة، 
-                 وتوظيف الذكاء الاصطناعي في تحليل فجوات الأداء.
-               </p>
+             {/* Deep layered background effects */}
+             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')] mix-blend-overlay"></div>
+             <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#b11e22]/20 rounded-full blur-[100px]"></div>
+             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
+             
+             <div className="relative z-10">
+               <div className="text-center max-w-4xl mx-auto mb-16">
+                   <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10 mb-8 shadow-lg">
+                        <Lightbulb className="w-4 h-4 text-yellow-400 animate-pulse" />
+                        <span className="text-xs font-bold text-blue-50 tracking-widest font-sans">رؤية استراتيجية</span>
+                   </div>
+                   
+                   <h2 className="text-4xl md:text-6xl font-extrabold mb-8 font-sans leading-tight relative inline-block">
+                     <span className="relative z-10 drop-shadow-md">لماذا هذه الورشة</span>
+                     <span className="relative mx-3 inline-block transform -rotate-2">
+                       <span className="absolute inset-0 bg-[#b11e22] rounded-xl transform rotate-2 shadow-lg"></span>
+                       <span className="relative z-10 text-white px-3">الآن؟</span>
+                     </span>
+                   </h2>
+                   
+                   <p className="text-lg md:text-2xl text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
+                     في ظل التطور المتسارع لتقنيات الذكاء الاصطناعي، لم يعد تحديد الاحتياجات التدريبية مجرد إجراء روتيني، بل أصبح ركيزة استراتيجية لبناء ميزة تنافسية مستدامة. تقدم هذه الورشة خارطة طريق عملية لدمج أدوات الذكاء الاصطناعي في صميم عمليات الموارد البشرية، مما يضمن دقة التقييم، وكفاءة الإنفاق، وتعظيم العائد على الاستثمار في رأس المال البشري.
+                   </p>
+               </div>
                
                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-right rtl:text-right">
-                  <div className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:bg-white/20 transition-colors">
-                     <CheckCircle2 className="w-10 h-10 text-[#b11e22] mb-6" />
-                     <h4 className="font-bold text-xl mb-3 font-sans">منهجيات حديثة</h4>
-                     <p className="text-sm text-blue-100 opacity-80 leading-relaxed font-sans">فهم أعمق لأحدث الطرق العالمية في التحليل</p>
+                  <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group shadow-lg">
+                     <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-white/5">
+                        <CheckCircle2 className="w-8 h-8 text-[#b11e22]" />
+                     </div>
+                     <h4 className="font-bold text-2xl mb-4 font-sans text-white">منهجيات حديثة</h4>
+                     <p className="text-base text-blue-100/80 leading-relaxed font-sans font-bold">الانتقال من الطرق التقليدية إلى أحدث الممارسات العالمية المعتمدة على البيانات.</p>
                   </div>
-                  <div className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:bg-white/20 transition-colors">
-                     <Brain className="w-10 h-10 text-[#b11e22] mb-6" />
-                     <h4 className="font-bold text-xl mb-3 font-sans">ذكاء اصطناعي</h4>
-                     <p className="text-sm text-blue-100 opacity-80 leading-relaxed font-sans">تحليل الفجوات بدقة متناهية وسرعة فائقة</p>
+                  <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group shadow-lg">
+                     <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-white/5">
+                        <Brain className="w-8 h-8 text-[#b11e22]" />
+                     </div>
+                     <h4 className="font-bold text-2xl mb-4 font-sans text-white">ذكاء اصطناعي</h4>
+                     <p className="text-base text-blue-100/80 leading-relaxed font-sans font-bold">استخدام خوارزميات ذكية لتحليل الفجوات بدقة متناهية وسرعة فائقة.</p>
                   </div>
-                  <div className="bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:bg-white/20 transition-colors">
-                     <Target className="w-10 h-10 text-[#b11e22] mb-6" />
-                     <h4 className="font-bold text-xl mb-3 font-sans">أداء مؤسسي</h4>
-                     <p className="text-sm text-blue-100 opacity-80 leading-relaxed font-sans">ربط التدريب بالأهداف الاستراتيجية مباشرة</p>
+                  <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group shadow-lg">
+                     <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-white/5">
+                        <Target className="w-8 h-8 text-[#b11e22]" />
+                     </div>
+                     <h4 className="font-bold text-2xl mb-4 font-sans text-white">أداء مؤسسي</h4>
+                     <p className="text-base text-blue-100/80 leading-relaxed font-sans font-bold">ربط مخرجات التدريب بالأهداف الاستراتيجية للمؤسسة بشكل مباشر وقابل للقياس.</p>
                   </div>
                </div>
              </div>
@@ -743,7 +823,7 @@ export default function App() {
       {/* Smart Highlights (Pillars) */}
       <section className="py-24 bg-slate-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading subtitle="القيمة المضافة" title="ركائز الورشة الأساسية" />
+          <SectionHeading title="ركائز الورشة الأساسية" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <FeatureCard 
@@ -773,7 +853,7 @@ export default function App() {
       {/* Axes / Learning Path - Redesigned Grid Layout */}
       <section id="axes" className="py-24 bg-white w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading subtitle="المسارات التعليمية" title="محاور ورشة العمل" align="center" />
+          <SectionHeading title="محاور ورشة العمل" align="center" />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
              {axesData.map((axis, index) => (
@@ -797,7 +877,7 @@ export default function App() {
              <div className="md:w-1/3 text-right">
                 <h2 className="text-4xl font-bold text-white mb-6 leading-tight font-sans">هذه الورشة <br/><span className="text-[#b11e22]">موجهة إلى</span></h2>
                 <div className="h-1.5 w-20 bg-[#b11e22] mb-8 rounded-full" />
-                <p className="text-blue-100 text-lg font-light leading-relaxed font-sans">
+                <p className="text-blue-100 text-lg font-light leading-relaxed font-sans font-medium">
                   صممت هذه الورشة خصيصاً للقادة وصناع القرار الذين يسعون لإحداث نقلة نوعية في مؤسساتهم باستخدام أحدث التقنيات.
                 </p>
              </div>
@@ -823,7 +903,7 @@ export default function App() {
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#284e7f] mb-6 tracking-tight font-sans">
             كن جزءاً من مستقبل التدريب الذكي
           </h2>
-          <p className="text-xl text-gray-500 mb-12 max-w-2xl mx-auto font-light font-sans">
+          <p className="text-xl text-gray-500 mb-12 max-w-2xl mx-auto font-light font-sans font-medium">
             لا تفوت فرصة الانضمام إلى نخبة القادة في هذا البرنامج الاستثنائي. المقاعد محدودة لضمان جودة التجربة.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -851,7 +931,7 @@ export default function App() {
                    alt="Reference Training Center" 
                    className="h-16 w-auto object-contain mx-auto md:mx-0 mb-4"
                  />
-                 <p className="text-gray-500 text-sm max-w-xs font-sans">
+                 <p className="text-gray-500 text-sm max-w-xs font-sans font-bold">
                    نمكن المؤسسات من بناء مستقبلها من خلال حلول تدريبية ذكية ومبتكرة.
                  </p>
               </div>
@@ -867,10 +947,10 @@ export default function App() {
               {/* Contact - Compact */}
               <div className="text-center md:text-left" dir="ltr">
                  <div className="flex flex-col gap-2 text-sm text-gray-600 font-sans font-medium">
-                    <a href="tel:+905337642450" className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start">
+                    <a href="tel:+905337642450" className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start font-bold">
                       <Smartphone size={16} className="text-[#b11e22]" /> +90 533 764 24 50
                     </a>
-                    <a href="mailto:info@reference-rcb.com" className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start">
+                    <a href="mailto:info@reference-rcb.com" className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start font-bold">
                       <Users size={16} className="text-[#b11e22]" /> info@reference-rcb.com
                     </a>
                  </div>
@@ -879,7 +959,7 @@ export default function App() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-200/60 text-center">
-              <p className="text-xs text-gray-400 font-sans">
+              <p className="text-xs text-gray-400 font-sans font-bold">
                 © 2026 Reference Training Center. All rights reserved.
               </p>
             </div>
