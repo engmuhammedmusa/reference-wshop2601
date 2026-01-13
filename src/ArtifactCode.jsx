@@ -329,8 +329,9 @@ const AIAdvisorSection = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Text Content */}
                 <div>
-                    <h2 className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">
-                        مستشار التدريب الذكي <br/>
+                     <h2 className="text-3xl md:text-4xl font-extrabold mb-5 text-[#284e7f] leading-tight font-sans">
+                        مستشار التدريب <br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
                     </h2>
                     <p className="text-gray-600 text-lg leading-relaxed mb-8 font-sans font-medium">
                         هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟ 
