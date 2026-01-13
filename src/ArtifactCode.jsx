@@ -302,7 +302,7 @@ const AIAdvisorSection = () => {
     setError('');
     setResponse('');
 
-    const apiKey = ""; // Set at runtime
+    const apiKey = "AIzaSyDpsuHfDotJQGoe9wyLhAP0yHmZmCJ6-Ig"; // Set at runtime// Set at runtime
     const prompt = `
       You are a senior HR consultant promoting a high-level workshop titled "Training Needs Analysis using AI & Smart Assessment Centers".
       User Challenge: "${query}"
