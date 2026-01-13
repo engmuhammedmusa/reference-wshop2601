@@ -86,7 +86,7 @@ const GlobalStyles = () => (
 // --- Components ---
 
 const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...props }) => {
-  const baseStyle = "inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-[2rem] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans";
+  const baseStyle = "inline-flex items-center justify-center px-8 py-3.5 md:py-4 text-sm md:text-base font-bold rounded-[2rem] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans";
   
   const variants = {
     primary: "border-transparent text-white bg-[#b11e22] hover:bg-[#8a1619] shadow-lg shadow-red-900/10 hover:shadow-red-900/20 hover:-translate-y-0.5",
@@ -105,25 +105,25 @@ const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...
 };
 
 const SectionHeading = ({ subtitle, title, align = 'center' }) => (
-  <div className={`mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto px-4`}>
+  <div className={`mb-12 md:mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto px-4`}>
     {subtitle && (
       <span className="inline-block py-2 px-5 rounded-[1.5rem] bg-[#284e7f]/5 text-[#284e7f] text-sm font-bold tracking-wider mb-4 border border-[#284e7f]/10 font-sans">
         {subtitle}
       </span>
     )}
-    <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#284e7f] leading-tight font-sans">
+    <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#284e7f] leading-tight font-sans">
       {title}
     </h2>
   </div>
 );
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
-  <div className="relative group p-8 bg-white rounded-[2.5rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
-    <div className="h-16 w-16 rounded-[1.5rem] bg-[#284e7f]/5 flex items-center justify-center mb-6 group-hover:bg-[#284e7f] transition-colors duration-300">
-      <Icon className="h-8 w-8 text-[#284e7f] group-hover:text-white transition-colors duration-300" />
+  <div className="relative group p-6 md:p-8 bg-white rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
+    <div className="h-14 w-14 md:h-16 md:w-16 rounded-[1.5rem] bg-[#284e7f]/5 flex items-center justify-center mb-6 group-hover:bg-[#284e7f] transition-colors duration-300">
+      <Icon className="h-7 w-7 md:h-8 md:w-8 text-[#284e7f] group-hover:text-white transition-colors duration-300" />
     </div>
     
-    <h3 className="text-xl font-extrabold text-[#284e7f] mb-3 font-sans">{title}</h3>
+    <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] mb-3 font-sans">{title}</h3>
     <p className="text-gray-600 leading-relaxed font-sans font-bold text-sm">
       {description}
     </p>
@@ -131,18 +131,18 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 );
 
 const AxisCard = ({ number, title, description, icon: Icon }) => (
-  <div className="group relative bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden h-full flex flex-col">
+  <div className="group relative bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden h-full flex flex-col">
     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#284e7f]/5 to-transparent rounded-bl-[4rem] transition-all duration-500 group-hover:scale-110 group-hover:from-[#284e7f]/10" />
     <div className="flex justify-between items-start mb-6 relative z-10">
-      <div className="w-16 h-16 rounded-[1.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center text-[#284e7f] group-hover:bg-[#284e7f] group-hover:text-white transition-colors duration-300 shadow-sm">
-        <Icon size={30} strokeWidth={1.5} />
+      <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center text-[#284e7f] group-hover:bg-[#284e7f] group-hover:text-white transition-colors duration-300 shadow-sm">
+        <Icon size={28} strokeWidth={1.5} />
       </div>
-      <span className="text-4xl font-extrabold text-slate-100 group-hover:text-slate-200/80 transition-colors font-sans select-none">
+      <span className="text-3xl md:text-4xl font-extrabold text-slate-100 group-hover:text-slate-200/80 transition-colors font-sans select-none">
         {number}
       </span>
     </div>
     <div className="relative z-10 flex-1 flex flex-col">
-      <h3 className="text-xl font-extrabold text-[#284e7f] mb-3 leading-snug font-sans group-hover:text-[#b11e22] transition-colors">
+      <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] mb-3 leading-snug font-sans group-hover:text-[#b11e22] transition-colors">
         {title}
       </h3>
       <p className="text-gray-500 text-sm leading-relaxed font-sans opacity-90 group-hover:opacity-100 font-bold">
@@ -174,7 +174,7 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
   <div className={`bg-white rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_10px_40px_rgb(0,0,0,0.06)] border border-gray-100 transition-all duration-700 h-full transform ${isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-50 blur-[1px]'}`}>
     <div className="flex flex-col md:flex-row h-full">
         {/* Image Side - Optimized for Mobile */}
-        <div className="w-full md:w-2/5 relative overflow-hidden group h-72 md:h-auto">
+        <div className="w-full md:w-2/5 relative overflow-hidden group h-64 md:h-auto">
             <div className="absolute inset-0 bg-[#284e7f]/20 group-hover:bg-transparent transition-colors duration-500 mix-blend-multiply z-10" />
             <img 
                 src={`https://lh3.googleusercontent.com/d/${imageId}`}
@@ -229,11 +229,11 @@ const CountdownTimer = () => {
   const GlassUnit = ({ value, label }) => (
     <div className="group relative">
       <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-[2rem] blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-      <div className="relative w-20 h-24 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-white/40 rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
-        <div className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
+      <div className="relative w-16 h-20 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-white/40 rounded-2xl md:rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
+        <div className="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
           {String(value).padStart(2, '0')}
         </div>
-        <div className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest font-sans">
+        <div className="text-[9px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest font-sans">
           {label}
         </div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent rounded-[2rem] pointer-events-none"></div>
@@ -242,7 +242,7 @@ const CountdownTimer = () => {
   );
 
   return (
-    <div className="flex gap-3 md:gap-4 justify-center mb-10 animate-in fade-in slide-in-from-bottom-6 duration-1000" dir="ltr">
+    <div className="flex gap-2 md:gap-4 justify-center mb-8 md:mb-10 animate-in fade-in slide-in-from-bottom-6 duration-1000" dir="ltr">
         <GlassUnit value={timeLeft.days} label="Days" />
         <GlassUnit value={timeLeft.hours} label="Hours" />
         <GlassUnit value={timeLeft.minutes} label="Mins" />
@@ -256,7 +256,7 @@ const FloatingWhatsApp = () => {
   const whatsappUrl = `https://wa.me/${phoneNumber}`;
 
   const WhatsAppIcon = () => (
-    <svg viewBox="0 0 24 24" className="w-7 h-7 fill-white" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 24 24" className="w-6 h-6 md:w-7 md:h-7 fill-white" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
     </svg>
   );
@@ -269,7 +269,7 @@ const FloatingWhatsApp = () => {
       className="fixed bottom-6 left-6 z-50 group hover:-translate-y-1 transition-transform duration-300"
       aria-label="Chat on WhatsApp"
     >
-      <div className="bg-[#25D366] p-4 rounded-full shadow-[0_8px_30px_rgba(37,211,102,0.3)] flex items-center justify-center">
+      <div className="bg-[#25D366] p-3 md:p-4 rounded-full shadow-[0_8px_30px_rgba(37,211,102,0.3)] flex items-center justify-center">
         <WhatsAppIcon />
       </div>
     </a>
@@ -316,7 +316,7 @@ const AIAdvisorSection = () => {
   };
 
   return (
-    <section className="py-24 bg-white relative w-full overflow-hidden">
+    <section className="py-20 md:py-24 bg-white relative w-full overflow-hidden">
       {/* Background with abstract shapes */}
       <div className="absolute inset-0 bg-[#f8fafc]">
          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
@@ -331,7 +331,7 @@ const AIAdvisorSection = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22] to-transparent opacity-50 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]"></div>
             <div className="absolute inset-[2px] bg-white rounded-[3.5rem]"></div>
             
-            <div className="bg-white/60 backdrop-blur-2xl rounded-[3.5rem] p-8 md:p-12 lg:p-16 relative overflow-hidden h-full">
+            <div className="bg-white/60 backdrop-blur-2xl rounded-[3.5rem] p-6 md:p-12 lg:p-16 relative overflow-hidden h-full">
                 
                 {/* Branding Tag - Aligned & Framed like a button */}
                 <div className="flex justify-center mb-8">
@@ -341,14 +341,14 @@ const AIAdvisorSection = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
                     {/* Text Content - Vertically Aligned */}
-                    <div className="flex flex-col justify-center h-full">
-                        <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#284e7f] leading-tight font-sans">
+                    <div className="flex flex-col justify-center h-full text-center lg:text-right">
+                        <h2 className="text-2xl md:text-3xl lg:text-5xl font-extrabold mb-4 md:mb-6 text-[#284e7f] leading-tight font-sans">
                             مستشار التدريب <br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
                         </h2>
-                        <p className="text-gray-600 text-lg leading-relaxed mb-8 font-sans font-medium">
+                        <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-sans font-medium">
                             هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟ 
                             <br/><br/>
                             اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله فوراً وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
@@ -358,13 +358,13 @@ const AIAdvisorSection = () => {
                     {/* Interaction Box */}
                     <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2 h-full flex flex-col justify-center">
                         {!response ? (
-                            <div className="p-6">
+                            <div className="p-4 md:p-6">
                                 <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
                                 <textarea
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                     placeholder="مثال: نجد صعوبة في قياس العائد الاستثماري من برامج التدريب الحالية..."
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-base font-medium"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-4 md:p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[150px] md:min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-sm md:text-base font-medium"
                                     dir="rtl"
                                 />
                                 <div className="flex justify-end">
@@ -381,7 +381,7 @@ const AIAdvisorSection = () => {
                                 {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
                             </div>
                         ) : (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-8 text-white relative overflow-hidden h-full flex flex-col justify-center">
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-6 md:p-8 text-white relative overflow-hidden h-full flex flex-col justify-center">
                                 <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-4 mb-6">
@@ -390,7 +390,7 @@ const AIAdvisorSection = () => {
                                         </div>
                                         <h3 className="font-bold text-xl font-sans">رأي المستشار الذكي</h3>
                                     </div>
-                                    <div className="text-blue-50 leading-loose text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
+                                    <div className="text-blue-50 leading-loose text-base md:text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
                                         {response}
                                     </div>
                                     <button 
@@ -646,7 +646,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <SectionHeading subtitle="الخبراء" title="نخبة المتحدثين والمدربين" align="center" />
           
-          <div className="relative mt-12 h-[550px] md:h-[450px]">
+          <div className="relative mt-12 h-[650px] md:h-[450px]">
              {trainers.map((trainer, index) => (
                 <div 
                     key={index}
@@ -687,13 +687,13 @@ export default function App() {
                   <div className="ml-4 w-40 h-4 bg-gray-200/50 rounded-md" />
                 </div>
                 <div className="p-1 bg-white">
-                   <div className="flex h-[450px]">
+                   <div className="flex flex-col sm:flex-row h-auto sm:h-[450px]">
                       <div className="w-16 border-l border-gray-100 flex flex-col items-center py-6 gap-6 bg-gray-50/50 hidden sm:flex">
                          <div className="w-8 h-8 rounded-lg bg-[#284e7f] flex items-center justify-center text-white font-bold">R</div>
                          <div className="w-8 h-8 rounded-lg text-gray-400 hover:bg-white hover:shadow-sm flex items-center justify-center"><Layout size={18} /></div>
                          <div className="w-8 h-8 rounded-lg text-[#b11e22] bg-white shadow-sm flex items-center justify-center"><BarChart3 size={18} /></div>
                       </div>
-                      <div className="flex-1 p-6 lg:p-8 bg-slate-50/30 overflow-hidden relative">
+                      <div className="flex-1 p-4 lg:p-8 bg-slate-50/30 overflow-hidden relative">
                          <div className="flex justify-between items-center mb-8">
                             <div>
                                <h3 className="font-bold text-xl text-gray-800 font-sans">تحليل فجوات الأداء</h3>
@@ -774,7 +774,7 @@ export default function App() {
       {/* Value Proposition - About Section */}
       <section id="about" className="py-24 bg-white relative w-full overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[3rem] p-8 md:p-16 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
+           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[2rem] md:rounded-[3rem] p-6 md:p-16 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
              
              {/* Deep layered background effects */}
              <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')] mix-blend-overlay"></div>
