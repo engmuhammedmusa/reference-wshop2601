@@ -72,6 +72,14 @@ const GlobalStyles = () => (
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
+
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 8s linear infinite;
+    }
   `}</style>
 );
 
@@ -85,7 +93,7 @@ const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...
     secondary: "border-transparent text-white bg-[#284e7f] hover:bg-[#1d3a61] shadow-md hover:shadow-lg",
     outline: "border border-gray-200 text-[#284e7f] bg-white/50 hover:bg-white hover:border-[#284e7f]/20 shadow-sm hover:shadow-md backdrop-blur-sm",
     white: "bg-white text-[#284e7f] hover:bg-gray-50 shadow-lg",
-    ai: "bg-[#1a3558] text-white hover:bg-[#284e7f] shadow-lg",
+    ai: "bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:shadow-lg hover:shadow-indigo-500/30",
   };
 
   return (
@@ -317,78 +325,82 @@ const AIAdvisorSection = () => {
       </div>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        {/* Glassy Floating Container */}
-        <div className="bg-white/60 backdrop-blur-2xl border border-white/60 rounded-[3.5rem] shadow-[0_30px_60px_-12px_rgba(40,78,127,0.15)] p-8 md:p-12 lg:p-16 relative overflow-hidden">
+        {/* Glassy Floating Container with Moving Border/Glow Animation */}
+        <div className="relative group">
+            {/* Animated Glow Border */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 rounded-[3.7rem] blur opacity-30 group-hover:opacity-70 transition duration-1000 animate-spin-slow"></div>
             
-            {/* Branding Tag */}
-            <div className="absolute top-8 left-8 md:top-10 md:left-10 flex items-center gap-2 px-4 py-2 bg-white/50 border border-blue-100 rounded-full shadow-sm">
-                <Sparkles className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                <span className="text-xs font-bold text-[#284e7f] tracking-widest font-sans">RefeAI</span>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                {/* Text Content */}
-                <div>
-                     <h2 className="text-3xl md:text-4xl font-extrabold mb-5 text-[#284e7f] leading-tight font-sans">
-                        مستشار التدريب <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
-                    </h2>
-                    <p className="text-gray-600 text-lg leading-relaxed mb-8 font-sans font-medium">
-                        هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟ 
-                        <br/><br/>
-                        اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
-                    </p>
-                    
-                    {/* Removed extra text div here */}
+            <div className="bg-white/60 backdrop-blur-2xl border border-white/60 rounded-[3.5rem] shadow-[0_30px_60px_-12px_rgba(40,78,127,0.15)] p-8 md:p-12 lg:p-16 relative overflow-hidden">
+                
+                {/* Branding Tag - Redesigned */}
+                <div className="absolute top-8 left-8 md:top-10 md:left-10">
+                    <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-tighter font-sans flex items-center gap-1">
+                        RefeAI <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
+                    </span>
                 </div>
 
-                {/* Interaction Box */}
-                <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2">
-                    {!response ? (
-                        <div className="p-6">
-                            <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
-                            <textarea
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                placeholder="مثال: نجد صعوبة في قياس العائد الاستثماري من برامج التدريب الحالية..."
-                                className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-base font-medium"
-                                dir="rtl"
-                            />
-                            <div className="flex justify-end">
-                                <Button 
-                                    variant="ai" 
-                                    onClick={handleAnalyze} 
-                                    disabled={loading || !query.trim()}
-                                    className="!py-3 !px-8 !text-base flex items-center gap-3 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
-                                >
-                                    {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
-                                    {loading ? 'جاري التحليل...' : 'حلل الآن'}
-                                </Button>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    {/* Text Content */}
+                    <div>
+                        <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#284e7f] leading-tight font-sans">
+                            مستشار التدريب <br/>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
+                        </h2>
+                        <p className="text-gray-600 text-lg leading-relaxed mb-8 font-sans font-medium">
+                            هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟ 
+                            <br/><br/>
+                            اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله فوراً وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
+                        </p>
+                    </div>
+
+                    {/* Interaction Box */}
+                    <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2">
+                        {!response ? (
+                            <div className="p-6">
+                                <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
+                                <textarea
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder="مثال: نجد صعوبة في قياس العائد الاستثماري من برامج التدريب الحالية..."
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-base font-medium"
+                                    dir="rtl"
+                                />
+                                <div className="flex justify-end">
+                                    <Button 
+                                        variant="ai" 
+                                        onClick={handleAnalyze} 
+                                        disabled={loading || !query.trim()}
+                                        className="!py-3 !px-8 !text-base flex items-center gap-3 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
+                                    >
+                                        {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
+                                        {loading ? 'جاري التحليل...' : 'تحليل الآن'}
+                                    </Button>
+                                </div>
+                                {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
                             </div>
-                            {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
-                        </div>
-                    ) : (
-                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-8 text-white relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30">
-                                        <Bot className="w-6 h-6 text-white" />
+                        ) : (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-8 text-white relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-4 mb-6">
+                                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30">
+                                            <Bot className="w-6 h-6 text-white" />
+                                        </div>
+                                        <h3 className="font-bold text-xl font-sans">رأي المستشار الذكي</h3>
                                     </div>
-                                    <h3 className="font-bold text-xl font-sans">رأي المستشار الذكي</h3>
+                                    <div className="text-blue-50 leading-loose text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
+                                        {response}
+                                    </div>
+                                    <button 
+                                        onClick={() => setResponse('')} 
+                                        className="text-sm font-bold text-yellow-400 hover:text-white transition-colors flex items-center gap-2"
+                                    >
+                                        <ArrowLeft size={16} /> تحليل تحدي آخر
+                                    </button>
                                 </div>
-                                <div className="text-blue-50 leading-loose text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
-                                    {response}
-                                </div>
-                                <button 
-                                    onClick={() => setResponse('')} 
-                                    className="text-sm font-bold text-yellow-400 hover:text-white transition-colors flex items-center gap-2"
-                                >
-                                    <ArrowLeft size={16} /> تحليل جديد
-                                </button>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
@@ -437,7 +449,7 @@ export default function App() {
       bio: "خبير عالمي في الذكاء الاصطناعي والتحول الرقمي، يقود مشاريع استراتيجية في عدة دول. حاصل على دكتوراه في إدارة الموارد البشرية الدولية."
     },
     {
-      name: "أ. أحمد الطويل",
+      name: "أحمد الطويل",
       title: "خبير التطوير المؤسسي",
       imageId: "1vPbj5AULuI0lRLjJqDakI71eb6ChRs78",
       bio: "خبير أردني في التطوير المؤسسي والقيادة بخبرة تتجاوز 18 عامًا في إدارة التغيير وبناء الكفاءات. مستشار لهيئات محلية ودولية."
@@ -536,9 +548,9 @@ export default function App() {
             <div className="hidden md:flex items-center gap-3">
               <a 
                 href="#ai-advisor"
-                className="flex items-center gap-2 bg-[#1a3558] text-white px-5 py-2.5 rounded-full text-sm font-bold animate-pulse border border-blue-400/20 hover:bg-[#284e7f] transition-all shadow-lg shadow-blue-900/10 font-sans"
+                className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-5 py-2.5 rounded-full text-sm font-bold animate-pulse hover:shadow-lg hover:shadow-purple-500/30 transition-all font-sans"
               >
-                <Sparkles className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
+                <Sparkles className="w-3.5 h-3.5 text-yellow-300 fill-yellow-300" />
                 <span>RefeAI</span>
               </a>
 
@@ -769,9 +781,8 @@ export default function App() {
              
              <div className="relative z-10">
                <div className="text-center max-w-4xl mx-auto mb-16">
-                   <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10 mb-8 shadow-lg">
-                        <Lightbulb className="w-4 h-4 text-yellow-400 animate-pulse" />
-                        <span className="text-xs font-bold text-blue-50 tracking-widest font-sans">رؤية استراتيجية</span>
+                   <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10 mb-8 shadow-lg opacity-0">
+                        {/* Removed text and icon but kept div to maintain layout structure if needed, or better, remove entirely */}
                    </div>
                    
                    <h2 className="text-4xl md:text-6xl font-extrabold mb-8 font-sans leading-tight relative inline-block">
