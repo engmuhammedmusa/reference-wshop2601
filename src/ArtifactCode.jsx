@@ -171,10 +171,10 @@ const TimelineItem = ({ number, title, description }) => (
 );
 
 const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
-  <div className={`bg-white rounded-[3rem] overflow-hidden shadow-[0_10px_40px_rgb(0,0,0,0.06)] border border-gray-100 transition-all duration-700 h-full transform ${isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-50 blur-[1px]'}`}>
+  <div className={`bg-white rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_10px_40px_rgb(0,0,0,0.06)] border border-gray-100 transition-all duration-700 h-full transform ${isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-50 blur-[1px]'}`}>
     <div className="flex flex-col md:flex-row h-full">
-        {/* Image Side */}
-        <div className="w-full md:w-2/5 relative overflow-hidden group">
+        {/* Image Side - Optimized for Mobile */}
+        <div className="w-full md:w-2/5 relative overflow-hidden group h-72 md:h-auto">
             <div className="absolute inset-0 bg-[#284e7f]/20 group-hover:bg-transparent transition-colors duration-500 mix-blend-multiply z-10" />
             <img 
                 src={`https://lh3.googleusercontent.com/d/${imageId}`}
@@ -183,19 +183,19 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
                 e.target.src = "https://ui-avatars.com/api/?name=" + name + "&background=284e7f&color=fff&size=500";
                 }}
                 alt={name} 
-                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110 min-h-[320px]" 
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" 
             />
         </div>
         
-        {/* Content Side */}
-        <div className="w-full md:w-3/5 p-8 md:p-10 flex flex-col justify-center bg-white relative">
-            <Quote className="absolute top-8 right-8 text-gray-100 w-16 h-16 -z-0 rotate-180" />
+        {/* Content Side - Compact on Mobile */}
+        <div className="w-full md:w-3/5 p-6 md:p-10 flex flex-col justify-center bg-white relative">
+            <Quote className="absolute top-6 right-6 md:top-8 md:right-8 text-gray-100 w-12 h-12 md:w-16 md:h-16 -z-0 rotate-180" />
             <div className="relative z-10">
-                <span className="inline-block px-4 py-1 rounded-full bg-blue-50 text-[#284e7f] text-xs font-bold mb-4 border border-blue-100">مدرب خبير</span>
-                <h3 className="text-3xl font-extrabold text-[#284e7f] mb-2 font-sans">{name}</h3>
-                <p className="text-[#b11e22] font-bold text-sm mb-6 font-sans">{title}</p>
-                <div className="h-1 w-20 bg-gray-100 rounded-full mb-6"></div>
-                <p className="text-gray-600 text-base leading-loose font-sans font-medium">
+                <span className="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-blue-50 text-[#284e7f] text-[10px] md:text-xs font-bold mb-3 md:mb-4 border border-blue-100">مدرب خبير</span>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-[#284e7f] mb-1 md:mb-2 font-sans">{name}</h3>
+                <p className="text-[#b11e22] font-bold text-xs md:text-sm mb-4 md:mb-6 font-sans">{title}</p>
+                <div className="h-1 w-16 md:w-20 bg-gray-100 rounded-full mb-4 md:mb-6"></div>
+                <p className="text-gray-600 text-sm md:text-base leading-relaxed md:leading-loose font-sans font-medium line-clamp-6 md:line-clamp-none">
                     {bio}
                 </p>
             </div>
