@@ -29,7 +29,9 @@ import {
   Puzzle,
   Scale,
   Quote,
-  Lightbulb
+  Lightbulb,
+  FileSignature, // New Icon
+  DownloadCloud  // New Icon
 } from 'lucide-react';
 
 // --- Fonts & Global Styles ---
@@ -86,7 +88,7 @@ const GlobalStyles = () => (
 // --- Components ---
 
 const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...props }) => {
-  const baseStyle = "inline-flex items-center justify-center px-8 py-3.5 md:py-4 text-sm md:text-base font-bold rounded-[2rem] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans";
+  const baseStyle = "inline-flex items-center justify-center px-6 py-3.5 md:py-4 text-sm md:text-base font-bold rounded-[2rem] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans gap-3 group";
   
   const variants = {
     primary: "border-transparent text-white bg-[#b11e22] hover:bg-[#8a1619] shadow-lg shadow-red-900/10 hover:shadow-red-900/20 hover:-translate-y-0.5",
@@ -96,10 +98,20 @@ const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...
     ai: "bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:shadow-lg hover:shadow-indigo-500/30",
   };
 
+  const iconContainerStyle = variant === 'primary' 
+    ? 'bg-white/20 text-white' 
+    : variant === 'outline'
+      ? 'bg-[#284e7f]/10 text-[#284e7f]'
+      : 'bg-white/20 text-white';
+
   return (
     <button className={`${baseStyle} ${variants[variant]} ${className}`} {...props}>
-      {children}
-      {Icon && <Icon className="mr-2 h-5 w-5 rtl:mr-0 rtl:ml-2" />} 
+      <span>{children}</span>
+      {Icon && (
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-translate-x-1 ${iconContainerStyle}`}>
+            <Icon size={18} />
+        </div>
+      )} 
     </button>
   );
 };
@@ -648,10 +660,19 @@ export default function App() {
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 mb-20 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 w-full px-4">
-            <Button variant="primary" icon={ArrowLeft} onClick={handleRegister} className="w-full sm:w-auto min-w-[240px] shadow-xl shadow-red-900/10">
+            <Button 
+                variant="primary" 
+                icon={FileSignature} 
+                onClick={handleRegister} 
+                className="w-full sm:w-auto min-w-[240px] shadow-xl shadow-red-900/10"
+            >
               التسجيل والاشتراك
             </Button>
-            <Button variant="outline" icon={Download} className="w-full sm:w-auto min-w-[240px]">
+            <Button 
+                variant="outline" 
+                icon={DownloadCloud} 
+                className="w-full sm:w-auto min-w-[240px]"
+            >
               تحميل الكتيب
             </Button>
           </div>
@@ -819,9 +840,12 @@ export default function App() {
              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
              
              <div className="relative z-10">
-               <div className="text-center max-w-4xl mx-auto mb-12">
+               <div className="text-center max-w-4xl mx-auto mb-16">
+                   <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10 mb-8 shadow-lg opacity-0">
+                        {/* Removed text and icon but kept div to maintain layout structure if needed, or better, remove entirely */}
+                   </div>
                    
-                   <h2 className="text-2xl md:text-4xl font-extrabold mb-6 font-sans leading-loose md:leading-[1.4] relative inline-block">
+                   <h2 className="text-3xl md:text-5xl font-extrabold mb-8 font-sans leading-loose md:leading-[1.4] relative inline-block">
                      <span className="relative z-10 drop-shadow-md">لماذا هذه الورشة</span>
                      <span className="relative mx-3 inline-block transform -rotate-2">
                        <span className="absolute inset-0 bg-[#b11e22] rounded-xl transform rotate-2 shadow-lg"></span>
@@ -829,7 +853,7 @@ export default function App() {
                      </span>
                    </h2>
                    
-                   <p className="text-sm md:text-base text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
+                   <p className="text-base md:text-lg text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
                      في ظل التطور المتسارع لتقنيات الذكاء الاصطناعي، لم يعد تحديد الاحتياجات التدريبية مجرد إجراء روتيني، بل أصبح ركيزة استراتيجية لبناء ميزة تنافسية مستدامة. تقدم هذه الورشة خارطة طريق عملية لدمج أدوات الذكاء الاصطناعي في صميم عمليات الموارد البشرية، مما يضمن دقة التقييم، وكفاءة الإنفاق، وتعظيم العائد على الاستثمار في رأس المال البشري.
                    </p>
                </div>
@@ -961,10 +985,19 @@ export default function App() {
             لا تفوت فرصة الانضمام إلى نخبة القادة في هذا البرنامج الاستثنائي. المقاعد محدودة لضمان جودة التجربة.
           </p>
           <div className="flex flex-col items-center justify-center gap-4">
-            <Button variant="primary" onClick={handleRegister} className="!px-12 !py-5 text-lg shadow-xl shadow-red-900/20 w-full sm:w-auto min-w-[280px]" icon={ArrowLeft}>
+            <Button 
+                variant="primary" 
+                icon={FileSignature} 
+                onClick={handleRegister} 
+                className="!px-12 !py-5 text-lg shadow-xl shadow-red-900/20 w-full sm:w-auto min-w-[280px]"
+            >
               سجل الآن
             </Button>
-            <Button variant="outline" className="!px-12 !py-5 text-lg w-full sm:w-auto min-w-[280px]" icon={Download}>
+            <Button 
+                variant="outline" 
+                icon={DownloadCloud} 
+                className="!px-12 !py-5 text-lg w-full sm:w-auto min-w-[280px]"
+            >
               تحميل الكتيب
             </Button>
           </div>
