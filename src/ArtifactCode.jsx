@@ -73,12 +73,12 @@ const GlobalStyles = () => (
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
-    @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    @keyframes rotate-border {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .animate-spin-slow {
-      animation: spin-slow 8s linear infinite;
+    .animate-rotate-border {
+      animation: rotate-border 4s linear infinite;
     }
   `}</style>
 );
@@ -325,23 +325,25 @@ const AIAdvisorSection = () => {
       </div>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        {/* Glassy Floating Container with Moving Border/Glow Animation */}
-        <div className="relative group">
-            {/* Animated Glow Border */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 rounded-[3.7rem] blur opacity-30 group-hover:opacity-70 transition duration-1000 animate-spin-slow"></div>
+        {/* Glassy Floating Container with Moving Border Animation */}
+        <div className="relative group p-[2px] rounded-[3.5rem] overflow-hidden">
+            {/* Animated Border */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22] to-transparent opacity-50 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]"></div>
+            <div className="absolute inset-[2px] bg-white rounded-[3.5rem]"></div>
             
-            <div className="bg-white/60 backdrop-blur-2xl border border-white/60 rounded-[3.5rem] shadow-[0_30px_60px_-12px_rgba(40,78,127,0.15)] p-8 md:p-12 lg:p-16 relative overflow-hidden">
+            <div className="bg-white/60 backdrop-blur-2xl rounded-[3.5rem] p-8 md:p-12 lg:p-16 relative overflow-hidden h-full">
                 
-                {/* Branding Tag - Redesigned */}
-                <div className="absolute top-8 left-8 md:top-10 md:left-10">
-                    <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-tighter font-sans flex items-center gap-1">
-                        RefeAI <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
-                    </span>
+                {/* Branding Tag - Aligned & Framed like a button */}
+                <div className="flex justify-center mb-8">
+                    <div className="flex items-center gap-2 px-6 py-2 bg-white border border-blue-100 rounded-full shadow-md transform hover:scale-105 transition-transform cursor-default">
+                        <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
+                        <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans">RefeAI BETA</span>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    {/* Text Content */}
-                    <div>
+                    {/* Text Content - Vertically Aligned */}
+                    <div className="flex flex-col justify-center h-full">
                         <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#284e7f] leading-tight font-sans">
                             مستشار التدريب <br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
@@ -354,7 +356,7 @@ const AIAdvisorSection = () => {
                     </div>
 
                     {/* Interaction Box */}
-                    <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2">
+                    <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2 h-full flex flex-col justify-center">
                         {!response ? (
                             <div className="p-6">
                                 <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
@@ -379,7 +381,7 @@ const AIAdvisorSection = () => {
                                 {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
                             </div>
                         ) : (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-8 text-white relative overflow-hidden">
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-8 text-white relative overflow-hidden h-full flex flex-col justify-center">
                                 <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-4 mb-6">
@@ -449,7 +451,7 @@ export default function App() {
       bio: "خبير عالمي في الذكاء الاصطناعي والتحول الرقمي، يقود مشاريع استراتيجية في عدة دول. حاصل على دكتوراه في إدارة الموارد البشرية الدولية."
     },
     {
-      name: "أحمد الطويل",
+      name: "أ. أحمد الطويل",
       title: "خبير التطوير المؤسسي",
       imageId: "1vPbj5AULuI0lRLjJqDakI71eb6ChRs78",
       bio: "خبير أردني في التطوير المؤسسي والقيادة بخبرة تتجاوز 18 عامًا في إدارة التغيير وبناء الكفاءات. مستشار لهيئات محلية ودولية."
@@ -548,9 +550,9 @@ export default function App() {
             <div className="hidden md:flex items-center gap-3">
               <a 
                 href="#ai-advisor"
-                className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-5 py-2.5 rounded-full text-sm font-bold animate-pulse hover:shadow-lg hover:shadow-purple-500/30 transition-all font-sans"
+                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 border border-white/20 font-sans"
               >
-                <Sparkles className="w-3.5 h-3.5 text-yellow-300 fill-yellow-300" />
+                <Sparkles className="w-4 h-4 text-yellow-300 fill-yellow-300 animate-pulse" />
                 <span>RefeAI</span>
               </a>
 
