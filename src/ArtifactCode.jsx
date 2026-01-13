@@ -417,6 +417,7 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTrainerIndex, setActiveTrainerIndex] = useState(0);
+  const [activeAudienceIndex, setActiveAudienceIndex] = useState(0); // State for Audience Carousel
 
   const registerUrl = "https://forms.cloud.microsoft/r/FPLwbAsYyU";
   const handleRegister = () => window.open(registerUrl, '_blank');
@@ -434,6 +435,22 @@ export default function App() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  const audienceRoles = [
+    'قيادات الموارد البشرية',
+    'القيادات التنفيذية',
+    'مدراء التحول الرقمي',
+    'مدراء التدريب والتطوير',
+    'صناع القرار'
+  ];
+
+  // Audience Carousel Loop (3s)
+  useEffect(() => {
+    const interval = setInterval(() => {
+        setActiveAudienceIndex((prev) => (prev + 1) % audienceRoles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [audienceRoles.length]);
 
   const navLinks = [
     { name: 'الرئيسية', href: '#' },
@@ -630,11 +647,11 @@ export default function App() {
             برنامج احترافي متقدم يمكّن القيادات من اتخاذ قرارات تدريبية ذكية قائمة على البيانات والذكاء الاصطناعي، وربط التدريب مباشرة بالأداء المؤسسي والاستراتيجية.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 w-full px-4">
-            <Button variant="primary" icon={ArrowLeft} onClick={handleRegister} className="w-full sm:w-auto shadow-xl shadow-red-900/10">
+          <div className="flex flex-col items-center justify-center gap-4 mb-20 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 w-full px-4">
+            <Button variant="primary" icon={ArrowLeft} onClick={handleRegister} className="w-full sm:w-auto min-w-[240px] shadow-xl shadow-red-900/10">
               التسجيل والاشتراك
             </Button>
-            <Button variant="outline" icon={Download} className="w-full sm:w-auto">
+            <Button variant="outline" icon={Download} className="w-full sm:w-auto min-w-[240px]">
               تحميل الكتيب
             </Button>
           </div>
@@ -667,6 +684,26 @@ export default function App() {
                         key={idx}
                         onClick={() => setActiveTrainerIndex(idx)}
                         className={`w-3 h-3 rounded-full transition-all duration-300 ${idx === activeTrainerIndex ? 'bg-[#b11e22] w-8' : 'bg-gray-300 hover:bg-gray-400'}`}
+                    />
+                ))}
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Axes / Learning Path - Moved After Trainers */}
+      <section id="axes" className="py-20 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-[3rem] p-8 md:p-16 shadow-xl border border-gray-100">
+             <SectionHeading title="محاور ورشة العمل" align="center" />
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                {axesData.map((axis, index) => (
+                    <AxisCard 
+                      key={index}
+                      number={axis.number}
+                      title={axis.title}
+                      description={axis.description}
+                      icon={axis.icon}
                     />
                 ))}
              </div>
@@ -773,8 +810,8 @@ export default function App() {
 
       {/* Value Proposition - About Section */}
       <section id="about" className="py-24 bg-white relative w-full overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[2rem] md:rounded-[3rem] p-6 md:p-16 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[3rem] p-8 md:p-10 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
              
              {/* Deep layered background effects */}
              <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')] mix-blend-overlay"></div>
@@ -787,7 +824,7 @@ export default function App() {
                         {/* Removed text and icon but kept div to maintain layout structure if needed, or better, remove entirely */}
                    </div>
                    
-                   <h2 className="text-4xl md:text-6xl font-extrabold mb-8 font-sans leading-tight relative inline-block">
+                   <h2 className="text-3xl md:text-5xl font-extrabold mb-8 font-sans leading-loose md:leading-[1.4] relative inline-block">
                      <span className="relative z-10 drop-shadow-md">لماذا هذه الورشة</span>
                      <span className="relative mx-3 inline-block transform -rotate-2">
                        <span className="absolute inset-0 bg-[#b11e22] rounded-xl transform rotate-2 shadow-lg"></span>
@@ -795,7 +832,7 @@ export default function App() {
                      </span>
                    </h2>
                    
-                   <p className="text-lg md:text-2xl text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
+                   <p className="text-base md:text-lg text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
                      في ظل التطور المتسارع لتقنيات الذكاء الاصطناعي، لم يعد تحديد الاحتياجات التدريبية مجرد إجراء روتيني، بل أصبح ركيزة استراتيجية لبناء ميزة تنافسية مستدامة. تقدم هذه الورشة خارطة طريق عملية لدمج أدوات الذكاء الاصطناعي في صميم عمليات الموارد البشرية، مما يضمن دقة التقييم، وكفاءة الإنفاق، وتعظيم العائد على الاستثمار في رأس المال البشري.
                    </p>
                </div>
@@ -863,45 +900,30 @@ export default function App() {
         </div>
       </section>
 
-      {/* Axes / Learning Path - Redesigned Grid Layout */}
-      <section id="axes" className="py-24 bg-white w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading title="محاور ورشة العمل" align="center" />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
-             {axesData.map((axis, index) => (
-                <AxisCard 
-                  key={index}
-                  number={axis.number}
-                  title={axis.title}
-                  description={axis.description}
-                  icon={axis.icon}
-                />
-             ))}
-          </div>
-        </div>
-      </section>
-
       {/* Target Audience */}
-      <section className="py-24 bg-[#284e7f] relative overflow-hidden w-full">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-16">
-             <div className="md:w-1/3 text-right">
-                <h2 className="text-4xl font-bold text-white mb-6 leading-tight font-sans">هذه الورشة <br/><span className="text-[#b11e22]">موجهة إلى</span></h2>
-                <div className="h-1.5 w-20 bg-[#b11e22] mb-8 rounded-full" />
-                <p className="text-blue-100 text-lg font-light leading-relaxed font-sans font-medium">
-                  صممت هذه الورشة خصيصاً للقادة وصناع القرار الذين يسعون لإحداث نقلة نوعية في مؤسساتهم باستخدام أحدث التقنيات.
-                </p>
-             </div>
-             
-             <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-               {['قيادات الموارد البشرية', 'القيادات التنفيذية', 'مدراء التحول الرقمي', 'مدراء التدريب والتطوير', 'صناع القرار'].map((role, idx) => (
-                 <div key={idx} className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex items-center gap-4 text-white hover:bg-white hover:text-[#284e7f] transition-all duration-300 group cursor-default shadow-lg">
-                    <div className="w-2 h-2 rounded-full bg-[#b11e22] group-hover:scale-150 transition-transform" />
-                    <span className="font-bold text-lg font-sans">{role}</span>
-                 </div>
-               ))}
+      <section className="py-12 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-[#284e7f] rounded-[3rem] relative overflow-hidden p-8 md:p-16 shadow-2xl shadow-blue-900/20">
+             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+             <div className="relative z-10">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-16">
+                   <div className="md:w-1/3 text-right">
+                      <h2 className="text-4xl font-bold text-white mb-6 leading-tight font-sans">هذه الورشة <br/><span className="text-[#b11e22]">موجهة إلى</span></h2>
+                      <div className="h-1.5 w-20 bg-[#b11e22] mb-8 rounded-full" />
+                      <p className="text-blue-100 text-lg font-light leading-relaxed font-sans font-medium">
+                        صممت هذه الورشة خصيصاً للقادة وصناع القرار الذين يسعون لإحداث نقلة نوعية في مؤسساتهم باستخدام أحدث التقنيات.
+                      </p>
+                   </div>
+                   
+                   <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                     {['قيادات الموارد البشرية', 'القيادات التنفيذية', 'مدراء التحول الرقمي', 'مدراء التدريب والتطوير', 'صناع القرار'].map((role, idx) => (
+                       <div key={idx} className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex items-center gap-4 text-white hover:bg-white hover:text-[#284e7f] transition-all duration-300 group cursor-default shadow-lg">
+                          <div className="w-2 h-2 rounded-full bg-[#b11e22] group-hover:scale-150 transition-transform" />
+                          <span className="font-bold text-lg font-sans">{role}</span>
+                       </div>
+                     ))}
+                   </div>
+                </div>
              </div>
           </div>
         </div>
