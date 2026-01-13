@@ -861,6 +861,97 @@ export default function App() {
           </div>
         </div>
       </section>
+        {/* Dashboard Visual - Moved & Redesigned */}
+      <section className="py-20 bg-grid-slate relative overflow-hidden w-full">
+         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
+         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div className="relative mx-auto max-w-5xl animate-in fade-in slide-in-from-bottom-10 duration-1000 perspective-1000">
+              <div className="relative bg-white rounded-[1.5rem] md:rounded-[2rem] border border-gray-200/60 shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden">
+                <div className="bg-gray-50 border-b border-gray-100 h-8 md:h-10 flex items-center px-4 gap-2">
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-400/80" />
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-400/80" />
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-400/80" />
+                  <div className="ml-4 w-32 md:w-40 h-3 md:h-4 bg-gray-200/50 rounded-md" />
+                </div>
+                <div className="p-1 bg-white">
+                   <div className="flex flex-col md:flex-row h-auto min-h-[300px]">
+                      {/* Sidebar - Hidden on mobile */}
+                      <div className="hidden md:flex w-16 border-l border-gray-100 flex-col items-center py-6 gap-6 bg-gray-50/50">
+                         <div className="w-8 h-8 rounded-lg bg-[#284e7f] flex items-center justify-center text-white font-bold">R</div>
+                         <div className="w-8 h-8 rounded-lg text-gray-400 hover:bg-white hover:shadow-sm flex items-center justify-center"><Layout size={18} /></div>
+                         <div className="w-8 h-8 rounded-lg text-[#b11e22] bg-white shadow-sm flex items-center justify-center"><BarChart3 size={18} /></div>
+                      </div>
+                      
+                      {/* Main Content */}
+                      <div className="flex-1 p-4 md:p-8 bg-slate-50/30 overflow-hidden relative">
+                         {/* Header inside dash */}
+                         <div className="flex justify-between items-center mb-6">
+                            <div>
+                               <h3 className="font-bold text-lg md:text-xl text-gray-800 font-sans">تحليل فجوات الأداء</h3>
+                               <p className="text-xs md:text-sm text-gray-400 font-sans">آخر تحديث: قبل 5 دقائق</p>
+                            </div>
+                            <div className="flex gap-2">
+                               <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400"><Search size={14} /></div>
+                               <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400"><Bell size={14} /></div>
+                            </div>
+                         </div>
+                         
+                         {/* Simplified Grid */}
+                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                            {/* Chart Area */}
+                            <div className="col-span-1 md:col-span-2 bg-white rounded-xl md:rounded-2xl p-4 md:p-5 shadow-sm border border-gray-100/50">
+                               <div className="flex justify-between mb-4">
+                                  <div className="h-3 md:h-4 w-20 md:w-24 bg-gray-100 rounded-md" />
+                                  <div className="h-3 md:h-4 w-3 md:w-4 bg-gray-100 rounded-full" />
+                               </div>
+                               <div className="flex items-end gap-2 md:gap-3 h-24 md:h-32 mt-2 px-1">
+                                  {/* Bars */}
+                                  <div className="w-full bg-blue-50 rounded-t-sm md:rounded-t-lg h-[40%]" />
+                                  <div className="w-full bg-blue-100 rounded-t-sm md:rounded-t-lg h-[70%]" />
+                                  <div className="w-full bg-[#284e7f] rounded-t-sm md:rounded-t-lg h-[90%]" />
+                                  <div className="w-full bg-blue-100 rounded-t-sm md:rounded-t-lg h-[60%]" />
+                                  <div className="w-full bg-blue-50 rounded-t-sm md:rounded-t-lg h-[30%]" />
+                               </div>
+                            </div>
+                            
+                            {/* Stats Card */}
+                            <div className="col-span-1 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-xl md:rounded-2xl p-4 md:p-5 text-white shadow-lg shadow-blue-900/10 flex flex-row md:flex-col items-center md:items-start justify-between md:justify-start">
+                               <div>
+                                   <div className="text-xs md:text-sm opacity-80 mb-1 font-sans">ROI Score</div>
+                                   <div className="text-2xl md:text-3xl font-bold mb-0 md:mb-4 font-sans">94%</div>
+                               </div>
+                               
+                               <div className="hidden md:block h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+                                  <div className="h-full w-[94%] bg-[#b11e22] rounded-full" />
+                               </div>
+                               
+                               {/* Avatars */}
+                               <div className="flex -space-x-2 space-x-reverse overflow-hidden md:mt-4">
+                                  {trainers.slice(0, 3).map((t, i) => (
+                                    <img key={i} className="inline-block h-6 w-6 md:h-8 md:w-8 rounded-full ring-2 ring-[#284e7f] object-cover" src={`https://lh3.googleusercontent.com/d/${t.imageId}`} alt="" />
+                                  ))}
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+              </div>
+              
+              {/* Floating Element - Adjusted position for mobile */}
+              <div className="absolute -left-4 md:-left-8 top-12 md:top-20 bg-white p-3 md:p-4 rounded-xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] animate-bounce delay-700 border border-gray-100 transform scale-75 md:scale-100 origin-top-left">
+                 <div className="flex items-center gap-3">
+                    <div className="bg-green-100 p-1.5 md:p-2 rounded-full text-green-600"><CheckCircle2 size={16} /></div>
+                    <div>
+                       <div className="text-[10px] md:text-xs text-gray-400 font-bold font-sans">اكتمال التحليل</div>
+                       <div className="text-xs md:text-sm font-bold text-gray-800 font-sans">ناجح 100%</div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+         </div>
+      </section>
+
 
       {/* Final CTA */}
       <section id="register" className="py-32 bg-white relative overflow-hidden w-full">
