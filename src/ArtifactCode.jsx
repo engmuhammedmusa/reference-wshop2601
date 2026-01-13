@@ -811,7 +811,7 @@ export default function App() {
       {/* Value Proposition - About Section */}
       <section id="about" className="py-24 bg-white relative w-full overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[3rem] p-8 md:p-10 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
+           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[3rem] p-6 md:p-10 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
              
              {/* Deep layered background effects */}
              <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')] mix-blend-overlay"></div>
@@ -819,12 +819,9 @@ export default function App() {
              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
              
              <div className="relative z-10">
-               <div className="text-center max-w-4xl mx-auto mb-16">
-                   <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10 mb-8 shadow-lg opacity-0">
-                        {/* Removed text and icon but kept div to maintain layout structure if needed, or better, remove entirely */}
-                   </div>
+               <div className="text-center max-w-4xl mx-auto mb-12">
                    
-                   <h2 className="text-3xl md:text-5xl font-extrabold mb-8 font-sans leading-loose md:leading-[1.4] relative inline-block">
+                   <h2 className="text-2xl md:text-4xl font-extrabold mb-6 font-sans leading-loose md:leading-[1.4] relative inline-block">
                      <span className="relative z-10 drop-shadow-md">لماذا هذه الورشة</span>
                      <span className="relative mx-3 inline-block transform -rotate-2">
                        <span className="absolute inset-0 bg-[#b11e22] rounded-xl transform rotate-2 shadow-lg"></span>
@@ -832,7 +829,7 @@ export default function App() {
                      </span>
                    </h2>
                    
-                   <p className="text-base md:text-lg text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
+                   <p className="text-sm md:text-base text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
                      في ظل التطور المتسارع لتقنيات الذكاء الاصطناعي، لم يعد تحديد الاحتياجات التدريبية مجرد إجراء روتيني، بل أصبح ركيزة استراتيجية لبناء ميزة تنافسية مستدامة. تقدم هذه الورشة خارطة طريق عملية لدمج أدوات الذكاء الاصطناعي في صميم عمليات الموارد البشرية، مما يضمن دقة التقييم، وكفاءة الإنفاق، وتعظيم العائد على الاستثمار في رأس المال البشري.
                    </p>
                </div>
@@ -903,26 +900,48 @@ export default function App() {
       {/* Target Audience */}
       <section className="py-12 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#284e7f] rounded-[3rem] relative overflow-hidden p-8 md:p-16 shadow-2xl shadow-blue-900/20">
+          <div className="bg-[#284e7f] rounded-[3rem] relative overflow-hidden p-8 md:p-16 shadow-2xl shadow-blue-900/20 flex flex-col items-center justify-center text-center">
              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-             <div className="relative z-10">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-16">
-                   <div className="md:w-1/3 text-right">
-                      <h2 className="text-4xl font-bold text-white mb-6 leading-tight font-sans">هذه الورشة <br/><span className="text-[#b11e22]">موجهة إلى</span></h2>
-                      <div className="h-1.5 w-20 bg-[#b11e22] mb-8 rounded-full" />
-                      <p className="text-blue-100 text-lg font-light leading-relaxed font-sans font-medium">
-                        صممت هذه الورشة خصيصاً للقادة وصناع القرار الذين يسعون لإحداث نقلة نوعية في مؤسساتهم باستخدام أحدث التقنيات.
-                      </p>
-                   </div>
-                   
-                   <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                     {['قيادات الموارد البشرية', 'القيادات التنفيذية', 'مدراء التحول الرقمي', 'مدراء التدريب والتطوير', 'صناع القرار'].map((role, idx) => (
-                       <div key={idx} className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex items-center gap-4 text-white hover:bg-white hover:text-[#284e7f] transition-all duration-300 group cursor-default shadow-lg">
-                          <div className="w-2 h-2 rounded-full bg-[#b11e22] group-hover:scale-150 transition-transform" />
-                          <span className="font-bold text-lg font-sans">{role}</span>
-                       </div>
-                     ))}
-                   </div>
+             <div className="relative z-10 w-full max-w-3xl flex flex-col gap-8">
+                <div className="flex flex-col items-center">
+                   <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight font-sans">
+                     هذه الورشة <span className="text-[#FFFFFF]">موجهة إلى</span>
+                   </h2>
+                   <div className="h-1.5 w-24 bg-[#b11e22] mb-6 rounded-full" />
+                   <p className="text-blue-100 text-lg font-light leading-relaxed font-sans font-medium mb-12">
+                     صممت هذه الورشة خصيصاً للقادة وصناع القرار الذين يسعون لإحداث نقلة نوعية في مؤسساتهم باستخدام أحدث التقنيات.
+                   </p>
+                </div>
+                
+                {/* Looping Carousel for Audience Roles */}
+                <div className="w-full relative h-32 flex items-center justify-center">
+                  {audienceRoles.map((role, idx) => (
+                    <div 
+                      key={idx} 
+                      className={`absolute transition-all duration-700 ease-in-out transform w-full max-w-lg ${
+                        idx === activeAudienceIndex 
+                          ? 'opacity-100 translate-y-0 scale-100' 
+                          : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
+                      }`}
+                    >
+                      <div className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-[2rem] flex items-center justify-center gap-4 text-white shadow-2xl mx-auto">
+                         <div className="w-3 h-3 rounded-full bg-[#b11e22] animate-pulse shrink-0" />
+                         <span className="font-bold text-2xl font-sans">{role}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Carousel Indicators for Audience */}
+                <div className="flex gap-2 justify-center mt-4">
+                   {audienceRoles.map((_, idx) => (
+                       <button 
+                           key={idx}
+                           onClick={() => setActiveAudienceIndex(idx)}
+                           className={`transition-all duration-300 rounded-full h-2 ${idx === activeAudienceIndex ? 'w-8 bg-[#b11e22]' : 'w-2 bg-white/30'}`}
+                           aria-label={`Go to slide ${idx + 1}`}
+                       />
+                   ))}
                 </div>
              </div>
           </div>
@@ -941,11 +960,11 @@ export default function App() {
           <p className="text-xl text-gray-500 mb-12 max-w-2xl mx-auto font-light font-sans font-medium">
             لا تفوت فرصة الانضمام إلى نخبة القادة في هذا البرنامج الاستثنائي. المقاعد محدودة لضمان جودة التجربة.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button variant="primary" onClick={handleRegister} className="!px-12 !py-5 text-lg shadow-xl shadow-red-900/20" icon={ArrowLeft}>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <Button variant="primary" onClick={handleRegister} className="!px-12 !py-5 text-lg shadow-xl shadow-red-900/20 w-full sm:w-auto min-w-[280px]" icon={ArrowLeft}>
               سجل الآن
             </Button>
-            <Button variant="outline" className="!px-12 !py-5 text-lg" icon={Download}>
+            <Button variant="outline" className="!px-12 !py-5 text-lg w-full sm:w-auto min-w-[280px]" icon={Download}>
               تحميل الكتيب
             </Button>
           </div>
