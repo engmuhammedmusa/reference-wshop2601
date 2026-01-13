@@ -362,7 +362,7 @@ const AIAdvisorSection = () => {
                                     className="!py-3 !px-8 !text-base flex items-center gap-3 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
                                 >
                                     {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
-                                    {loading ? 'جاري التحليل...' : 'تحليل الآن'}
+                                    {loading ? 'جاري التحليل...' : 'حلل الآن'}
                                 </Button>
                             </div>
                             {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
@@ -384,7 +384,7 @@ const AIAdvisorSection = () => {
                                     onClick={() => setResponse('')} 
                                     className="text-sm font-bold text-yellow-400 hover:text-white transition-colors flex items-center gap-2"
                                 >
-                                    <ArrowLeft size={16} /> تحليل تحدي آخر
+                                    <ArrowLeft size={16} /> تحليل جديد
                                 </button>
                             </div>
                         </div>
@@ -437,7 +437,7 @@ export default function App() {
       bio: "خبير عالمي في الذكاء الاصطناعي والتحول الرقمي، يقود مشاريع استراتيجية في عدة دول. حاصل على دكتوراه في إدارة الموارد البشرية الدولية."
     },
     {
-      name: "أحمد الطويل",
+      name: "أ. أحمد الطويل",
       title: "خبير التطوير المؤسسي",
       imageId: "1vPbj5AULuI0lRLjJqDakI71eb6ChRs78",
       bio: "خبير أردني في التطوير المؤسسي والقيادة بخبرة تتجاوز 18 عامًا في إدارة التغيير وبناء الكفاءات. مستشار لهيئات محلية ودولية."
