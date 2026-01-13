@@ -189,7 +189,7 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
     <div className="relative h-full shadow-[0_18px_60px_rgba(0,0,0,0.12)]">
       <div className="flex flex-col md:flex-row h-full">
         {/* Image Side */}
-        <div className="w-full md:w-2/5 relative overflow-hidden group h-56 sm:h-64 md:h-auto">
+        <div className="w-full md:w-2/5 relative overflow-hidden group h-[38svh] min-h-[220px] max-h-[340px] sm:h-64 md:h-auto">
           <img
             src={`https://lh3.googleusercontent.com/d/${imageId}`}
             onError={(e) => {
@@ -232,9 +232,11 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
           </div>
 
           <div className="relative z-10">
-            <p className="text-gray-700 text-sm sm:text-[15px] leading-relaxed sm:leading-7 md:text-base md:leading-loose font-sans font-medium line-clamp-6">
-              {bio}
-            </p>
+            <div className="max-h-[24svh] md:max-h-none overflow-y-auto md:overflow-visible pr-1">
+              <p className="text-gray-700 text-sm sm:text-[15px] leading-relaxed sm:leading-7 md:text-base md:leading-loose font-sans font-medium">
+                {bio}
+              </p>
+            </div>
 
             <div className="mt-5 flex items-center justify-between">
               <div className="h-px flex-1 bg-white/25" />
@@ -713,7 +715,7 @@ export default function App() {
               <div className="absolute inset-[2px] rounded-[2.75rem] md:rounded-[3.25rem] bg-white/30 backdrop-blur-2xl border border-white/40" />
 
               <div className="relative rounded-[2.75rem] md:rounded-[3.25rem] p-4 sm:p-6 md:p-8">
-                <div className="relative h-[620px] sm:h-[600px] md:h-[460px]">
+                <div className="relative h-[calc(100svh-260px)] min-h-[460px] max-h-[640px] sm:h-[560px] md:h-[460px]">
                   {trainers.map((trainer, index) => (
                     <div
                       key={index}
