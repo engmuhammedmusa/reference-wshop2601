@@ -379,7 +379,7 @@ export default function App() {
 
         {/* --- Trainers Loop --- */}
         <section id="trainers">
-            <SectionTitle title="نخبة الخبراء" subtitle="المدربين" />
+            <SectionTitle title="نخبة الخبراء"/>
             <ScrollLoop>
                 <MobileTrainerCard 
                     name="د. رامي شاهين" 
@@ -387,7 +387,7 @@ export default function App() {
                     imageId="1gwL1YOxAQCLiwXM0KPockBJ21gAyK0fR" 
                 />
                 <MobileTrainerCard 
-                    name="أحمد الطويل" 
+                    name="أ. أحمد الطويل" 
                     title="خبير التطوير المؤسسي" 
                     imageId="1vPbj5AULuI0lRLjJqDakI71eb6ChRs78" 
                 />
@@ -440,7 +440,7 @@ export default function App() {
 
         {/* --- Axes Loop --- */}
         <section id="axes" className="bg-white rounded-t-[3rem] pt-10 pb-6 shadow-[0_-10px_40px_rgba(0,0,0,0.03)] -mb-12 z-10 relative">
-            <SectionTitle title="رحلة التعلم" subtitle="محاور الورشة" />
+            <SectionTitle title="رحلة التعلم" subtitle="محاور ورشة العمل" />
             <ScrollLoop>
                 <MobileAxisCard number="01" title="قياس أثر التدريب ROI" icon={TrendingUp} />
                 <MobileAxisCard number="02" title="الاحتياجات بالبيانات" icon={Database} />
