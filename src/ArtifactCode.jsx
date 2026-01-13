@@ -276,12 +276,11 @@ const AIAdvisorSection = () => {
       <div className="absolute top-0 right-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]"></div>
 
       {/* Reference Logo - Top Right of AI Section */}
-      <div className="absolute top-6 right-6 md:top-10 md:right-10 opacity-80 hover:opacity-100 transition-opacity z-20">
-         <img 
-            src="https://lh3.googleusercontent.com/d/1l4GCnGgjY65XiSnJevl0y7goxr5nFP2j" 
-            alt="Reference Training Center" 
-            className="h-16 md:h-20 w-auto object-contain brightness-0 invert opacity-90"
-         />
+      <div className="absolute top-6 right-6 md:top-10 md:right-10 opacity-80 hover:opacity-100 transition-opacity z-20 flex flex-col items-center gap-2">
+         <div className="flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+            <Sparkles className="w-4 h-4 text-yellow-400 fill-yellow-400 animate-pulse" />
+            <span className="text-sm font-bold text-white tracking-widest">RefeAI</span>
+         </div>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -433,42 +432,41 @@ export default function App() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             {/* Logo Image */}
             <div className="flex items-center gap-3">
                <img 
-                 src="https://lh3.googleusercontent.com/d/1l4GCnGgjY65XiSnJevl0y7goxr5nFP2j" 
+                 src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
                  alt="Reference Training Center" 
-                 className="h-12 w-auto object-contain"
+                 className="h-16 w-auto object-contain"
                />
             </div>
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => {
-                const isSpecial = link.name === 'المستشار الذكي';
-                return (
-                  <a 
-                    key={link.name} 
-                    href={link.href}
-                    className={`text-base font-medium transition-all relative group flex items-center gap-1.5 ${
-                      isSpecial 
-                        ? 'text-[#284e7f] font-extrabold animate-pulse bg-blue-50/50 px-3 py-1 rounded-full border border-blue-200 shadow-[0_0_15px_rgba(40,78,127,0.3)]' 
-                        : 'text-gray-700 hover:text-[#b11e22]'
-                    }`}
-                  >
-                    {isSpecial && <Sparkles className="w-4 h-4 text-[#b11e22] fill-current" />}
-                    {link.name}
-                    {!isSpecial && (
-                      <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-[#b11e22] transition-all group-hover:w-full"></span>
-                    )}
-                  </a>
-                );
-              })}
+              {navLinks.filter(link => link.name !== 'المستشار الذكي').map((link) => (
+                <a 
+                  key={link.name} 
+                  href={link.href}
+                  className="text-base font-medium text-gray-700 hover:text-[#b11e22] transition-colors relative group"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-[#b11e22] transition-all group-hover:w-full"></span>
+                </a>
+              ))}
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Buttons & Smart Advisor */}
             <div className="hidden md:flex items-center gap-4">
+              {/* Smart Advisor Button (Moved here) */}
+              <a 
+                href="#ai-advisor"
+                className="flex items-center gap-2 bg-[#1a3558] text-white px-4 py-2 rounded-full font-bold animate-pulse border border-blue-400/30 hover:bg-[#284e7f] transition-all shadow-[0_0_15px_rgba(40,78,127,0.5)] hover:shadow-[0_0_20px_rgba(40,78,127,0.7)]"
+              >
+                <Sparkles className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                <span>المستشار الذكي</span>
+              </a>
+
               <Button variant="primary" onClick={handleRegister} className="!px-6 !py-2 !text-sm !rounded-md">
                 احجز مقعدك
               </Button>
@@ -527,16 +525,14 @@ export default function App() {
                {/* Modern Countdown Timer */}
                <CountdownTimer />
                
-               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#284e7f] leading-tight mb-4 animate-in fade-in slide-in-from-bottom-6 duration-700">
+               <h1 className="text-3xl lg:text-5xl xl:text-6xl font-extrabold text-[#284e7f] leading-tight mb-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
                  تحديد الاحتياجات التدريبية <br/>
                  <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">
                    باستخدام الذكاء الاصطناعي
                  </span>
+                 <br />
+                 بمنهجية مركز التقييم الذكي
                </h1>
-               
-               <p className="text-xl text-gray-500 font-light mb-6 font-english dir-ltr tracking-wide">
-                 AI-Driven Training Needs Analysis & <br/>Smart Assessment Centers
-               </p>
 
                <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 border-r-4 border-[#b11e22] pr-4 bg-gradient-to-l from-gray-50 to-transparent py-2">
                  برنامج احترافي متقدم يمكّن القيادات من اتخاذ قرارات تدريبية ذكية قائمة على البيانات والذكاء الاصطناعي، وربط التدريب مباشرة بالأداء المؤسسي والاستراتيجية.
@@ -618,12 +614,6 @@ export default function App() {
                          </div>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Floating Badge */}
-                  <div className="absolute top-20 right-0 bg-white shadow-lg rounded-full px-4 py-2 flex items-center gap-2 border border-gray-100 animate-bounce delay-1000">
-                    <Award className="text-[#b11e22] w-5 h-5" />
-                    <span className="font-bold text-[#284e7f] text-sm">نخبة الخبراء</span>
                   </div>
                </div>
             </div>
@@ -812,9 +802,9 @@ export default function App() {
               <div className="flex items-center gap-3 mb-6">
                  {/* Footer Logo Image */}
                  <img 
-                   src="https://lh3.googleusercontent.com/d/1l4GCnGgjY65XiSnJevl0y7goxr5nFP2j" 
+                   src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
                    alt="Reference Training Center" 
-                   className="h-12 w-auto object-contain brightness-0 invert"
+                   className="h-20 w-auto object-contain brightness-0 invert"
                  />
               </div>
               <p className="text-gray-400 max-w-sm leading-relaxed">
