@@ -329,7 +329,7 @@ const AIAdvisorSection = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Text Content */}
                 <div>
-                    <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#284e7f] leading-tight font-sans">
+                    <h2 className="h-full w-full bg-gradient-to-r from-[#284e7f] to-[#b11e22] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out">
                         مستشار التدريب الذكي <br/>
                     </h2>
                     <p className="text-gray-600 text-lg leading-relaxed mb-8 font-sans font-medium">
