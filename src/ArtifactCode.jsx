@@ -323,20 +323,19 @@ const AIAdvisorSection = () => {
             {/* Branding Tag */}
             <div className="absolute top-8 left-8 md:top-10 md:left-10 flex items-center gap-2 px-4 py-2 bg-white/50 border border-blue-100 rounded-full shadow-sm">
                 <Sparkles className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                <span className="text-xs font-bold text-[#284e7f] tracking-widest font-sans">RefeAI BETA</span>
+                <span className="text-xs font-bold text-[#284e7f] tracking-widest font-sans">RefeAI</span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Text Content */}
                 <div>
                     <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#284e7f] leading-tight font-sans">
-                        مستشار التدريب <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي</span>
+                        مستشار التدريب الذكي <br/>
                     </h2>
                     <p className="text-gray-600 text-lg leading-relaxed mb-8 font-sans font-medium">
                         هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟ 
                         <br/><br/>
-                        !اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
+                        اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
                     </p>
                     
                     {/* Removed extra text div here */}
