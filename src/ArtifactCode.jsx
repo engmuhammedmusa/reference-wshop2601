@@ -33,7 +33,6 @@ import {
 // --- Fonts & Global Styles ---
 const GlobalStyles = () => (
   <style>{`
-    /* Changed Font to Tajawal - A modern, geometric Arabic font */
     @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
     
     :root {
@@ -43,9 +42,12 @@ const GlobalStyles = () => (
     body, html {
       font-family: 'Tajawal', sans-serif !important;
       background-color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
     }
     
-    /* Force override tailwind defaults if necessary */
     .font-sans {
       font-family: 'Tajawal', sans-serif !important;
     }
@@ -92,7 +94,7 @@ const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...
 };
 
 const SectionHeading = ({ subtitle, title, align = 'center' }) => (
-  <div className={`mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto`}>
+  <div className={`mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto px-4`}>
     <span className="inline-block py-1.5 px-4 rounded-full bg-[#284e7f]/5 text-[#284e7f] text-sm font-bold tracking-wider mb-4 border border-[#284e7f]/10 font-sans">
       {subtitle}
     </span>
@@ -115,13 +117,9 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
   </div>
 );
 
-// New Axis Card Component
-const AxisCard = ({ number, title, description, icon: Icon, delay }) => (
+const AxisCard = ({ number, title, description, icon: Icon }) => (
   <div className="group relative bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden h-full flex flex-col">
-    {/* Decorative Background Blob */}
     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#284e7f]/5 to-transparent rounded-bl-[4rem] transition-all duration-500 group-hover:scale-110 group-hover:from-[#284e7f]/10" />
-    
-    {/* Icon & Number Header */}
     <div className="flex justify-between items-start mb-6 relative z-10">
       <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#284e7f] group-hover:bg-[#284e7f] group-hover:text-white transition-colors duration-300 shadow-sm">
         <Icon size={28} strokeWidth={1.5} />
@@ -130,8 +128,6 @@ const AxisCard = ({ number, title, description, icon: Icon, delay }) => (
         {number}
       </span>
     </div>
-
-    {/* Content */}
     <div className="relative z-10 flex-1 flex flex-col">
       <h3 className="text-xl font-bold text-[#284e7f] mb-3 leading-snug font-sans group-hover:text-[#b11e22] transition-colors">
         {title}
@@ -140,10 +136,23 @@ const AxisCard = ({ number, title, description, icon: Icon, delay }) => (
         {description}
       </p>
     </div>
-
-    {/* Bottom Line Indicator */}
     <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gray-100 overflow-hidden">
       <div className="h-full w-full bg-gradient-to-r from-[#284e7f] to-[#b11e22] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+    </div>
+  </div>
+);
+
+const TimelineItem = ({ number, title, description }) => (
+  <div className="flex gap-6 group">
+    <div className="flex flex-col items-center">
+      <div className="w-12 h-12 rounded-full bg-[#284e7f] text-white flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-900/10 relative z-10 border-4 border-white font-sans">
+        {number}
+      </div>
+      <div className="w-0.5 h-full bg-gray-100 group-last:hidden mt-2" />
+    </div>
+    <div className="pb-12 pt-2">
+      <h3 className="text-xl font-bold text-[#284e7f] mb-2 group-hover:text-[#b11e22] transition-colors font-sans">{title}</h3>
+      <p className="text-gray-600 leading-relaxed max-w-xl font-sans">{description}</p>
     </div>
   </div>
 );
@@ -174,7 +183,6 @@ const TrainerCard = ({ name, title, bio, imageId }) => (
   </div>
 );
 
-// --- Countdown Component (IOS 26 Glassy Style) ---
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -207,7 +215,6 @@ const CountdownTimer = () => {
         <div className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest font-sans">
           {label}
         </div>
-        {/* Shine effect */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent rounded-2xl pointer-events-none"></div>
       </div>
     </div>
@@ -223,7 +230,6 @@ const CountdownTimer = () => {
   );
 };
 
-// --- WhatsApp Floating Button ---
 const FloatingWhatsApp = () => {
   const phoneNumber = "905337642450";
   const whatsappUrl = `https://wa.me/${phoneNumber}`;
@@ -289,7 +295,7 @@ const AIAdvisorSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#1a1c2e] to-[#284e7f] text-white overflow-hidden relative">
+    <section className="py-20 bg-gradient-to-br from-[#1a1c2e] to-[#284e7f] text-white overflow-hidden relative w-full">
       <div className="absolute top-0 right-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]"></div>
       
       {/* RefeAI Branding */}
@@ -300,7 +306,7 @@ const AIAdvisorSection = () => {
          </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-sans">RefeAI مستشار التدريب الذكي</h2>
           <p className="text-blue-100 max-w-2xl mx-auto text-lg font-light font-sans">
@@ -308,7 +314,7 @@ const AIAdvisorSection = () => {
           </p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl max-w-3xl mx-auto">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl max-w-3xl mx-auto w-full">
           {!response ? (
             <div className="space-y-6">
               <div className="relative">
@@ -446,31 +452,33 @@ export default function App() {
   ];
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#f8fafc] text-gray-900 selection:bg-[#b11e22] selection:text-white overflow-x-hidden">
+    <div dir="rtl" className="min-h-screen w-full bg-[#f8fafc] text-gray-900 selection:bg-[#b11e22] selection:text-white overflow-x-hidden">
       <GlobalStyles />
       
       {/* Floating WhatsApp Button */}
       <FloatingWhatsApp />
       
-      {/* Navigation - Floating Modern Style */}
+      {/* Navigation - Responsive Logic */}
       <nav 
-        className={`fixed top-4 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-          isScrolled ? 'px-4' : 'px-4'
+        className={`fixed z-50 transition-all duration-300 ease-in-out ${
+          // Mobile: Top 0, full width. Desktop: Top 4, pill shape.
+          'top-0 left-0 right-0 w-full md:top-4 md:px-4'
         }`}
       >
-        <div className={`mx-auto max-w-7xl rounded-full transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-white/80 backdrop-blur-xl shadow-lg border border-white/20 py-2' 
-            : 'bg-transparent py-4'
+        <div className={`mx-auto transition-all duration-300 ${
+          // Mobile Styles: Square, full width, white background if scrolled
+          'md:max-w-7xl md:rounded-full ' + (isScrolled 
+            ? 'bg-white/95 backdrop-blur-xl shadow-md border-b md:border md:shadow-lg border-white/20 py-2' 
+            : 'bg-white/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none py-3 md:py-4')
         }`}>
-          <div className="px-6 md:px-8 flex justify-between items-center h-14">
+          <div className="px-4 md:px-8 flex justify-between items-center h-14">
             
             {/* Logo */}
             <div className="flex items-center gap-3">
                <img 
                  src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
                  alt="Reference Training Center" 
-                 className="h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                 className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
                />
             </div>
 
@@ -490,7 +498,6 @@ export default function App() {
 
             {/* Action Buttons */}
             <div className="hidden md:flex items-center gap-3">
-              {/* Smart Advisor (Dark, Separated) */}
               <a 
                 href="#ai-advisor"
                 className="flex items-center gap-2 bg-[#1a3558] text-white px-5 py-2.5 rounded-full text-sm font-bold animate-pulse border border-blue-400/20 hover:bg-[#284e7f] transition-all shadow-lg shadow-blue-900/10 font-sans"
@@ -512,14 +519,14 @@ export default function App() {
               className="md:hidden p-2 text-gray-600 rounded-full hover:bg-gray-100"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="absolute top-20 left-4 right-4 bg-white/95 backdrop-blur-xl border border-gray-100 p-4 rounded-3xl shadow-2xl animate-in slide-in-from-top-5 z-40">
+          <div className="absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-4 shadow-xl animate-in slide-in-from-top-5 z-40 md:hidden">
             <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <a 
@@ -538,29 +545,24 @@ export default function App() {
         )}
       </nav>
 
-      {/* Hero Section - Text Only */}
-      <section className="relative pt-40 pb-16 lg:pt-48 lg:pb-24 overflow-hidden bg-grid-slate">
-        {/* Background Atmosphere */}
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-24 overflow-hidden bg-grid-slate w-full">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#284e7f]/5 rounded-full blur-[100px]" />
           <div className="absolute top-[10%] right-[10%] w-[40%] h-[40%] bg-[#b11e22]/5 rounded-full blur-[100px]" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          
-          {/* Top Badge: Date */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full">
           <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-lg font-bold mb-8 animate-in fade-in slide-in-from-bottom-3 font-sans" dir="ltr">
              <Calendar className="w-5 h-5 text-[#b11e22]" />
              <span>19 – 23 January, 2026</span>
           </div>
 
-          {/* Centered Countdown */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-8 w-full">
             <CountdownTimer />
           </div>
 
-          {/* Main Title */}
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-[#284e7f] tracking-tight leading-[1.1] mb-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-[#284e7f] tracking-tight leading-[1.2] mb-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans px-2">
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-2 opacity-80">تحديد الاحتياجات التدريبية</span>
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
               باستخدام الذكاء الاصطناعي
@@ -574,13 +576,11 @@ export default function App() {
             </span>
           </h1>
 
-          {/* Description */}
-          <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans">
+          <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans px-4">
             برنامج احترافي متقدم يمكّن القيادات من اتخاذ قرارات تدريبية ذكية قائمة على البيانات والذكاء الاصطناعي، وربط التدريب مباشرة بالأداء المؤسسي والاستراتيجية.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 w-full px-4">
             <Button variant="primary" icon={ArrowLeft} onClick={handleRegister} className="w-full sm:w-auto shadow-xl shadow-red-900/10">
               التسجيل والاشتراك
             </Button>
@@ -591,11 +591,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* Trainers Section - Moved After Hero */}
-      <section id="trainers" className="py-20 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Trainers Section */}
+      <section id="trainers" className="py-20 bg-white relative overflow-hidden w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <SectionHeading subtitle="الخبراء" title="نخبة المتحدثين والمدربين" align="center" />
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 mt-12">
             {trainers.map((trainer, index) => (
                <TrainerCard key={index} {...trainer} />
@@ -604,33 +603,25 @@ export default function App() {
         </div>
       </section>
 
-      {/* Dashboard / Window Visual - Moved Below Trainers */}
-      <section className="py-20 bg-grid-slate relative overflow-hidden">
+      {/* Dashboard Visual */}
+      <section className="py-20 bg-grid-slate relative overflow-hidden w-full">
          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
-         
-         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="relative mx-auto max-w-5xl animate-in fade-in slide-in-from-bottom-10 duration-1000 perspective-1000">
               <div className="relative bg-white rounded-[2rem] border border-gray-200/60 shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden">
-                {/* Fake Browser Header */}
                 <div className="bg-gray-50 border-b border-gray-100 h-10 flex items-center px-4 gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-400/80" />
                   <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
                   <div className="w-3 h-3 rounded-full bg-green-400/80" />
                   <div className="ml-4 w-40 h-4 bg-gray-200/50 rounded-md" />
                 </div>
-                
-                {/* Dashboard Content */}
                 <div className="p-1 bg-white">
                    <div className="flex h-[450px]">
-                      {/* Sidebar */}
                       <div className="w-16 border-l border-gray-100 flex flex-col items-center py-6 gap-6 bg-gray-50/50 hidden sm:flex">
                          <div className="w-8 h-8 rounded-lg bg-[#284e7f] flex items-center justify-center text-white font-bold">R</div>
                          <div className="w-8 h-8 rounded-lg text-gray-400 hover:bg-white hover:shadow-sm flex items-center justify-center"><Layout size={18} /></div>
                          <div className="w-8 h-8 rounded-lg text-[#b11e22] bg-white shadow-sm flex items-center justify-center"><BarChart3 size={18} /></div>
-                         <div className="w-8 h-8 rounded-lg text-gray-400 hover:bg-white hover:shadow-sm flex items-center justify-center"><Users size={18} /></div>
                       </div>
-
-                      {/* Main Content Area */}
                       <div className="flex-1 p-6 lg:p-8 bg-slate-50/30 overflow-hidden relative">
                          <div className="flex justify-between items-center mb-8">
                             <div>
@@ -642,8 +633,6 @@ export default function App() {
                                <div className="w-8 h-8 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400"><Bell size={14} /></div>
                             </div>
                          </div>
-
-                         {/* Abstract Charts */}
                          <div className="grid grid-cols-3 gap-6 mb-6">
                             <div className="col-span-2 bg-white rounded-2xl p-5 shadow-sm border border-gray-100/50">
                                <div className="flex justify-between mb-4">
@@ -672,8 +661,6 @@ export default function App() {
                                <div className="mt-2 text-xs opacity-60 font-sans">المدربين النشطين</div>
                             </div>
                          </div>
-
-                         {/* Bottom List */}
                          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100/50">
                             <div className="flex justify-between items-center mb-4">
                                <div className="h-4 w-32 bg-gray-100 rounded-md" />
@@ -700,8 +687,6 @@ export default function App() {
                    </div>
                 </div>
               </div>
-              
-              {/* Floating Elements on Visual */}
               <div className="absolute -left-8 top-20 bg-white p-4 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] animate-bounce delay-700 hidden lg:block border border-gray-100">
                  <div className="flex items-center gap-3">
                     <div className="bg-green-100 p-2 rounded-full text-green-600"><CheckCircle2 size={20} /></div>
@@ -716,7 +701,7 @@ export default function App() {
       </section>
 
       {/* Value Proposition */}
-      <section id="about" className="py-24 bg-white relative">
+      <section id="about" className="py-24 bg-white relative w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <div className="bg-[#284e7f] rounded-[2.5rem] p-12 md:p-20 text-white shadow-2xl shadow-blue-900/20 relative overflow-hidden">
              <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')]"></div>
@@ -725,8 +710,7 @@ export default function App() {
                <h2 className="text-3xl font-bold mb-8 font-sans">لماذا هذه الورشة؟</h2>
                <p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-12 font-light font-sans">
                  يهدف البرنامج إلى تمكين المشاركين من فهم منهجيات تحديد الاحتياجات التدريبية الحديثة، 
-                 وتوظيف الذكاء الاصطناعي في تحليل فجوات الأداء، 
-                 وتحويل نتائج التحليل إلى خطط تدريبية فعّالة مرتبطة بالأداء المؤسسي.
+                 وتوظيف الذكاء الاصطناعي في تحليل فجوات الأداء.
                </p>
                
                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-right rtl:text-right">
@@ -757,7 +741,7 @@ export default function App() {
       </div>
 
       {/* Smart Highlights (Pillars) */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading subtitle="القيمة المضافة" title="ركائز الورشة الأساسية" />
 
@@ -787,7 +771,7 @@ export default function App() {
       </section>
 
       {/* Axes / Learning Path - Redesigned Grid Layout */}
-      <section id="axes" className="py-24 bg-white">
+      <section id="axes" className="py-24 bg-white w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading subtitle="المسارات التعليمية" title="محاور ورشة العمل" align="center" />
           
@@ -806,7 +790,7 @@ export default function App() {
       </section>
 
       {/* Target Audience */}
-      <section className="py-24 bg-[#284e7f] relative overflow-hidden">
+      <section className="py-24 bg-[#284e7f] relative overflow-hidden w-full">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-16">
@@ -831,7 +815,7 @@ export default function App() {
       </section>
 
       {/* Final CTA */}
-      <section id="register" className="py-32 bg-white relative overflow-hidden">
+      <section id="register" className="py-32 bg-white relative overflow-hidden w-full">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-block p-4 rounded-full bg-blue-50 mb-6">
              <Award className="w-8 h-8 text-[#b11e22]" />
@@ -854,7 +838,7 @@ export default function App() {
       </section>
 
       {/* Footer - Redesigned */}
-      <footer className="relative pt-20 pb-10 overflow-hidden">
+      <footer className="relative pt-20 pb-10 overflow-hidden w-full">
         {/* Glass Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-[2.5rem] shadow-2xl p-8 md:p-10">
