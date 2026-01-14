@@ -191,39 +191,44 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
         {/* Image Side */}
         <div className="w-full md:w-2/5 flex flex-col overflow-hidden">
           <div className="relative w-full h-[42svh] min-h-[240px] max-h-[420px] sm:h-80 md:h-full flex items-center justify-center bg-white/10 backdrop-blur-xl border-b md:border-b-0 md:border-l border-white/15 p-3 sm:p-4">
-            <img
-              src={`https://drive.google.com/thumbnail?id=${imageId}&sz=w1400`}
-              data-backup={`https://lh3.googleusercontent.com/d/${imageId}`}
-              data-tried="0"
-              onError={(e) => {
-                const img = e.currentTarget;
-                // First fallback: googleusercontent direct
-                if (img.dataset.tried !== '1' && img.dataset.backup) {
-                  img.dataset.tried = '1';
-                  img.src = img.dataset.backup;
-                  return;
-                }
-                // Final fallback: avatar
-                img.onerror = null;
-                img.src =
-                  'https://ui-avatars.com/api/?name=' +
-                  encodeURIComponent(name) +
-                  '&background=284e7f&color=fff&size=500';
-              }}
-              alt={name}
-              className="w-full h-full object-contain object-center"
-            />
+            {/* Photo Frame */}
+            <div className="relative w-full h-full rounded-[1.75rem] overflow-hidden bg-white/15 border border-white/35 ring-1 ring-white/25 shadow-[0_14px_40px_rgba(0,0,0,0.12)]">
+              <img
+                src={`https://drive.google.com/thumbnail?id=${imageId}&sz=w1400`}
+                data-backup={`https://lh3.googleusercontent.com/d/${imageId}`}
+                data-tried="0"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (img.dataset.tried !== '1' && img.dataset.backup) {
+                    img.dataset.tried = '1';
+                    img.src = img.dataset.backup;
+                    return;
+                  }
+                  img.onerror = null;
+                  img.src =
+                    'https://ui-avatars.com/api/?name=' +
+                    encodeURIComponent(name) +
+                    '&background=284e7f&color=fff&size=500';
+                }}
+                alt={name}
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
           </div>
 
-          {/* Mobile header (kept off the photo so it stays fully visible) */}
+          {/* Mobile header */}
           <div className="px-4 pb-4 pt-3 md:hidden">
-            <div className="px-4 py-3 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/25 shadow-lg">
+            <div className="px-4 py-3 rounded-2xl bg-gradient-to-b from-white/30 to-white/14 backdrop-blur-2xl border border-white/40 shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="text-white font-extrabold text-lg leading-tight truncate font-sans">{name}</div>
-                  <div className="text-white/85 font-bold text-xs mt-1 truncate font-sans">{title}</div>
+                  <div className="text-white font-extrabold text-[19px] leading-tight truncate font-sans drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
+                    {name}
+                  </div>
+                  <div className="text-white/90 font-bold text-xs mt-1 truncate font-sans drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
+                    {title}
+                  </div>
                 </div>
-                <span className="shrink-0 px-3 py-1 rounded-full bg-white/20 border border-white/25 text-white text-[11px] font-bold">
+                <span className="shrink-0 px-3 py-1 rounded-full bg-white/28 border border-white/35 text-white text-[11px] font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
                   مدرب خبير
                 </span>
               </div>
@@ -759,7 +764,7 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-</div>
+              </div>
             </div>
           </div>
         </div>
