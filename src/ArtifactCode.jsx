@@ -898,7 +898,7 @@ export default function App() {
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/80 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
                         <div className="relative px-6 py-4 md:px-8 md:py-5 rounded-[2.25rem] bg-white/70 backdrop-blur-2xl border border-white/70 shadow-[0_22px_70px_rgba(177,30,34,0.14)]">
                           <span className="block text-[#b11e22] font-black text-xl md:text-2xl lg:text-[28px] leading-tight font-sans">
-                            .هذا ليس خيالاً ، هــذه ورشتنـــا الجديـــدة
+                            هذا ليس خيالاً ، هــذه ورشتنـــا الجديـــدة
                           </span>
                         </div>
                       </div>
