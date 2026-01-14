@@ -32,11 +32,20 @@ import {
   Lightbulb,
   FileSignature,
   DownloadCloud,
-  Cpu,
-  Network,
-  Binary,
-  CircuitBoard,
 } from 'lucide-react';
+
+// Keep trainer slide + comment timing perfectly in sync
+const TRAINER_SLIDE_MS = 5000;
+
+const TRAINER_COMMENTS = [
+  'لا تخف من القياس، ففيه بداية كل تحسن حقيقي',
+  'نتائج لا تخمن.. تُقاس',
+  'نحن لا نترجم البيانات فحسب، بل نفسر لغة النجاح',
+  'عندما تصبح الخوارزميات حدسًا عمليًا',
+  'التدريب المؤثر لا يغير طريقة عملك، بل يغير طريقة تفكيرك',
+  'نحن لا نقدم أدوات فقط، بل نُعرِّف مسارات',
+  'لا يوجد عظمة بدون قياس دقيق، ولا تطور بدون تقييم ذكي',
+];
 
 // --- Fonts & Global Styles ---
 const GlobalStyles = () => (
@@ -91,27 +100,53 @@ const GlobalStyles = () => (
     }
     .animate-rotate-border { animation: rotate-border 4s linear infinite; }
 
-    @keyframes shimmer-border {
-      0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 5px rgba(255,255,255,0.1); }
-      50% { border-color: rgba(255, 255, 255, 0.6); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-      100% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 5px rgba(255,255,255,0.1); }
+    @keyframes float-y {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
-    .animate-shimmer-border { animation: shimmer-border 3s infinite; }
+    .float-slow { animation: float-y 7.5s ease-in-out infinite; }
+    .float-med { animation: float-y 6s ease-in-out infinite; animation-delay: 0.6s; }
+    .float-fast { animation: float-y 4.8s ease-in-out infinite; animation-delay: 1.1s; }
 
-    @keyframes float-in-out {
-      0% { opacity: 0; transform: translateY(20px) scale(0.9); }
-      10% { opacity: 1; transform: translateY(0) scale(1); }
-      90% { opacity: 1; transform: translateY(-10px) scale(1); }
-      100% { opacity: 0; transform: translateY(-30px) scale(0.9); }
+    /* One-line full comment marquee (RTL) */
+    @keyframes marquee-rtl {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
-    .animate-float-in-out { animation: float-in-out 8s ease-in-out infinite; }
+    .animate-marquee-rtl {
+      animation: marquee-rtl 10s linear infinite;
+      direction: rtl;
+      unicode-bidi: plaintext;
+      text-align: right;
+    }
 
-    @keyframes float-continuous {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(3deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
+    /* Trainers comment: simple enter animation on change */
+    @keyframes comment-in {
+      0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .animate-float-continuous { animation: float-continuous 6s ease-in-out infinite; }
+    .animate-comment-in {
+      animation: comment-in 420ms ease-out;
+    }
+
+    /* Red glassy light sweep for comment border */
+    @keyframes red-sweep {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(50%); }
+    }
+    .animate-red-sweep { animation: red-sweep 2.6s linear infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-rotate-border,
+      .float-slow,
+      .float-med,
+      .float-fast,
+      .animate-marquee-rtl,
+      .animate-comment-in,
+      .animate-red-sweep {
+        animation: none !important;
+      }
+    }
 
     /* RefeAI brand treatment */
     .refeai-brand {
@@ -123,8 +158,10 @@ const GlobalStyles = () => (
     .refeai-pill {
       box-shadow: 0 16px 48px rgba(99,102,241,0.18);
     }
-  `}</style>
+
+      `}</style>
 );
+
 
 // --- Components ---
 const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...props }) => {
@@ -163,19 +200,14 @@ const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...
   );
 };
 
-const SectionHeading = ({ subtitle, title, description, align = 'center', titleClasses }) => (
+const SectionHeading = ({ subtitle, title, align = 'center', titleClassName = '' }) => (
   <div className={`mb-12 md:mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto px-4`}>
     {subtitle && (
       <span className="inline-block py-2 px-5 rounded-[1.5rem] bg-[#284e7f]/5 text-[#284e7f] text-sm font-bold tracking-wider mb-4 border border-[#284e7f]/10 font-sans">
         {subtitle}
       </span>
     )}
-    <h2 className={`${titleClasses || 'text-2xl md:text-4xl lg:text-5xl'} font-extrabold text-[#284e7f] leading-tight font-sans ${description ? 'mb-6' : ''}`}>{title}</h2>
-    {description && (
-      <p className="text-base md:text-lg text-gray-600 leading-relaxed font-sans font-medium max-w-3xl mx-auto">
-        {description}
-      </p>
-    )}
+    <h2 className={`text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#284e7f] leading-tight font-sans ${titleClassName}`}>{title}</h2>
   </div>
 );
 
@@ -223,81 +255,98 @@ const AxisCard = ({ number, title, description, icon: Icon }) => (
   </div>
 );
 
-/* Glassy, mobile-perfect Trainer Card */
-const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
-  <div className="relative h-full w-full rounded-[2.5rem] p-2 bg-white/60 backdrop-blur-sm border border-white/50 shadow-2xl group isolate transition-all duration-300">
-    
-    {/* Inner Card Content - White Background */}
-    <div className="relative h-full w-full bg-white rounded-[2.2rem] overflow-hidden shadow-inner">
-        {/* Full Background Image - Clear, no dark overlay */}
-        <img
-            src={`https://drive.google.com/thumbnail?id=${imageId}&sz=w1400`}
-            className={`absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[20s] ease-linear ${isActive ? 'scale-110' : 'scale-100'}`}
-            alt={name}
-        />
-        
-        {/* Modern Gradient Mix - Blends details with photo */}
-        <div className="absolute bottom-0 left-0 right-0 pt-32 pb-6 px-6 bg-gradient-to-t from-white via-white/90 to-transparent flex flex-col items-start text-right z-20">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-white/80 border border-slate-200 backdrop-blur-sm text-[10px] md:text-xs font-bold text-[#284e7f] shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#b11e22] animate-pulse"></span>
-                مدرب خبير
-            </div>
-            
-            <h3 className="text-lg md:text-xl font-extrabold text-[#1e293b] font-sans mb-1">
-                {name}
-            </h3>
-            <p className="text-[#b11e22] font-bold text-xs md:text-sm mb-2 font-sans tracking-wide">
-                {title}
-            </p>
-            
-            <div className="w-full h-px bg-slate-200/80 mb-2" />
-            
-            <p className="text-slate-700 text-xs md:text-sm leading-relaxed line-clamp-3 font-sans font-bold">
-                {bio}
-            </p>
-        </div>
-    </div>
-  </div>
-);
+/* Trainers: Tinder-style deck (Ecommerce-card inspired layout) */
+const TrainerCard = ({ name, title, bio, imageId, isActive, deckPos = 0 }) => {
+  const deckTransforms = [
+    'translate-y-0 scale-100 rotate-0 opacity-100',
+    'translate-y-5 scale-[0.975] -rotate-[1deg] opacity-90',
+    'translate-y-10 scale-[0.95] rotate-[1deg] opacity-75',
+  ];
 
-const FloatingComment = ({ text, className, delay = '0s', duration = '8s', color = 'blue' }) => {
-  const shadowColor = color === 'red' ? 'rgba(177, 30, 34, 0.4)' : 'rgba(40, 78, 127, 0.4)';
-  const borderColor = color === 'red' ? 'rgba(177, 30, 34, 0.3)' : 'rgba(40, 78, 127, 0.3)';
-  const textColor = color === 'red' ? 'text-[#b11e22]' : 'text-[#284e7f]';
-  
+  const posClass = deckTransforms[Math.min(deckPos, deckTransforms.length - 1)];
+
+  const primarySrc = `https://lh3.googleusercontent.com/d/${imageId}=w1600`;
+  const fallbackSrc = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1600`;
+
   return (
-    // Positioning Wrapper: Handles placement (absolute) and centering (translate)
-    <div className={`absolute z-50 pointer-events-none hidden lg:flex items-center justify-center ${className}`}>
-      
-      {/* Animated Content: Handles the float/bobbing animation separately */}
-      <div 
-        className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/80 backdrop-blur-md border shadow-lg animate-float-in-out"
-        style={{ 
-          animationDelay: delay,
-          animationDuration: duration,
-          borderColor: borderColor,
-          boxShadow: `0 8px 32px ${shadowColor}`
-        }}
+    <div
+      className={`relative h-full w-full rounded-[2.75rem] md:rounded-[3.25rem] transition-all duration-700 ease-out ${posClass} ${
+        isActive ? '' : 'pointer-events-none'
+      }`}
+    >
+      {/* Glassy animated border (outside only) */}
+      <div className="absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] p-[2px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#284e7f]/40 to-transparent opacity-70 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+        <div className="absolute inset-[2px] rounded-[2.75rem] md:rounded-[3.25rem] bg-white" />
+      </div>
+
+      {/* Card */}
+      <div className="relative h-full rounded-[2.75rem] md:rounded-[3.25rem] overflow-hidden bg-white shadow-[0_22px_70px_rgba(0,0,0,0.14)] flex flex-col">
+        {/* CardHeader (image) */}
+        <div className="relative h-[70%] min-h-[420px] sm:min-h-[480px] bg-white overflow-hidden flex items-center justify-center px-4 py-3">
+          <img
+            src={primarySrc}
+            alt={name}
+            className="h-full w-full object-contain object-top bg-white"
+            loading="lazy"
+            onError={(e) => {
+              if (e.currentTarget.getAttribute('data-fallback') === '1') return;
+              e.currentTarget.setAttribute('data-fallback', '1');
+              e.currentTarget.src = fallbackSrc;
+            }}
+          />
+
+          {/* Photo frame (no overlays covering the photo) */}
+          <div className="pointer-events-none absolute inset-3 rounded-[2.25rem] sm:rounded-[2.5rem] border border-slate-900/10 ring-1 ring-white/70" />
+          <div className="pointer-events-none absolute inset-0 ring-1 ring-slate-900/5" />
+
+          {/* Soft fade into body */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent via-white/65 to-white" />
+        </div>
+
+        {/* CardBody */}
+        <div className="flex-1 px-5 sm:px-7 pt-5 pb-4 flex flex-col justify-between">
+          <div>
+            <div className="mb-2 flex items-center justify-between gap-4">
+              <div className="text-slate-900 font-extrabold text-[18px] sm:text-[20px] leading-tight font-sans">
+                {name}
+              </div>
+              <div className="text-slate-700/90 font-bold text-[12px] sm:text-[13px] font-sans whitespace-nowrap">
+                {title}
+              </div>
+            </div>
+
+            <div className="h-px w-full bg-slate-900/10 my-3" />
+
+            <p className="text-slate-800/95 text-[12px] sm:text-[13px] leading-relaxed font-sans font-medium text-center">
+              {bio}
+            </p>
+          </div>
+
+          {/* CardFooter */}
+          <div className="pt-4">
+            <div className="w-full rounded-[1.25rem] bg-slate-900/5 border border-slate-900/10 px-4 py-3 text-center">
+              <span className="text-slate-900/80 font-extrabold text-[12px] sm:text-[13px] font-sans">
+                مدرب خبير
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Active card lift */}
+      <div
+        className={`pointer-events-none absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] transition-opacity duration-700 ${
+          isActive ? 'opacity-100' : 'opacity-0'
+        }`}
       >
-        <div className={`w-2 h-2 rounded-full animate-pulse ${color === 'red' ? 'bg-[#b11e22]' : 'bg-[#284e7f]'}`} />
-        <p className={`text-xs md:text-sm font-bold font-sans whitespace-nowrap ${textColor}`}>{text}</p>
+        <div className="absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] ring-1 ring-white/25" />
       </div>
     </div>
   );
 };
 
-const FloatingIcon = ({ icon: Icon, className, delay = '0s', duration = '6s', size = 24, color = 'text-[#284e7f]' }) => (
-  <div
-    className={`absolute z-0 pointer-events-none opacity-60 animate-float-continuous ${className}`}
-    style={{ animationDelay: delay, animationDuration: duration }}
-  >
-    <div className={`p-3 rounded-2xl bg-white/30 backdrop-blur-md border border-white/40 shadow-xl ${color}`}>
-        <Icon size={size} strokeWidth={1.5} />
-    </div>
-  </div>
-);
-
-const CountdownTimer = ({ align = 'center' }) => {
+const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -322,18 +371,18 @@ const CountdownTimer = ({ align = 'center' }) => {
   const GlassUnit = ({ value, label }) => (
     <div className="group relative">
       <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-[2rem] blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
-      <div className="relative w-16 h-20 md:w-20 md:h-24 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-white/40 rounded-2xl md:rounded-[1.5rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
-        <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
+      <div className="relative w-16 h-20 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-[#b11e22]/35 rounded-2xl md:rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
+        <div className="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
           {String(value).padStart(2, '0')}
         </div>
-        <div className="text-[9px] md:text-[10px] font-semibold text-gray-500 uppercase tracking-widest font-sans">{label}</div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent rounded-[2rem] pointer-events-none" />
+        <div className="text-[9px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest font-sans">{label}</div>
+        <div className="absolute top-0 left-0 w-full h-full rounded-[2rem] pointer-events-none ring-1 ring-[#b11e22]/20 bg-gradient-to-br from-white/30 to-transparent" />
       </div>
     </div>
   );
 
   return (
-    <div className={`flex gap-2 md:gap-3 mb-8 md:mb-10 animate-in fade-in slide-in-from-bottom-6 duration-1000 ${align === 'center' ? 'justify-center' : 'justify-start'}`} dir="ltr">
+    <div className="flex gap-2 md:gap-4 justify-center mb-0" dir="ltr">
       <GlassUnit value={timeLeft.days} label="Days" />
       <GlassUnit value={timeLeft.hours} label="Hours" />
       <GlassUnit value={timeLeft.minutes} label="Mins" />
@@ -367,8 +416,8 @@ const FloatingWhatsApp = () => {
   );
 };
 
-// --- Hero AI Widget ---
-const HeroAIWidget = () => {
+// --- AI Advisor Section ---
+const AIAdvisorSection = ({ compact = false }) => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
@@ -408,89 +457,168 @@ const HeroAIWidget = () => {
     }
   };
 
-  return (
-    <div id="ai-widget" className="relative w-full max-w-xl mx-auto lg:mr-auto lg:ml-0">
-        {/* Subtle Glow Behind */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 rounded-[2.5rem] opacity-30 blur-lg group-hover:opacity-50 transition duration-1000"></div>
-        
-        <div className="relative bg-white/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] p-6 md:p-8 overflow-hidden transition-all duration-300 hover:bg-white/50">
-            
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#284e7f] to-[#b11e22] flex items-center justify-center text-white shadow-lg shadow-blue-900/10">
-                        {/* Changed Bot to Sparkles */}
-                        <Sparkles size={20} />
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-bold text-[#284e7f] font-sans leading-none mb-1">RefeAI: مستشار التدريب الذكي</h3>
-                        <div className="flex items-center gap-1.5">
-                            <span className="relative flex h-2 w-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                            </span>
-                            <span className="text-[10px] text-slate-500 font-sans font-bold tracking-wide">RefeAI Online</span>
-                        </div>
-                    </div>
-                </div>
+  // Compact mode: used inside Hero (no outer section wrapper)
+  if (compact) {
+    return (
+      <div className="w-full max-w-xl mx-auto">
+        <div className="relative group p-[2px] rounded-[2.75rem] overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22] to-transparent opacity-40 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+          <div className="absolute inset-[2px] bg-white/20 rounded-[2.75rem] backdrop-blur-2xl border border-white/35" />
+
+          <div className="relative bg-white/65 backdrop-blur-2xl rounded-[2.75rem] p-4 sm:p-6 shadow-[0_22px_70px_rgba(0,0,0,0.10)]">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <div className="flex items-center gap-2 px-4 py-2 bg-white/70 border border-white/60 rounded-full shadow-sm">
+                <Sparkles className="w-4 h-4 text-yellow-500 fill-yellow-500 animate-pulse" />
+                <span className="text-xs text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans refeai-brand">
+                  RefeAI BETA
+                </span>
+              </div>
+              <div className="text-[#284e7f] font-extrabold text-sm sm:text-base font-sans">
+                مستشار التدريب الذكي
+              </div>
             </div>
 
             {!response ? (
-              <div className="flex flex-col gap-4">
-                <div className="relative group/input">
-                  <textarea
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="مثال: كيف يمكنني وضع خطة تدريبية كاملة حسب احتياج موظفي قسم الموارد البشرية؟"
-                    // Removed pl-32 since button is outside
-                    className="w-full bg-white/60 hover:bg-white/90 focus:bg-white border border-white/50 focus:border-[#284e7f]/20 rounded-[1.5rem] p-5 text-gray-700 placeholder-gray-400 outline-none min-h-[130px] resize-none text-right transition-all duration-300 font-sans text-sm md:text-base font-medium shadow-sm focus:shadow-md"
-                    dir="rtl"
-                  />
-                </div>
-                
-                <button 
+              <div>
+                <label className="block text-xs sm:text-sm font-extrabold text-slate-700 mb-2 font-sans">
+                  صف التحدي الذي تواجهه:
+                </label>
+                <textarea
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="مثال: نحتاج طريقة أدق لربط التدريب بمؤشرات الأداء..."
+                  className="w-full bg-white/70 border border-slate-900/10 rounded-[1.75rem] p-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#284e7f]/15 focus:border-[#284e7f]/30 outline-none min-h-[140px] resize-none text-right transition-all font-sans text-sm font-bold"
+                  dir="rtl"
+                />
+
+                <div className="mt-3">
+                  <button
                     onClick={handleAnalyze}
                     disabled={loading || !query.trim()}
-                    // Moved button outside, made it full width
-                    className="w-full h-12 rounded-xl bg-[#284e7f] hover:bg-[#1d3a61] disabled:bg-gray-300 disabled:cursor-not-allowed text-white flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
-                >
-                    {loading ? (
-                        <>
-                        <Loader2 className="animate-spin w-5 h-5" />
-                        <span className="text-base font-bold">جاري التحليل...</span>
-                        </>
-                    ) : (
-                        <>
-                        <span className="text-base font-bold">تحليل</span>
-                        <Send className="w-5 h-5 rtl:-rotate-90" />
-                        </>
-                    )}
-                </button>
+                    className={`w-full rounded-[1.5rem] py-4 px-5 font-extrabold font-sans transition-all flex items-center justify-center gap-2 border border-slate-900/10 bg-white/75 hover:bg-white shadow-sm hover:shadow-md active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed ${loading ? 'cursor-wait' : ''}`}
+                  >
+                    {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Send className="h-5 w-5" />}
+                    <span>{loading ? 'جاري التحليل...' : 'تحليل الآن'}</span>
+                  </button>
+                </div>
 
-                {error && <p className="text-red-500 text-xs text-center font-sans">{error}</p>}
+                {error && <p className="text-red-600 text-sm mt-3 text-center font-sans font-bold">{error}</p>}
               </div>
             ) : (
-              <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                {/* Chat Bubble Style Response */}
-                <div className="bg-white/80 border border-white/60 rounded-[1.5rem] rounded-tr-sm p-6 shadow-sm relative">
-                   <div className="text-[#1e293b] leading-loose text-sm md:text-base font-sans font-medium text-right">
-                     {response}
-                   </div>
-                </div>
-                
-                <div className="flex justify-end">
-                    <button
-                      onClick={() => setResponse('')}
-                      className="group flex items-center gap-2 px-5 py-2 rounded-full bg-white/50 hover:bg-white border border-white/60 text-gray-500 hover:text-[#284e7f] text-xs font-bold transition-all shadow-sm"
-                    >
-                      <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-                      استشارة جديدة
-                    </button>
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-5 sm:p-6 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-24 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-white/18 flex items-center justify-center backdrop-blur-md border border-white/25">
+                      <Bot className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="font-extrabold text-lg font-sans">رأي المستشار الذكي</h3>
+                  </div>
+
+                  <div className="text-blue-50 leading-loose text-sm sm:text-base font-sans border-r-2 border-yellow-400/50 pr-4 mb-4 font-bold">
+                    {response}
+                  </div>
+
+                  <button
+                    onClick={() => setResponse('')}
+                    className="text-sm font-extrabold text-yellow-300 hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    <ArrowLeft size={16} /> تحليل تحدي آخر
+                  </button>
                 </div>
               </div>
             )}
+          </div>
         </div>
-    </div>
+      </div>
+    );
+  }
+
+  return (
+    <section className="py-20 md:py-24 bg-white relative w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="relative group p-[2px] rounded-[3.5rem] overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22] to-transparent opacity-50 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+          <div className="absolute inset-[2px] bg-white rounded-[3.5rem]" />
+
+          <div className="bg-white/60 backdrop-blur-2xl rounded-[3.5rem] p-6 md:p-12 lg:p-16 relative overflow-hidden h-full">
+            <div className="flex justify-center mb-8">
+              <div className="flex items-center gap-2 px-6 py-2 bg-white border border-blue-100 rounded-full shadow-md transform hover:scale-105 transition-transform cursor-default">
+                <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
+                <span className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans refeai-brand">
+                  RefeAI BETA
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div className="flex flex-col justify-center h-full text-center lg:text-right">
+                <h2 className="text-2xl md:text-3xl lg:text-5xl font-extrabold mb-4 md:mb-6 text-[#284e7f] leading-tight font-sans">
+                  مستشار التدريب <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
+                </h2>
+                <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-sans font-medium">
+                  هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟
+                  <br />
+                  <br />
+                  اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله فوراً وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2 h-full flex flex-col justify-center">
+                {!response ? (
+                  <div className="p-4 md:p-6">
+                    <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
+                    <textarea
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="مثال: نجد صعوبة في قياس العائد الاستثماري من برامج التدريب الحالية..."
+                      className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-4 md:p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[150px] md:min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-sm md:text-base font-medium"
+                      dir="rtl"
+                    />
+                    <div className="w-full">
+                      <Button
+                        variant="ai"
+                        onClick={handleAnalyze}
+                        disabled={loading || !query.trim()}
+                        className="w-full !py-4 !px-6 !text-base rounded-[1.5rem] shadow-lg hover:shadow-xl active:scale-[0.99] transition-all justify-center"
+                      >
+                        <span className="inline-flex items-center gap-2">
+                          {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
+                          <span>{loading ? 'جاري التحليل...' : 'تحليل الآن'}</span>
+                        </span>
+                      </Button>
+                    </div>
+                    {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
+                  </div>
+                ) : (
+                  <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-6 md:p-8 text-white relative overflow-hidden h-full flex flex-col justify-center">
+                    <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                    <div className="relative z-10">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30">
+                          <Bot className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="font-bold text-xl font-sans">رأي المستشار الذكي</h3>
+                      </div>
+                      <div className="text-blue-50 leading-loose text-base md:text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
+                        {response}
+                      </div>
+                      <button
+                        onClick={() => setResponse('')}
+                        className="text-sm font-bold text-yellow-400 hover:text-white transition-colors flex items-center gap-2"
+                      >
+                        <ArrowLeft size={16} /> تحليل تحدي آخر
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -499,8 +627,7 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTrainerIndex, setActiveTrainerIndex] = useState(0);
-  // New state to cycle through the larger list of comments independently
-  const [activeCommentIndex, setActiveCommentIndex] = useState(0); 
+  const [trainerCommentIndex, setTrainerCommentIndex] = useState(0);
   const [activeAudienceIndex, setActiveAudienceIndex] = useState(0);
 
   const registerUrl = 'https://forms.cloud.microsoft/r/FPLwbAsYyU';
@@ -512,13 +639,20 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Trainer & Comment Carousel Loop (5s)
+  // Page title (matches hero)
+  useEffect(() => {
+    document.title = 'AI Assessment Center | RefeAI';
+  }, []);
+
+  // Trainer Carousel Loop (synced with side comment)
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveTrainerIndex((prev) => (prev + 1) % 3);
-      // Cycle through the 7 comments
-      setActiveCommentIndex((prev) => (prev + 1) % 7);
-    }, 5000);
+      setActiveTrainerIndex((prev) => {
+        const next = (prev + 1) % trainers.length;
+        setTrainerCommentIndex((cPrev) => (cPrev + 1) % TRAINER_COMMENTS.length);
+        return next;
+      });
+    }, TRAINER_SLIDE_MS);
     return () => clearInterval(interval);
   }, []);
 
@@ -565,47 +699,6 @@ export default function App() {
       imageId: '12r7lppBDqCAX5oFBldy-7O77uREbwMVr',
       bio: 'دكتوراه في الإدارة العامة وتطوير المنظمات، وماجستير إدارة أعمال في علم النفس الإداري. استشاري جودة معتمد ومدرب دولي.',
     },
-  ];
-
-  // Centered position above the card
-  const commentPosition = "left-1/2 -translate-x-1/2 -top-6";
-
-  const trainerComments = [
-    {
-      text: "التدريب المؤثر لا يغير طريقة عملك، بل يغير طريقة تفكيرك",
-      position: commentPosition,
-      color: "blue"
-    },
-    {
-      text: "نحن لا نقدم أدوات فقط، بل نُعرِّف مسارات",
-      position: commentPosition,
-      color: "red"
-    },
-    {
-      text: "لا يوجد عظمة بدون قياس دقيق، ولا تطور بدون تقييم ذكي",
-      position: commentPosition,
-      color: "blue"
-    },
-    {
-      text: "لا تخف من القياس، ففيه بداية كل تحسن حقيقي",
-      position: commentPosition,
-      color: "red"
-    },
-    {
-      text: "نتائج لا تخمن.. تُقاس",
-      position: commentPosition,
-      color: "blue"
-    },
-    {
-      text: "نحن لا نترجم البيانات فحسب، بل نفسر لغة النجاح",
-      position: commentPosition,
-      color: "red"
-    },
-    {
-      text: "عندما تصبح الخوارزميات حدسًا عمليًا",
-      position: commentPosition,
-      color: "blue"
-    }
   ];
 
   const axesData = [
@@ -659,7 +752,7 @@ export default function App() {
             'md:max-w-7xl md:rounded-full ' +
             (isScrolled
               ? 'bg-white/25 backdrop-blur-2xl shadow-lg border-b md:border border-white/35 py-2'
-              : 'bg-white/15 md:bg-white/10 backdrop-blur-2xl border-b md:border border-white/25 py-3 md:py-4')
+              : 'bg-white/15 md:bg-transparent border-b md:border border-white/25 py-3 md:py-4')
           }`}
         >
           <div className="px-4 md:px-8 flex justify-between items-center h-14">
@@ -688,14 +781,6 @@ export default function App() {
 
             {/* Action Buttons */}
             <div className="hidden md:flex items-center gap-3">
-              <a
-                href="#ai-widget"
-                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 border border-white/20 font-sans refeai-pill"
-              >
-                <Sparkles className="w-4 h-4 text-yellow-300 fill-yellow-300 animate-pulse" />
-                <span className="refeai-brand">RefeAI</span>
-              </a>
-
               <button
                 onClick={handleRegister}
                 className="px-6 py-2.5 text-sm font-bold text-[#b11e22] bg-red-50 border border-red-100 rounded-full hover:bg-red-100 transition-colors font-sans"
@@ -733,166 +818,195 @@ export default function App() {
           </div>
         )}
       </nav>
-
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center pt-32 lg:pt-48 pb-16 overflow-hidden bg-grid-slate w-full" id="hero">
-        {/* Background Blobs */}
+      <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-24 overflow-hidden bg-grid-slate w-full">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#284e7f]/5 rounded-full blur-[100px]" />
           <div className="absolute top-[10%] right-[10%] w-[40%] h-[40%] bg-[#b11e22]/5 rounded-full blur-[100px]" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-            
-            {/* Right Column (Hero AI Widget - First in RTL) */}
-            <div className="relative order-1 lg:order-1 flex justify-center lg:justify-start">
-               <HeroAIWidget />
-            </div>
+          <div className="min-h-[calc(100svh-220px)] lg:min-h-[calc(100svh-260px)] flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center w-full">
+              {/* Left Text */}
+              <div className="order-2 lg:order-1 text-center flex flex-col items-center justify-center">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#284e7f] tracking-tight leading-[1.2] mb-6 animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans">
+  <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
+    تحديد الاحتياجات التدريبية
+  </span>
+  <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
+    باستخدام الذكاء الاصطناعي
+  </span>
 
-            {/* Left Column (Text Content - Second in RTL) */}
-            <div className="flex flex-col items-center text-center z-20 order-2 lg:order-2">
-              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 border border-blue-100 shadow-sm text-[#284e7f] text-sm font-bold mb-6 animate-in fade-in slide-in-from-bottom-3 font-sans" dir="ltr">
-                <Calendar className="w-4 h-4 text-[#b11e22]" />
-                <span>19 – 23 January, 2026</span>
-              </div>
+  {/* Special badge line */}
+  <span className="mt-4 inline-flex justify-center">
+    <span className="relative inline-flex p-[2px] rounded-full overflow-hidden">
+      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/60 to-transparent opacity-80 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+      <span className="relative inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/18 backdrop-blur-2xl border border-white/35 shadow-[0_18px_60px_rgba(0,0,0,0.12)]">
+        <span className="w-2 h-2 rounded-full bg-[#b11e22] shadow-[0_0_0_6px_rgba(177,30,34,0.12)]" />
+        <span className="text-xl md:text-2xl lg:text-3xl font-black tracking-tight text-slate-900">
+          AI Assessment Center
+        </span>
+      </span>
+    </span>
+  </span>
+</h1>
 
-              {/* Title - Smaller Size (1.5x smaller approx) */}
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-[#284e7f] tracking-tight leading-[1.4] mb-8 animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans">
-                <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
-                  تحديد الاحتياجات التدريبية
-                </span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-6">
-                  باستخدام الذكاء الاصطناعي
-                </span>
-                
-                <div className="relative inline-flex group mt-2">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#284e7f] to-[#b11e22] rounded-full blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-                  <div className="relative inline-flex items-center gap-3 px-6 py-2.5 bg-gradient-to-r from-[#284e7f] to-[#b11e22] rounded-full border border-white/20 shadow-2xl hover:scale-105 transition-transform duration-300">
-                     <div className="p-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/10">
-                        <Brain size={16} className="text-white" />
-                     </div>
-                     <span className="text-base md:text-lg font-bold tracking-wider text-white font-sans drop-shadow-md">
-                      AI Assessment Center
-                    </span>
+                <p className="text-lg md:text-xl text-gray-500 mb-6 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans font-bold">
+  تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك — يحتوي على شات بوت ذكي تماماً مثل الذي في الأعلى — يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
+</p>
+
+                {/* Focus line (primary hero emphasis) */}
+                <div className="mt-3 flex items-center justify-center animate-in fade-in slide-in-from-bottom-7 duration-700 delay-200">
+                  <div className="relative p-[2px] rounded-[2.25rem] overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/80 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
+                    <div className="relative px-6 py-4 md:px-8 md:py-5 rounded-[2.25rem] bg-white/70 backdrop-blur-2xl border border-white/70 shadow-[0_22px_70px_rgba(177,30,34,0.14)]">
+                      <span className="block text-[#b11e22] font-black text-xl md:text-2xl lg:text-[28px] leading-tight font-sans">
+                        هذا ليس خيالاً ، هـــذه ورشتنـــا الجديـــدة
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </h1>
 
-              {/* Paragraph */}
-              <p className="text-sm md:text-base text-gray-700 mb-8 max-w-xl leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans font-bold">
-                تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك — يحتوي على شات بوت ذكي تماماً مثل الذي في الأعلى — يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
-                <br className="hidden md:block" />
-                <span className="block mt-4 text-[#b11e22] font-black text-base md:text-lg bg-red-50/80 px-4 py-2 rounded-lg border border-red-100 shadow-sm inline-block transform hover:scale-105 transition-transform duration-300 cursor-default">
-                  هذا ليس خيالاً ، هـــذه ورشتنـــا الجديـــدة
-                </span>
-              </p>
+                {/* Date + Countdown (moved below buttons) */}
+                <div className="mt-7 flex flex-col items-center gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
+                  <div
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-lg font-bold font-sans"
+                    dir="ltr"
+                  >
+                    <Calendar className="w-5 h-5 text-[#b11e22]" />
+                    <span>19 – 23 January, 2026</span>
+                  </div>
 
-              <div className="w-full max-w-md flex justify-center">
-                 <CountdownTimer align="center" />
+                  <CountdownTimer />
+                </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 w-full sm:w-auto justify-center">
-                <Button variant="primary" icon={DownloadCloud} className="w-full sm:w-auto min-w-[200px] shadow-xl shadow-red-900/10">
-                  تحميل الكتيب
-                </Button>
-                <Button variant="outline" icon={FileSignature} onClick={handleRegister} className="w-full sm:w-auto min-w-[200px]">
-                  سجل الآن
-                </Button>
+                            {/* Right: RefeAI Chat (replaces hero image) */}
+              <div className="order-1 lg:order-2 flex items-center justify-center w-full">
+                <div id="ai-advisor" className="w-full flex items-center justify-center">
+                  <AIAdvisorSection compact />
+                </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* Trainers (glassy + mobile-perfect) */}
-      <section id="trainers" className="pt-8 pb-20 md:pt-12 md:pb-24 relative overflow-hidden w-full">
-        <div className="absolute inset-0 bg-[#f8fafc]">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
-          <div className="absolute -top-[15%] left-[5%] w-[55%] h-[55%] bg-[#284e7f]/8 rounded-full blur-[120px]" />
-          <div className="absolute top-[25%] -right-[10%] w-[45%] h-[45%] bg-[#b11e22]/8 rounded-full blur-[120px]" />
-        </div>
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <SectionHeading 
-            title="مدربونا ليسوا مجرد خبراء؛ هم صانعوا التحول" 
-            align="center" 
-            titleClasses="text-lg md:text-xl lg:text-2xl"
-            description="من الذكاء الاصطناعي إلى تحليل البيانات الضخمة، ومن استراتيجيات الأداء إلى مراكز التقييم المتقدمة، كل مدرب يجمع بين المعرفة العميقة والخبرة العملية ليضمن لك تجربة تدريبية ذكية، ملموسة، ومؤثرة!"
+      {/* Trainers */}
+      <section id="trainers" className="relative w-full pt-24 pb-28 md:pt-28 md:pb-32 bg-[#f8fafc]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            subtitle=""
+            align="center"
+            titleClassName="text-xl md:text-3xl lg:text-4xl"
+            title={
+              <>
+                مدربونا ليسوا مجرد خبراء؛{' '}
+                <span className="relative inline-block px-3 py-1.5 rounded-full bg-white/35 backdrop-blur-xl border border-white/55 text-transparent bg-clip-text bg-gradient-to-l from-[#b11e22] to-[#284e7f] font-black shadow-[0_18px_60px_rgba(177,30,34,0.12)] overflow-hidden">
+                  هم صانعوا التحول
+                  <span className="pointer-events-none absolute inset-x-2 -bottom-1 h-[3px] rounded-full overflow-hidden">
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/80 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
+                  </span>
+                </span>
+              </>
+            }
           />
 
-          {/* Wrapper for Stack + Floating Comments + Icons */}
-          <div className="relative w-full max-w-4xl mx-auto">
-             
-             {/* Card Stack Container */}
-             <div className="relative mx-auto w-full max-w-md h-[550px] md:h-[650px] flex justify-center items-center perspective-1000">
-                
-                {/* Dynamic Single Floating Comment - Synced with Loop using activeCommentIndex */}
-                <FloatingComment 
-                    key={activeCommentIndex} // Forces remount to restart animation on swap
-                    text={trainerComments[activeCommentIndex].text}
-                    className={trainerComments[activeCommentIndex].position}
-                    delay="0.3s" 
-                    duration="4.5s" // Fades out just before the 5s loop triggers
-                    color={trainerComments[activeCommentIndex].color}
-                />
+          <p className="mt-4 mb-10 text-center text-slate-700/90 font-sans font-bold text-[19px] sm:text-[20px] md:text-[21px] leading-relaxed max-w-3xl mx-auto">
+            من الذكاء الاصطناعي إلى تحليل البيانات الضخمة، ومن استراتيجيات الأداء إلى مراكز التقييم المتقدمة، كل مدرب يجمع بين المعرفة العميقة والخبرة العملية ليضمن لك تجربة تدريبية ذكية، ملموسة، ومؤثرة!
+          </p>
 
-                {trainers.map((trainer, index) => {
-                    // Determine position in stack relative to active index
-                    // 0 = active, 1 = next, 2 = last
-                    const position = (index - activeTrainerIndex + trainers.length) % trainers.length;
-                    
-                    let zIndex = 0;
-                    let transformClass = '';
-                    let opacityClass = '';
-
-                    if (position === 0) {
-                        // Active Card (Front)
-                        zIndex = 30;
-                        transformClass = 'scale-100 translate-y-0';
-                        opacityClass = 'opacity-100';
-                    } else if (position === 1) {
-                        // Next Card (Behind 1)
-                        zIndex = 20;
-                        transformClass = 'scale-95 translate-y-4 md:translate-y-6 blur-[1px]';
-                        opacityClass = 'opacity-60 grayscale-[0.5]';
-                    } else {
-                        // Last Card (Behind 2 - Hidden/Fading)
-                        zIndex = 10;
-                        transformClass = 'scale-90 translate-y-8 md:translate-y-12 blur-[2px]';
-                        opacityClass = 'opacity-0'; // Hide the 3rd one to keep it clean or use low opacity
-                    }
-
-                    return (
-                        <div
-                          key={index}
-                          className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out origin-bottom ${transformClass} ${opacityClass}`}
-                          style={{ zIndex }}
-                        >
-                          <TrainerCard {...trainer} isActive={position === 0} />
-                        </div>
-                    );
-                })}
-
-                {/* Navigation Dots */}
-                <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 z-40">
-                    <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/40 backdrop-blur-md border border-white/50 shadow-sm">
-                      {trainers.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setActiveTrainerIndex(idx)}
-                          className={`transition-all duration-300 rounded-full h-2.5 ${
-                            idx === activeTrainerIndex 
-                                ? 'w-8 bg-[#b11e22] shadow-[0_0_10px_rgba(177,30,34,0.5)]' 
-                                : 'w-2.5 bg-white hover:bg-slate-200'
-                          }`}
-                          aria-label={`Trainer slide ${idx + 1}`}
-                        />
-                      ))}
-                    </div>
+          <div className="mx-auto w-full max-w-xl sm:max-w-2xl">
+            {/* Comment (synced with slide) */}
+            <div className="mb-4 sm:mb-5">
+              <div className="relative p-[2px] rounded-2xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/70 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
+                <div
+                  key={trainerCommentIndex}
+                  className="relative bg-white/80 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.10)] px-4 py-3 animate-comment-in"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <Quote className="w-4 h-4 text-slate-900/70" />
+                    <p
+                      dir="rtl"
+                      className="text-slate-900 font-extrabold text-[12px] sm:text-[13px] font-sans leading-snug text-center"
+                    >
+                      {TRAINER_COMMENTS[trainerCommentIndex % TRAINER_COMMENTS.length]}
+                    </p>
+                  </div>
                 </div>
-             </div>
+              </div>
+            </div>
+
+            {/* Main trainer card */}
+            <div className="bg-white rounded-[2.5rem] sm:rounded-[3rem] border border-slate-900/10 shadow-[0_22px_70px_rgba(0,0,0,0.12)] overflow-hidden">
+              {/* Photo */}
+              <div className="relative bg-white">
+                {(() => {
+                  const t = trainers[activeTrainerIndex];
+                  const primarySrc = `https://lh3.googleusercontent.com/d/${t.imageId}=w1600`;
+                  const fallbackSrc = `https://drive.google.com/thumbnail?id=${t.imageId}&sz=w1600`;
+
+                  return (
+                    <div className="relative h-[520px] sm:h-[660px] lg:h-[720px]">
+                      <img
+                        src={primarySrc}
+                        alt={t.name}
+                        className="h-full w-full object-cover object-top bg-white"
+                        loading="lazy"
+                        onError={(e) => {
+                          if (e.currentTarget.getAttribute('data-fallback') === '1') return;
+                          e.currentTarget.setAttribute('data-fallback', '1');
+                          e.currentTarget.src = fallbackSrc;
+                        }}
+                      />
+
+                      {/* Subtle frame (no overlay that covers the photo) */}
+                      <div className="pointer-events-none absolute inset-3 rounded-[2rem] sm:rounded-[2.25rem] border border-slate-900/10" />
+
+                      {/* Soft blend into details */}
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-white" />
+                    </div>
+                  );
+                })()}
+              </div>
+
+              {/* Details */}
+              <div className="px-5 sm:px-7 py-5">
+                <div className="text-center">
+                  <div className="text-slate-900 font-extrabold text-[20px] sm:text-[22px] leading-tight font-sans">
+                    {trainers[activeTrainerIndex].name}
+                  </div>
+
+                  <div className="mt-2 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-[1.25rem] bg-slate-900/5 border border-slate-900/10">
+                    <Users className="w-4 h-4 text-[#284e7f]" />
+                    <span className="text-slate-900/90 font-extrabold text-[12px] sm:text-[13px] font-sans">
+                      {trainers[activeTrainerIndex].title}
+                    </span>
+                  </div>
+
+                  <p className="mt-4 text-slate-800/95 text-[12px] sm:text-[13px] leading-relaxed font-sans font-medium">
+                    {trainers[activeTrainerIndex].bio}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Dots */}
+            <div className="flex justify-center gap-2 mt-5">
+              {trainers.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setActiveTrainerIndex(idx);
+                    setTrainerCommentIndex(idx % TRAINER_COMMENTS.length);
+                  }}
+                  className={`h-2 rounded-full ${idx === activeTrainerIndex ? 'w-8 bg-[#b11e22]' : 'w-2 bg-slate-900/15'}`}
+                  aria-label={`Trainer ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -915,7 +1029,10 @@ export default function App() {
       <section id="about" className="py-24 bg-white relative w-full overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[3rem] p-6 md:p-10 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
-            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')] mix-blend-overlay" />
+            <div
+              className="absolute inset-0 opacity-20 mix-blend-overlay"
+              style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/grid-noise.png')" }}
+            />
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#b11e22]/20 rounded-full blur-[100px]" />
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2" />
 
@@ -971,10 +1088,13 @@ export default function App() {
         </div>
       </section>
 
-      {/* Pillars */}
+            {/* Pillars */}
       <section className="py-24 bg-slate-50 relative overflow-hidden w-full">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')" }}
+          />
           <div className="absolute -top-[20%] left-[5%] w-[55%] h-[55%] bg-[#284e7f]/8 rounded-full blur-[120px]" />
           <div className="absolute top-[30%] -right-[10%] w-[45%] h-[45%] bg-[#b11e22]/8 rounded-full blur-[120px]" />
         </div>
@@ -995,7 +1115,10 @@ export default function App() {
       <section className="py-12 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#284e7f] rounded-[3rem] relative overflow-hidden p-8 md:p-16 shadow-2xl shadow-blue-900/20 flex flex-col items-center justify-center text-center">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
+            <div
+            className="absolute inset-0 opacity-5"
+            style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')" }}
+          />
             <div className="relative z-10 w-full max-w-3xl flex flex-col gap-8">
               <div className="flex flex-col items-center">
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight font-sans">
