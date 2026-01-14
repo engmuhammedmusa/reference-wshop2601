@@ -155,8 +155,65 @@ const GlobalStyles = () => (
       /* keep exact casing: RefeAI */
       text-shadow: 0 10px 30px rgba(0,0,0,0.18);
     }
-    .refeai-pill {
-      box-shadow: 0 16px 48px rgba(99,102,241,0.18);
+    /* Hero: AI Assessment Center explosive hover */
+    .hover-container {
+      display: inline-block;
+      position: relative;
+      overflow: visible;
+    }
+
+    .explosive-text {
+      color: #b11e22;
+      text-decoration-line: underline;
+      text-decoration-color: #b11e22;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 10px;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 280ms ease-out;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height: 1.1;
+    }
+
+    .explosive-text:hover { transform: scale(1.08); }
+
+    .explosive-text:hover::before,
+    .explosive-text:hover::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 260%;
+      height: 260%;
+      border-radius: 9999px;
+      transform: translate(-50%, -50%) scale(0);
+      animation: burst 0.8s ease-out forwards;
+      pointer-events: none;
+    }
+
+    .explosive-text:hover::before {
+      background: radial-gradient(circle, rgba(177, 30, 34, 0.45), transparent 70%);
+      z-index: -1;
+    }
+
+    .explosive-text:hover::after {
+      background: radial-gradient(circle, rgba(40, 78, 127, 0.40), transparent 70%);
+      z-index: -2;
+      animation-delay: 0.1s;
+    }
+
+    @keyframes burst {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+      50% { opacity: 0.75; }
+      100% { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
+    }
+
+    @media (min-width: 768px) {
+      .explosive-text { font-size: clamp(26px, 2.8vw, 40px); }
     }
 
       `}</style>
@@ -371,12 +428,12 @@ const CountdownTimer = () => {
   const GlassUnit = ({ value, label }) => (
     <div className="group relative">
       <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-[2rem] blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
-      <div className="relative w-16 h-20 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-[#b11e22]/35 rounded-2xl md:rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
+      <div className="relative w-16 h-20 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl rounded-2xl md:rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
         <div className="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
           {String(value).padStart(2, '0')}
         </div>
-        <div className="text-[9px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest font-sans">{label}</div>
-        <div className="absolute top-0 left-0 w-full h-full rounded-[2rem] pointer-events-none ring-1 ring-[#b11e22]/20 bg-gradient-to-br from-white/30 to-transparent" />
+        <div className="text-[9px] md:text-xs font-semibold text-[#b11e22] uppercase tracking-widest font-sans">{label}</div>
+        <div className="absolute top-0 left-0 w-full h-full rounded-[2rem] pointer-events-none bg-gradient-to-br from-white/30 to-transparent" />
       </div>
     </div>
   );
@@ -466,15 +523,13 @@ const AIAdvisorSection = ({ compact = false }) => {
           <div className="absolute inset-[2px] bg-white/20 rounded-[2.75rem] backdrop-blur-2xl border border-white/35" />
 
           <div className="relative bg-white/65 backdrop-blur-2xl rounded-[2.75rem] p-4 sm:p-6 shadow-[0_22px_70px_rgba(0,0,0,0.10)]">
-            <div className="flex items-center justify-between gap-3 mb-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/70 border border-white/60 rounded-full shadow-sm">
+            <div className="flex flex-col items-center justify-center text-center gap-3 mb-4">
+              <div className="flex items-center justify-center gap-2 px-5 py-2 bg-white/70 border border-white/60 rounded-full shadow-sm">
                 <Sparkles className="w-4 h-4 text-yellow-500 fill-yellow-500 animate-pulse" />
-                <span className="text-xs text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans refeai-brand">
-                  RefeAI BETA
+                <span className="inline-flex items-baseline gap-2 text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans">
+                  <span className="refeai-brand text-base sm:text-lg">RefeAI</span>
+                  <span className="text-[10px] sm:text-xs font-extrabold">BETA</span>
                 </span>
-              </div>
-              <div className="text-[#284e7f] font-extrabold text-sm sm:text-base font-sans">
-                مستشار التدريب الذكي
               </div>
             </div>
 
@@ -838,16 +893,10 @@ export default function App() {
     باستخدام الذكاء الاصطناعي
   </span>
 
-  {/* Special badge line */}
-  <span className="mt-4 inline-flex justify-center">
-    <span className="relative inline-flex p-[2px] rounded-full overflow-hidden">
-      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/60 to-transparent opacity-80 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
-      <span className="relative inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/18 backdrop-blur-2xl border border-white/35 shadow-[0_18px_60px_rgba(0,0,0,0.12)]">
-        <span className="w-2 h-2 rounded-full bg-[#b11e22] shadow-[0_0_0_6px_rgba(177,30,34,0.12)]" />
-        <span className="text-xl md:text-2xl lg:text-3xl font-black tracking-tight text-slate-900">
-          AI Assessment Center
-        </span>
-      </span>
+  {/* Special line (explosive hover) */}
+  <span className="mt-5 inline-flex justify-center">
+    <span className="hover-container">
+      <span className="explosive-text" dir="ltr">AI Assessment Center</span>
     </span>
   </span>
 </h1>
