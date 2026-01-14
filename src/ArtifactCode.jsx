@@ -163,6 +163,7 @@ const GlobalStyles = () => (
     }
 
     .explosive-text {
+      font-weight: 900;
       color: #b11e22;
       text-decoration-line: underline;
       text-decoration-color: #b11e22;
@@ -541,7 +542,7 @@ const AIAdvisorSection = ({ compact = false }) => {
                 <textarea
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="مثال: نحتاج طريقة أدق لربط التدريب بمؤشرات الأداء..."
+                  placeholder="مثال: نحتاج طريقة أدق لربط التدريب بمؤشرات الأداء الخاصة بالموظف محمد سالم.."
                   className="w-full bg-white/70 border border-slate-900/10 rounded-[1.75rem] p-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#284e7f]/15 focus:border-[#284e7f]/30 outline-none min-h-[140px] resize-none text-right transition-all font-sans text-sm font-bold"
                   dir="rtl"
                 />
@@ -884,54 +885,56 @@ export default function App() {
           <div className="min-h-[calc(100svh-220px)] lg:min-h-[calc(100svh-260px)] flex items-center">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center w-full">
               {/* Left Text */}
-              <div className="order-2 lg:order-1 text-center flex flex-col items-center justify-center">
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#284e7f] tracking-tight leading-[1.2] mb-6 animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans">
-  <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
-    تحديد الاحتياجات التدريبية
-  </span>
-  <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
-    باستخدام الذكاء الاصطناعي
-  </span>
+              <div className="order-2 lg:order-1 w-full flex items-center justify-center">
+                <div className="w-full max-w-2xl mx-auto lg:mx-0 text-center flex flex-col items-center justify-center space-y-6 md:space-y-7 lg:space-y-8">
+                  {/* 1) Paragraph + Focus line */}
+                  <div className="w-full flex flex-col items-center space-y-4 md:space-y-5">
+                    <p className="text-lg md:text-xl text-gray-500 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 font-sans font-bold">
+                      تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك — يحتوي على شات بوت ذكي تماماً مثل الذي في الأعلى — يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
+                    </p>
 
-  {/* Special line (explosive hover) */}
-  <span className="mt-5 inline-flex justify-center">
-    <span className="hover-container">
-      <span className="explosive-text" dir="ltr">AI Assessment Center</span>
-    </span>
-  </span>
-</h1>
+                    <div className="flex items-center justify-center animate-in fade-in slide-in-from-bottom-7 duration-700 delay-100">
+                      <div className="relative p-[2px] rounded-[2.25rem] overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/80 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
+                        <div className="relative px-6 py-4 md:px-8 md:py-5 rounded-[2.25rem] bg-white/70 backdrop-blur-2xl border border-white/70 shadow-[0_22px_70px_rgba(177,30,34,0.14)]">
+                          <span className="block text-[#b11e22] font-black text-xl md:text-2xl lg:text-[28px] leading-tight font-sans">
+                            هذا ليس خيالاً ، هـــهذه ورشتنـــا الجديـــدة
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                <p className="text-lg md:text-xl text-gray-500 mb-6 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans font-bold">
-  تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك — يحتوي على شات بوت ذكي تماماً مثل الذي في الأعلى — يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
-</p>
+                  {/* 2) Title + AI Assessment Center */}
+                  <div className="w-full flex flex-col items-center space-y-4 md:space-y-5 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-200">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#284e7f] tracking-tight leading-[1.2] font-sans">
+                      <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">تحديد الاحتياجات التدريبية</span>
+                      <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">باستخدام الذكاء الاصطناعي</span>
+                    </h1>
 
-                {/* Focus line (primary hero emphasis) */}
-                <div className="mt-3 flex items-center justify-center animate-in fade-in slide-in-from-bottom-7 duration-700 delay-200">
-                  <div className="relative p-[2px] rounded-[2.25rem] overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/80 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
-                    <div className="relative px-6 py-4 md:px-8 md:py-5 rounded-[2.25rem] bg-white/70 backdrop-blur-2xl border border-white/70 shadow-[0_22px_70px_rgba(177,30,34,0.14)]">
-                      <span className="block text-[#b11e22] font-black text-xl md:text-2xl lg:text-[28px] leading-tight font-sans">
-                        هذا ليس خيالاً ، هـــذه ورشتنـــا الجديـــدة
+                    <div className="inline-flex justify-center">
+                      <span className="hover-container">
+                        <span className="explosive-text" dir="ltr">AI Assessment Center</span>
                       </span>
                     </div>
                   </div>
-                </div>
 
-                {/* Date + Countdown (moved below buttons) */}
-                <div className="mt-7 flex flex-col items-center gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
-                  <div
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-lg font-bold font-sans"
-                    dir="ltr"
-                  >
-                    <Calendar className="w-5 h-5 text-[#b11e22]" />
-                    <span>19 – 23 January, 2026</span>
+                  {/* 3) Date */}
+                  <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
+                    <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-lg font-bold font-sans" dir="ltr">
+                      <Calendar className="w-5 h-5 text-[#b11e22]" />
+                      <span>19 – 23 January, 2026</span>
+                    </div>
                   </div>
 
-                  <CountdownTimer />
+                  {/* 4) Time counter */}
+                  <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
+                    <CountdownTimer />
+                  </div>
                 </div>
               </div>
 
-                            {/* Right: RefeAI Chat (replaces hero image) */}
+              {/* Right: RefeAI Chat (replaces hero image) */}
               <div className="order-1 lg:order-2 flex items-center justify-center w-full">
                 <div id="ai-advisor" className="w-full flex items-center justify-center">
                   <AIAdvisorSection compact />
