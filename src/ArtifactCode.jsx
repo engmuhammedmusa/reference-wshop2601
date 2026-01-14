@@ -149,15 +149,19 @@ const SectionHeading = ({ subtitle, title, align = 'center' }) => (
 );
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
-  <div className="relative group p-6 md:p-7 rounded-[2rem] md:rounded-[2.5rem] bg-white/25 backdrop-blur-2xl border border-white/45 shadow-[0_18px_60px_rgba(0,0,0,0.06)] hover:shadow-[0_22px_70px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
-    <div className="flex items-center gap-4 mb-4">
-      <div className="h-12 w-12 rounded-[1.25rem] bg-white/22 border border-white/35 flex items-center justify-center shadow-sm">
+  <div className="relative group p-6 md:p-7 rounded-[2rem] md:rounded-[2.5rem] bg-white/25 backdrop-blur-2xl border border-white/45 shadow-[0_18px_60px_rgba(0,0,0,0.06)] hover:shadow-[0_22px_70px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 h-full flex flex-col items-center text-center md:items-start md:text-right">
+    <div className="flex items-center gap-4 mb-4 w-full max-w-[22rem] mx-auto justify-center md:max-w-none md:mx-0 md:justify-start">
+      <div className="h-12 w-12 rounded-[1.25rem] bg-white/22 border border-white/35 flex items-center justify-center shadow-sm shrink-0">
         <Icon className="h-6 w-6 text-[#284e7f]" />
       </div>
-      <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] leading-snug font-sans">{title}</h3>
+      <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] leading-snug font-sans">
+        {title}
+      </h3>
     </div>
 
-    <p className="text-gray-700/90 leading-relaxed font-sans font-bold text-sm md:text-[15px]">{description}</p>
+    <p className="w-full max-w-[22rem] mx-auto text-gray-700/90 leading-relaxed font-sans font-bold text-sm md:text-[15px] md:max-w-none md:mx-0">
+      {description}
+    </p>
 
     <div className="pointer-events-none absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] ring-1 ring-white/30" />
   </div>
@@ -449,15 +453,17 @@ const AIAdvisorSection = () => {
                       className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-4 md:p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[150px] md:min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-sm md:text-base font-medium"
                       dir="rtl"
                     />
-                    <div className="flex justify-end">
+                    <div className="w-full">
                       <Button
                         variant="ai"
                         onClick={handleAnalyze}
                         disabled={loading || !query.trim()}
-                        className="!py-3 !px-8 !text-base flex items-center gap-3 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
+                        className="w-full !py-4 !px-6 !text-base rounded-[1.5rem] shadow-lg hover:shadow-xl active:scale-[0.99] transition-all justify-center"
                       >
-                        {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
-                        {loading ? 'جاري التحليل...' : 'تحليل الآن'}
+                        <span className="inline-flex items-center gap-2">
+                          {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
+                          <span>{loading ? 'جاري التحليل...' : 'تحليل الآن'}</span>
+                        </span>
                       </Button>
                     </div>
                     {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
