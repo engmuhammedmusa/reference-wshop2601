@@ -221,7 +221,7 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
             <div className="px-4 py-3 rounded-2xl bg-gradient-to-b from-white/30 to-white/14 backdrop-blur-2xl border border-white/40 shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="text-white font-extrabold text-[19px] leading-tight truncate font-sans drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
+                  <div className="text-slate-900 font-extrabold text-[19px] leading-tight truncate font-sans">
                     {name}
                   </div>
                   <div className="text-white/90 font-bold text-xs mt-1 truncate font-sans drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
