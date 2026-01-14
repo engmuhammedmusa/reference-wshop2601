@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+
+// Keep trainer slide + comment timing perfectly in sync
+const TRAINER_SLIDE_MS = 5000;
 import {
   Menu,
   X,
@@ -32,10 +35,6 @@ import {
   Lightbulb,
   FileSignature,
   DownloadCloud,
-  Cpu,
-  Network,
-  Binary,
-  CircuitBoard,
 } from 'lucide-react';
 
 // --- Fonts & Global Styles ---
@@ -91,27 +90,13 @@ const GlobalStyles = () => (
     }
     .animate-rotate-border { animation: rotate-border 4s linear infinite; }
 
-    @keyframes shimmer-border {
-      0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 5px rgba(255,255,255,0.1); }
-      50% { border-color: rgba(255, 255, 255, 0.6); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-      100% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 5px rgba(255,255,255,0.1); }
+    @keyframes float-y {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
-    .animate-shimmer-border { animation: shimmer-border 3s infinite; }
-
-    @keyframes float-in-out {
-      0% { opacity: 0; transform: translateY(20px) scale(0.9); }
-      10% { opacity: 1; transform: translateY(0) scale(1); }
-      90% { opacity: 1; transform: translateY(-10px) scale(1); }
-      100% { opacity: 0; transform: translateY(-30px) scale(0.9); }
-    }
-    .animate-float-in-out { animation: float-in-out 8s ease-in-out infinite; }
-
-    @keyframes float-continuous {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(3deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
-    }
-    .animate-float-continuous { animation: float-continuous 6s ease-in-out infinite; }
+    .float-slow { animation: float-y 7.5s ease-in-out infinite; }
+    .float-med { animation: float-y 6s ease-in-out infinite; animation-delay: 0.6s; }
+    .float-fast { animation: float-y 4.8s ease-in-out infinite; animation-delay: 1.1s; }
 
     /* RefeAI brand treatment */
     .refeai-brand {
@@ -123,8 +108,10 @@ const GlobalStyles = () => (
     .refeai-pill {
       box-shadow: 0 16px 48px rgba(99,102,241,0.18);
     }
-  `}</style>
+
+      `}</style>
 );
+
 
 // --- Components ---
 const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...props }) => {
@@ -163,19 +150,14 @@ const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...
   );
 };
 
-const SectionHeading = ({ subtitle, title, description, align = 'center', titleClasses }) => (
+const SectionHeading = ({ subtitle, title, align = 'center' }) => (
   <div className={`mb-12 md:mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto px-4`}>
     {subtitle && (
       <span className="inline-block py-2 px-5 rounded-[1.5rem] bg-[#284e7f]/5 text-[#284e7f] text-sm font-bold tracking-wider mb-4 border border-[#284e7f]/10 font-sans">
         {subtitle}
       </span>
     )}
-    <h2 className={`${titleClasses || 'text-2xl md:text-4xl lg:text-5xl'} font-extrabold text-[#284e7f] leading-tight font-sans ${description ? 'mb-6' : ''}`}>{title}</h2>
-    {description && (
-      <p className="text-base md:text-lg text-gray-600 leading-relaxed font-sans font-medium max-w-3xl mx-auto">
-        {description}
-      </p>
-    )}
+    <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#284e7f] leading-tight font-sans">{title}</h2>
   </div>
 );
 
@@ -223,76 +205,86 @@ const AxisCard = ({ number, title, description, icon: Icon }) => (
   </div>
 );
 
-/* Glassy, mobile-perfect Trainer Card */
-const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
-  <div className="relative h-full w-full rounded-[2.5rem] p-2 bg-white/60 backdrop-blur-sm border border-white/50 shadow-2xl group isolate transition-all duration-300">
-    
-    {/* Inner Card Content - White Background */}
-    <div className="relative h-full w-full bg-white rounded-[2.2rem] overflow-hidden shadow-inner">
-        {/* Full Background Image - Clear, no dark overlay */}
-        <img
-            src={`https://drive.google.com/thumbnail?id=${imageId}&sz=w1400`}
-            className={`absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[20s] ease-linear ${isActive ? 'scale-110' : 'scale-100'}`}
-            alt={name}
-        />
-        
-        {/* Transparent Info Box with Glassy Animated Border - Light for Contrast against Photo */}
-        <div className="absolute bottom-4 left-4 right-4 p-5 rounded-3xl bg-white/90 backdrop-blur-xl border border-white/40 animate-shimmer-border flex flex-col items-start text-right z-20 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-slate-100/80 border border-slate-200 text-[10px] md:text-xs font-bold text-[#284e7f] shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#b11e22] animate-pulse"></span>
-                مدرب خبير
-            </div>
-            
-            <h3 className="text-xl md:text-2xl font-extrabold text-[#1e293b] font-sans mb-1">
-                {name}
-            </h3>
-            <p className="text-[#b11e22] font-bold text-xs md:text-sm mb-3 font-sans tracking-wide">
-                {title}
-            </p>
-            
-            <div className="w-full h-px bg-slate-200 mb-3" />
-            
-            <p className="text-slate-600 text-xs md:text-sm leading-relaxed line-clamp-3 font-sans font-medium">
-                {bio}
-            </p>
-        </div>
-    </div>
-  </div>
-);
+/* Trainers: Tinder-style deck */
+const TrainerCard = ({ name, title, bio, imageId, isActive, deckPos = 0 }) => {
+  const deckTransforms = [
+    'translate-y-0 scale-100 rotate-0 opacity-100',
+    'translate-y-4 scale-[0.97] -rotate-[1deg] opacity-90',
+    'translate-y-8 scale-[0.94] rotate-[1deg] opacity-75',
+  ];
 
-const FloatingComment = ({ text, className, delay = '0s', duration = '8s', color = 'blue' }) => {
-  const shadowColor = color === 'red' ? 'rgba(177, 30, 34, 0.4)' : 'rgba(40, 78, 127, 0.4)';
-  const borderColor = color === 'red' ? 'rgba(177, 30, 34, 0.3)' : 'rgba(40, 78, 127, 0.3)';
-  const textColor = color === 'red' ? 'text-[#b11e22]' : 'text-[#284e7f]';
-  
+  const posClass = deckTransforms[Math.min(deckPos, deckTransforms.length - 1)];
+
   return (
-    <div 
-      className={`absolute z-50 pointer-events-none hidden lg:flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/80 backdrop-blur-md border shadow-lg animate-float-in-out ${className}`}
-      style={{ 
-        animationDelay: delay,
-        animationDuration: duration,
-        borderColor: borderColor,
-        boxShadow: `0 8px 32px ${shadowColor}`
-      }}
+    <div
+      className={`relative h-full w-full rounded-[2.75rem] md:rounded-[3.25rem] transition-all duration-700 ease-out ${posClass} ${
+        isActive ? '' : 'pointer-events-none'
+      }`}
     >
-      <div className={`w-2 h-2 rounded-full animate-pulse ${color === 'red' ? 'bg-[#b11e22]' : 'bg-[#284e7f]'}`} />
-      <p className={`text-xs md:text-sm font-bold font-sans whitespace-nowrap ${textColor}`}>{text}</p>
+      {/* Glassy animated border (outside only) */}
+      <div className="absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] p-[2px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#284e7f]/40 to-transparent opacity-70 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+        <div className="absolute inset-[2px] rounded-[2.75rem] md:rounded-[3.25rem] bg-white" />
+      </div>
+
+      {/* Card body */}
+      <div className="relative h-full rounded-[2.75rem] md:rounded-[3.25rem] overflow-hidden bg-white shadow-[0_22px_70px_rgba(0,0,0,0.14)]">
+        {/* Photo (full, vertical, no overlay) */}
+        <div className="relative h-full w-full bg-white">
+          <img
+            src={`https://drive.google.com/thumbnail?id=${imageId}&sz=w1400`}
+            alt={name}
+            className="w-full h-full object-contain object-center bg-white"
+            loading="lazy"
+          />
+
+          {/* Photo border (keeps photo fully visible) */}
+          <div className="pointer-events-none absolute inset-3 rounded-[2.25rem] sm:rounded-[2.5rem] border border-slate-900/10 ring-1 ring-white/40" />
+
+          {/* Info box (centered + dark text, glass border animation only) */}
+          <div className="absolute inset-x-4 sm:inset-x-6 bottom-4 sm:bottom-6">
+            <div className="relative p-[2px] rounded-[1.75rem] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/55 to-transparent opacity-70 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+              <div className="relative rounded-[1.75rem] bg-white/55 backdrop-blur-2xl border border-white/20 px-5 py-4 sm:px-6 sm:py-5">
+                <div className="flex flex-col items-center justify-center text-center gap-2">
+                  <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-white/70 border border-slate-900/10 text-slate-900/80 text-[11px] font-extrabold font-sans">
+                    مدرب خبير
+                  </span>
+
+                  <div className="text-slate-900 font-extrabold text-[18px] sm:text-[20px] leading-tight font-sans">
+                    {name}
+                  </div>
+
+                  <div className="text-slate-700/90 font-bold text-xs sm:text-sm font-sans leading-relaxed">
+                    {title}
+                  </div>
+
+                  <div className="pt-1 text-slate-700/90 text-[12px] sm:text-sm leading-relaxed font-sans font-medium line-clamp-3">
+                    {bio}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Subtle inner stroke (keeps photo crisp, no overlay) */}
+          <div className="pointer-events-none absolute inset-0 ring-1 ring-slate-900/5" />
+        </div>
+      </div>
+
+      {/* Active card lift */}
+      <div
+        className={`pointer-events-none absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] transition-opacity duration-700 ${
+          isActive ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        <div className="absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] ring-1 ring-white/25" />
+      </div>
     </div>
   );
 };
 
-const FloatingIcon = ({ icon: Icon, className, delay = '0s', duration = '6s', size = 24, color = 'text-[#284e7f]' }) => (
-  <div
-    className={`absolute z-0 pointer-events-none opacity-60 animate-float-continuous ${className}`}
-    style={{ animationDelay: delay, animationDuration: duration }}
-  >
-    <div className={`p-3 rounded-2xl bg-white/30 backdrop-blur-md border border-white/40 shadow-xl ${color}`}>
-        <Icon size={size} strokeWidth={1.5} />
-    </div>
-  </div>
-);
-
-const CountdownTimer = ({ align = 'center' }) => {
+const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -317,18 +309,18 @@ const CountdownTimer = ({ align = 'center' }) => {
   const GlassUnit = ({ value, label }) => (
     <div className="group relative">
       <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-[2rem] blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
-      <div className="relative w-16 h-20 md:w-20 md:h-24 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-white/40 rounded-2xl md:rounded-[1.5rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
-        <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
+      <div className="relative w-16 h-20 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl border border-white/40 rounded-2xl md:rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
+        <div className="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
           {String(value).padStart(2, '0')}
         </div>
-        <div className="text-[9px] md:text-[10px] font-semibold text-gray-500 uppercase tracking-widest font-sans">{label}</div>
+        <div className="text-[9px] md:text-xs font-semibold text-gray-500 uppercase tracking-widest font-sans">{label}</div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent rounded-[2rem] pointer-events-none" />
       </div>
     </div>
   );
 
   return (
-    <div className={`flex gap-2 md:gap-3 mb-8 md:mb-10 animate-in fade-in slide-in-from-bottom-6 duration-1000 ${align === 'center' ? 'justify-center' : 'justify-start'}`} dir="ltr">
+    <div className="flex gap-2 md:gap-4 justify-center mb-8 md:mb-10 animate-in fade-in slide-in-from-bottom-6 duration-1000" dir="ltr">
       <GlassUnit value={timeLeft.days} label="Days" />
       <GlassUnit value={timeLeft.hours} label="Hours" />
       <GlassUnit value={timeLeft.minutes} label="Mins" />
@@ -505,8 +497,6 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTrainerIndex, setActiveTrainerIndex] = useState(0);
-  // New state to cycle through the larger list of comments independently
-  const [activeCommentIndex, setActiveCommentIndex] = useState(0); 
   const [activeAudienceIndex, setActiveAudienceIndex] = useState(0);
 
   const registerUrl = 'https://forms.cloud.microsoft/r/FPLwbAsYyU';
@@ -518,13 +508,16 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Trainer & Comment Carousel Loop (5s)
+  // Page title (matches hero)
+  useEffect(() => {
+    document.title = 'AI Assessment Center | RefeAI';
+  }, []);
+
+  // Trainer Carousel Loop (synced with floating comment)
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveTrainerIndex((prev) => (prev + 1) % 3);
-      // Cycle through the 7 comments
-      setActiveCommentIndex((prev) => (prev + 1) % 7);
-    }, 5000);
+    }, TRAINER_SLIDE_MS);
     return () => clearInterval(interval);
   }, []);
 
@@ -571,44 +564,6 @@ export default function App() {
       imageId: '12r7lppBDqCAX5oFBldy-7O77uREbwMVr',
       bio: 'دكتوراه في الإدارة العامة وتطوير المنظمات، وماجستير إدارة أعمال في علم النفس الإداري. استشاري جودة معتمد ومدرب دولي.',
     },
-  ];
-
-  const trainerComments = [
-    {
-      text: "التدريب المؤثر لا يغير طريقة عملك، بل يغير طريقة تفكيرك",
-      position: "-bottom-8 -right-12 rotate-1",
-      color: "blue"
-    },
-    {
-      text: "نحن لا نقدم أدوات فقط، بل نُعرِّف مسارات",
-      position: "-bottom-8 -right-12 rotate-1",
-      color: "red"
-    },
-    {
-      text: "لا يوجد عظمة بدون قياس دقيق، ولا تطور بدون تقييم ذكي",
-      position: "-bottom-8 -right-12 rotate-1",
-      color: "blue"
-    },
-    {
-      text: "لا تخف من القياس، ففيه بداية كل تحسن حقيقي",
-      position: "-bottom-8 -right-12 rotate-1",
-      color: "red"
-    },
-    {
-      text: "نتائج لا تخمن.. تُقاس",
-      position: "-bottom-8 -right-12 rotate-1",
-      color: "blue"
-    },
-    {
-      text: "نحن لا نترجم البيانات فحسب، بل نفسر لغة النجاح",
-      position: "-bottom-8 -right-12 rotate-1",
-      color: "red"
-    },
-    {
-      text: "عندما تصبح الخوارزميات حدسًا عمليًا",
-      position: "-bottom-8 -right-12 rotate-1",
-      color: "blue"
-    }
   ];
 
   const axesData = [
@@ -736,116 +691,139 @@ export default function App() {
           </div>
         )}
       </nav>
-
       {/* Hero */}
-      <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-grid-slate w-full">
-        {/* Background Blobs */}
+      <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-24 overflow-hidden bg-grid-slate w-full">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#284e7f]/5 rounded-full blur-[100px]" />
           <div className="absolute top-[10%] right-[10%] w-[40%] h-[40%] bg-[#b11e22]/5 rounded-full blur-[100px]" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-            
-            {/* Left Column (Text Content - visually Right in RTL) */}
-            <div className="flex flex-col items-center text-center z-20 order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 border border-blue-100 shadow-sm text-[#284e7f] text-sm font-bold mb-6 animate-in fade-in slide-in-from-bottom-3 font-sans" dir="ltr">
-                <Calendar className="w-4 h-4 text-[#b11e22]" />
-                <span>19 – 23 January, 2026</span>
+          <div className="min-h-[calc(100svh-220px)] lg:min-h-[calc(100svh-260px)] flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center w-full">
+              {/* Left Text */}
+              <div className="order-2 lg:order-1 text-center flex flex-col items-center justify-center">
+                <div
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-lg font-bold mb-6 animate-in fade-in slide-in-from-bottom-3 font-sans"
+                  dir="ltr"
+                >
+                  <Calendar className="w-5 h-5 text-[#b11e22]" />
+                  <span>19 – 23 January, 2026</span>
+                </div>
+
+                <div className="flex justify-center mb-6">
+                  <CountdownTimer />
+                </div>
+
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#284e7f] tracking-tight leading-[1.2] mb-6 animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans">
+  <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
+    تحديد الاحتياجات التدريبية
+  </span>
+  <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
+    باستخدام الذكاء الاصطناعي
+  </span>
+
+  {/* Special badge line */}
+  <span className="mt-4 inline-flex justify-center">
+    <span className="relative inline-flex p-[2px] rounded-full overflow-hidden">
+      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/60 to-transparent opacity-80 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+      <span className="relative inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/18 backdrop-blur-2xl border border-white/35 shadow-[0_18px_60px_rgba(0,0,0,0.12)]">
+        <span className="w-2 h-2 rounded-full bg-[#b11e22] shadow-[0_0_0_6px_rgba(177,30,34,0.12)]" />
+        <span className="text-xl md:text-2xl lg:text-3xl font-black tracking-tight text-slate-900">
+          AI Assessment Center
+        </span>
+      </span>
+    </span>
+  </span>
+</h1>
+
+                <p className="text-lg md:text-xl text-gray-500 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans font-bold">
+                  تصميم احترافي يدمج الذكاء الاصطناعي مع مراكز التقييم لرفع دقة التشخيص، قياس الأثر، وصناعة قرار تدريبي مرتبط مباشرة بالأداء والاستراتيجية.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+                  <Button variant="primary" icon={DownloadCloud} className="w-full sm:w-auto min-w-[240px] shadow-xl shadow-red-900/10">
+                    Download the brochure
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    icon={FileSignature}
+                    onClick={handleRegister}
+                    className="w-full sm:w-auto min-w-[240px]"
+                  >
+                    Apply Now
+                  </Button>
+                </div>
               </div>
 
-              <h1 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-[#284e7f] tracking-tight leading-[1.4] mb-8 animate-in fade-in slide-in-from-bottom-5 duration-700 font-sans">
-                {/* First two lines: Same size and design, but 2x smaller */}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">
-                  تحديد الاحتياجات التدريبية
-                </span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-6">
-                  باستخدام الذكاء الاصطناعي
-                </span>
-                
-                {/* Last line: Special and noticeable - New Design: Sharp Gradient Pill */}
-                <div className="relative inline-flex group mt-2">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#284e7f] to-[#b11e22] rounded-full blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-                  <div className="relative inline-flex items-center gap-3 px-6 py-2.5 bg-gradient-to-r from-[#284e7f] to-[#b11e22] rounded-full border border-white/20 shadow-2xl hover:scale-105 transition-transform duration-300">
-                     <div className="p-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/10">
-                        <Brain size={16} className="text-white" />
-                     </div>
-                     <span className="text-lg md:text-xl font-bold tracking-wider text-white font-sans drop-shadow-md">
-                      AI Assessment Center
-                    </span>
+              {/* Right Image */}
+              <div className="order-1 lg:order-2 flex items-center justify-center">
+                <div className="relative group">
+                  {/* Animated glass border */}
+                  <div className="relative p-[2px] rounded-[2.75rem] md:rounded-[3.25rem] overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#284e7f]/45 to-transparent opacity-70 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+                    <div className="absolute inset-[2px] rounded-[2.75rem] md:rounded-[3.25rem] bg-white/10 backdrop-blur-xl border border-white/35" />
+
+                    <div className="relative rounded-[2.75rem] md:rounded-[3.25rem] overflow-hidden shadow-[0_22px_70px_rgba(0,0,0,0.12)]">
+                      <div className="absolute -top-20 -right-16 w-72 h-72 bg-[#284e7f]/8 rounded-full blur-[80px]" />
+                      <div className="absolute -bottom-24 -left-16 w-72 h-72 bg-[#b11e22]/8 rounded-full blur-[80px]" />
+
+                      <img
+                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80"
+                        alt="AI Assessment Center Concept"
+                        className="w-full h-[320px] sm:h-[420px] lg:h-[520px] object-cover object-[center_65%]"
+                        loading="eager"
+                      />
+
+                      {/* Glassy blend overlay (lighter so photo stays clearer) */}
+                      <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#f8fafc]/14 to-[#f8fafc]/45 pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-white/10 pointer-events-none" />
+
+                      {/* Floating KPI chips */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        <div className="absolute top-5 right-5 sm:top-6 sm:right-6 float-slow">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/18 backdrop-blur-2xl border border-white/35 shadow-[0_14px_40px_rgba(0,0,0,0.12)]">
+                            <div className="w-2 h-2 rounded-full bg-emerald-400/80" />
+                            <span className="text-white/90 text-sm font-extrabold drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] font-sans">
+                              89% تحقيق الأهداف
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10 float-med">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/14 backdrop-blur-2xl border border-white/30 shadow-[0_14px_40px_rgba(0,0,0,0.10)]">
+                            <span className="text-white/90 text-sm font-black tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] font-sans">
+                              KPIs
+                            </span>
+                            <div className="h-4 w-px bg-white/35" />
+                            <span className="text-white/80 text-xs font-bold font-sans">Dashboard</span>
+                          </div>
+                        </div>
+
+                        <div className="absolute top-1/2 left-5 sm:left-7 -translate-y-1/2 float-fast">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/16 backdrop-blur-2xl border border-white/35 shadow-[0_14px_40px_rgba(0,0,0,0.12)]">
+                            <div className="w-6 h-6 rounded-full bg-white/12 border border-white/25 flex items-center justify-center">
+                              <Loader2 className="w-4 h-4 text-white/85 animate-spin" />
+                            </div>
+                            <span className="text-white/90 text-sm font-extrabold drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] font-sans">
+                              جارٍ التحليل 98%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Subtle inner border */}
+                      <div className="pointer-events-none absolute inset-0 ring-1 ring-white/30 rounded-[2.75rem] md:rounded-[3.25rem]" />
+                    </div>
                   </div>
                 </div>
-              </h1>
-
-              <p className="text-base text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans font-medium">
-                تخيل لو استطعت تحويل بيانات مؤسستك إلى خريطة طريق تدريبية ذكية، تحدد بالضبط ما يحتاجه فريقك، وتُقاس نتائجه بأرقام واضحة، ويعود عليك بعائد استثمار حقيقي.
-                <br className="hidden md:block" />
-                <span className="block mt-3 text-[#b11e22] font-bold text-lg">
-                  هذا ليس خيالاً – هذه ورشتنا الجديدة!
-                </span>
-              </p>
-
-              <div className="w-full max-w-md">
-                 <CountdownTimer align="center" />
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 w-full sm:w-auto justify-center">
-                <Button variant="primary" icon={DownloadCloud} className="w-full sm:w-auto min-w-[200px] shadow-xl shadow-red-900/10">
-                  تحميل الكتيب
-                </Button>
-                <Button variant="outline" icon={FileSignature} onClick={handleRegister} className="w-full sm:w-auto min-w-[200px]">
-                  سجل الآن
-                </Button>
               </div>
             </div>
-
-            {/* Right Column (Conceptual Image - visually Left in RTL) */}
-            <div className="relative order-1 lg:order-2 animate-in fade-in slide-in-from-left-10 duration-1000">
-              <div className="relative h-[400px] md:h-[500px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/20">
-                <img 
-                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop" 
-                  alt="AI Assessment Center Concept" 
-                  className="object-cover w-full h-full"
-                />
-                
-                {/* Glassy Gradient Overlay - Blends image to background (RTL aware) */}
-                {/* Enhanced vision: Added backdrop-blur, lighter 'via' color, and adjusted stops to show more image */}
-                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent from-20% via-white/10 to-[#f8fafc] opacity-80 backdrop-blur-[1px]" />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#f8fafc]/50 lg:hidden" />
-                
-                {/* Floating Elements on Image */}
-                <div className="absolute bottom-8 right-8 glass-panel p-4 rounded-2xl animate-bounce delay-1000 shadow-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-green-100 p-2 rounded-full text-green-600">
-                      <Brain size={20} />
-                    </div>
-                    <div>
-                      <div className="text-xs text-slate-500 font-bold font-sans">دقة التحليل</div>
-                      <div className="text-sm font-extrabold text-[#284e7f] font-sans">98.5%</div>
-                    </div>
-                  </div>
-                </div>
-
-                 <div className="absolute top-8 left-8 glass-panel p-4 rounded-2xl animate-pulse delay-500 shadow-lg hidden md:block">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-blue-100 p-2 rounded-full text-blue-600">
-                      <Target size={20} />
-                    </div>
-                    <div>
-                      <div className="text-xs text-slate-500 font-bold font-sans">تحقيق الأهداف</div>
-                      <div className="text-sm font-extrabold text-[#284e7f] font-sans">+40%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </section>
 
-      {/* Trainers (glassy + mobile-perfect) */}
+      {/* Trainers */}
       <section id="trainers" className="py-20 md:py-24 relative overflow-hidden w-full">
         <div className="absolute inset-0 bg-[#f8fafc]">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
@@ -854,91 +832,59 @@ export default function App() {
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <SectionHeading 
-            title="مدربونا ليسوا مجرد خبراء؛ هم صانعوا التحول" 
-            align="center" 
-            titleClasses="text-lg md:text-xl lg:text-2xl"
-            description="من الذكاء الاصطناعي إلى تحليل البيانات الضخمة، ومن استراتيجيات الأداء إلى مراكز التقييم المتقدمة، كل مدرب يجمع بين المعرفة العميقة والخبرة العملية ليضمن لك تجربة تدريبية ذكية، ملموسة، ومؤثرة!"
-          />
+          <SectionHeading subtitle="الخبراء" title="نخبة المتحدثين والمدربين" align="center" />
 
-          {/* Wrapper for Stack + Floating Comments + Icons */}
-          <div className="relative w-full max-w-4xl mx-auto">
-             
-             {/* Floating Icons Background */}
-             <FloatingIcon icon={Brain} className="top-0 right-[10%] lg:right-[20%]" delay="0s" color="text-[#b11e22]" />
-             <FloatingIcon icon={Cpu} className="bottom-20 left-[5%] lg:left-[15%]" delay="2s" color="text-[#284e7f]" size={32} />
-             <FloatingIcon icon={Network} className="top-20 left-[10%]" delay="1s" color="text-indigo-600" />
-             <FloatingIcon icon={Binary} className="bottom-40 right-[5%]" delay="3s" color="text-slate-500" />
-             <FloatingIcon icon={CircuitBoard} className="top-1/3 right-[25%] opacity-30" delay="4s" size={18} />
+          <div className="relative mx-auto w-full max-w-5xl">
+            <div className="relative p-[2px] rounded-[2.75rem] md:rounded-[3.25rem] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#284e7f]/35 to-transparent opacity-70 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
+              <div className="absolute inset-[2px] rounded-[2.75rem] md:rounded-[3.25rem] bg-white/30 backdrop-blur-2xl border border-white/40" />
 
-             {/* Card Stack Container */}
-             <div className="relative mx-auto w-full max-w-md h-[550px] md:h-[650px] flex justify-center items-center perspective-1000">
-                
-                {/* Dynamic Single Floating Comment - Synced with Loop using activeCommentIndex */}
-                <FloatingComment 
-                    key={activeCommentIndex} // Forces remount to restart animation on swap
-                    text={trainerComments[activeCommentIndex].text}
-                    className={trainerComments[activeCommentIndex].position}
-                    delay="0.3s" 
-                    duration="4.5s" // Fades out just before the 5s loop triggers
-                    color={trainerComments[activeCommentIndex].color}
-                />
+              <div className="relative rounded-[2.75rem] md:rounded-[3.25rem] bg-white/10 backdrop-blur-2xl overflow-hidden">
+                {/* Vertical card slider (app-like) */}
+                <div className="relative h-[calc(100svh-260px)] min-h-[560px] max-h-[780px] sm:min-h-[620px] sm:max-h-[820px] flex items-center justify-center">
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    {trainers.map((trainer, index) => {
+                      const len = trainers.length;
+                      const deckPos = (index - activeTrainerIndex + len) % len;
+                      if (deckPos > 2) return null;
+                      const isActive = deckPos === 0;
 
-                {trainers.map((trainer, index) => {
-                    // Determine position in stack relative to active index
-                    // 0 = active, 1 = next, 2 = last
-                    const position = (index - activeTrainerIndex + trainers.length) % trainers.length;
-                    
-                    let zIndex = 0;
-                    let transformClass = '';
-                    let opacityClass = '';
-
-                    if (position === 0) {
-                        // Active Card (Front)
-                        zIndex = 30;
-                        transformClass = 'scale-100 translate-y-0';
-                        opacityClass = 'opacity-100';
-                    } else if (position === 1) {
-                        // Next Card (Behind 1)
-                        zIndex = 20;
-                        transformClass = 'scale-95 translate-y-4 md:translate-y-6 blur-[1px]';
-                        opacityClass = 'opacity-60 grayscale-[0.5]';
-                    } else {
-                        // Last Card (Behind 2 - Hidden/Fading)
-                        zIndex = 10;
-                        transformClass = 'scale-90 translate-y-8 md:translate-y-12 blur-[2px]';
-                        opacityClass = 'opacity-0'; // Hide the 3rd one to keep it clean or use low opacity
-                    }
-
-                    return (
+                      return (
                         <div
                           key={index}
-                          className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out origin-bottom ${transformClass} ${opacityClass}`}
-                          style={{ zIndex }}
+                          className="absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out"
+                          style={{
+                            zIndex: 50 - deckPos,
+                            opacity: deckPos === 2 ? 0.55 : 1,
+                            pointerEvents: isActive ? 'auto' : 'none',
+                          }}
                         >
-                          <TrainerCard {...trainer} isActive={position === 0} />
+                          <div className="w-full h-full max-w-[560px] px-2 sm:px-0">
+                            <TrainerCard {...trainer} deckPos={deckPos} isActive={isActive} />
+                          </div>
                         </div>
-                    );
-                })}
+                      );
+                    })}
 
-                {/* Navigation Dots */}
-                <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 z-40">
-                    <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/40 backdrop-blur-md border border-white/50 shadow-sm">
-                      {trainers.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setActiveTrainerIndex(idx)}
-                          className={`transition-all duration-300 rounded-full h-2.5 ${
-                            idx === activeTrainerIndex 
-                                ? 'w-8 bg-[#b11e22] shadow-[0_0_10px_rgba(177,30,34,0.5)]' 
-                                : 'w-2.5 bg-white hover:bg-slate-200'
-                          }`}
-                          aria-label={`Trainer slide ${idx + 1}`}
-                        />
-                      ))}
+                    {/* Dots */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40">
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/25 backdrop-blur-xl border border-white/35 shadow-lg">
+                        {trainers.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setActiveTrainerIndex(idx)}
+                            className={`transition-all duration-300 rounded-full h-2 ${
+                              idx === activeTrainerIndex ? 'w-8 bg-[#b11e22]' : 'w-2 bg-white/60 hover:bg-white'
+                            }`}
+                            aria-label={`Trainer slide ${idx + 1}`}
+                          />
+                        ))}
+                      </div>
                     </div>
+                  </div>
                 </div>
-             </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
