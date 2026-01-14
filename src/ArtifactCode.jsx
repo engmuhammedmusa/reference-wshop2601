@@ -367,8 +367,8 @@ const FloatingWhatsApp = () => {
   );
 };
 
-// --- AI Advisor Section ---
-const AIAdvisorSection = () => {
+// --- Hero AI Widget ---
+const HeroAIWidget = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
@@ -409,99 +409,88 @@ const AIAdvisorSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-24 bg-white relative w-full overflow-hidden">
-      <div className="absolute inset-0 bg-[#f8fafc]">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
-        <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-[#284e7f]/5 rounded-full blur-[120px]" />
-        <div className="absolute top-[20%] -right-[10%] w-[40%] h-[40%] bg-[#b11e22]/5 rounded-full blur-[120px]" />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="relative group p-[2px] rounded-[3.5rem] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22] to-transparent opacity-50 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
-          <div className="absolute inset-[2px] bg-white rounded-[3.5rem]" />
-
-          <div className="bg-white/60 backdrop-blur-2xl rounded-[3.5rem] p-6 md:p-12 lg:p-16 relative overflow-hidden h-full">
-            <div className="flex justify-center mb-8">
-              <div className="flex items-center gap-2 px-6 py-2 bg-white border border-blue-100 rounded-full shadow-md transform hover:scale-105 transition-transform cursor-default">
-                <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
-                <span className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans refeai-brand">
-                  RefeAI BETA
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-              <div className="flex flex-col justify-center h-full text-center lg:text-right">
-                <h2 className="text-2xl md:text-3xl lg:text-5xl font-extrabold mb-4 md:mb-6 text-[#284e7f] leading-tight font-sans">
-                  مستشار التدريب <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">
-                    الذكي والشخصي
-                  </span>
-                </h2>
-                <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-sans font-medium">
-                  هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟
-                  <br />
-                  <br />
-                  اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله فوراً وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
-                </p>
-              </div>
-
-              <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2 h-full flex flex-col justify-center">
-                {!response ? (
-                  <div className="p-4 md:p-6">
-                    <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
-                    <textarea
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      placeholder="مثال: نجد صعوبة في قياس العائد الاستثماري من برامج التدريب الحالية..."
-                      className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-4 md:p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[150px] md:min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-sm md:text-base font-medium"
-                      dir="rtl"
-                    />
-                    <div className="w-full">
-                      <Button
-                        variant="ai"
-                        onClick={handleAnalyze}
-                        disabled={loading || !query.trim()}
-                        className="w-full !py-4 !px-6 !text-base rounded-[1.5rem] shadow-lg hover:shadow-xl active:scale-[0.99] transition-all justify-center"
-                      >
-                        <span className="inline-flex items-center gap-2">
-                          {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
-                          <span>{loading ? 'جاري التحليل...' : 'تحليل الآن'}</span>
-                        </span>
-                      </Button>
+    <div id="ai-widget" className="relative w-full max-w-xl mx-auto lg:mr-auto lg:ml-0">
+        {/* Subtle Glow Behind */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 rounded-[2.5rem] opacity-30 blur-lg group-hover:opacity-50 transition duration-1000"></div>
+        
+        <div className="relative bg-white/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] p-6 md:p-8 overflow-hidden transition-all duration-300 hover:bg-white/50">
+            
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#284e7f] to-[#b11e22] flex items-center justify-center text-white shadow-lg shadow-blue-900/10">
+                        {/* Changed Bot to Sparkles */}
+                        <Sparkles size={20} />
                     </div>
-                    {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
-                  </div>
-                ) : (
-                  <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-6 md:p-8 text-white relative overflow-hidden h-full flex flex-col justify-center">
-                    <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30">
-                          <Bot className="w-6 h-6 text-white" />
+                    <div>
+                        <h3 className="text-lg font-bold text-[#284e7f] font-sans leading-none mb-1">RefeAI: مستشار التدريب الذكي</h3>
+                        <div className="flex items-center gap-1.5">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            </span>
+                            <span className="text-[10px] text-slate-500 font-sans font-bold tracking-wide">RefeAI Online</span>
                         </div>
-                        <h3 className="font-bold text-xl font-sans">رأي المستشار الذكي</h3>
-                      </div>
-                      <div className="text-blue-50 leading-loose text-base md:text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
-                        {response}
-                      </div>
-                      <button
-                        onClick={() => setResponse('')}
-                        className="text-sm font-bold text-yellow-400 hover:text-white transition-colors flex items-center gap-2"
-                      >
-                        <ArrowLeft size={16} /> تحليل تحدي آخر
-                      </button>
                     </div>
-                  </div>
-                )}
-              </div>
+                </div>
             </div>
 
-          </div>
+            {!response ? (
+              <div className="flex flex-col gap-4">
+                <div className="relative group/input">
+                  <textarea
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="مثال: كيف يمكنني وضع خطة تدريبية كاملة حسب احتياج موظفي قسم الموارد البشرية؟"
+                    // Removed pl-32 since button is outside
+                    className="w-full bg-white/60 hover:bg-white/90 focus:bg-white border border-white/50 focus:border-[#284e7f]/20 rounded-[1.5rem] p-5 text-gray-700 placeholder-gray-400 outline-none min-h-[130px] resize-none text-right transition-all duration-300 font-sans text-sm md:text-base font-medium shadow-sm focus:shadow-md"
+                    dir="rtl"
+                  />
+                </div>
+                
+                <button 
+                    onClick={handleAnalyze}
+                    disabled={loading || !query.trim()}
+                    // Moved button outside, made it full width
+                    className="w-full h-12 rounded-xl bg-[#284e7f] hover:bg-[#1d3a61] disabled:bg-gray-300 disabled:cursor-not-allowed text-white flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                >
+                    {loading ? (
+                        <>
+                        <Loader2 className="animate-spin w-5 h-5" />
+                        <span className="text-base font-bold">جاري التحليل...</span>
+                        </>
+                    ) : (
+                        <>
+                        <span className="text-base font-bold">تحليل</span>
+                        <Send className="w-5 h-5 rtl:-rotate-90" />
+                        </>
+                    )}
+                </button>
+
+                {error && <p className="text-red-500 text-xs text-center font-sans">{error}</p>}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                {/* Chat Bubble Style Response */}
+                <div className="bg-white/80 border border-white/60 rounded-[1.5rem] rounded-tr-sm p-6 shadow-sm relative">
+                   <div className="text-[#1e293b] leading-loose text-sm md:text-base font-sans font-medium text-right">
+                     {response}
+                   </div>
+                </div>
+                
+                <div className="flex justify-end">
+                    <button
+                      onClick={() => setResponse('')}
+                      className="group flex items-center gap-2 px-5 py-2 rounded-full bg-white/50 hover:bg-white border border-white/60 text-gray-500 hover:text-[#284e7f] text-xs font-bold transition-all shadow-sm"
+                    >
+                      <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+                      استشارة جديدة
+                    </button>
+                </div>
+              </div>
+            )}
         </div>
-      </div>
-    </section>
+    </div>
   );
 };
 
@@ -700,7 +689,7 @@ export default function App() {
             {/* Action Buttons */}
             <div className="hidden md:flex items-center gap-3">
               <a
-                href="#ai-advisor"
+                href="#ai-widget"
                 className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 border border-white/20 font-sans refeai-pill"
               >
                 <Sparkles className="w-4 h-4 text-yellow-300 fill-yellow-300 animate-pulse" />
@@ -746,7 +735,7 @@ export default function App() {
       </nav>
 
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center pt-32 lg:pt-48 pb-16 overflow-hidden bg-grid-slate w-full">
+      <section className="relative min-h-screen flex items-center pt-32 lg:pt-48 pb-16 overflow-hidden bg-grid-slate w-full" id="hero">
         {/* Background Blobs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#284e7f]/5 rounded-full blur-[100px]" />
@@ -756,52 +745,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             
-            {/* Right Column (Conceptual Image - Now First in RTL) */}
-            <div className="relative order-1 lg:order-1 animate-in fade-in slide-in-from-right-10 duration-1000 flex justify-center group">
-              <div className="relative w-full max-w-4xl transform hover:scale-[1.01] transition-transform duration-700">
-                {/* Integration Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-[#284e7f]/20 via-[#b11e22]/10 to-transparent rounded-full blur-[60px] pointer-events-none -z-10" />
-                
-                {/* Rounder Box Container */}
-                <div className="rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/40 bg-white/50 backdrop-blur-sm ring-1 ring-black/5">
-                  <img 
-                    src="https://drive.google.com/thumbnail?id=1ZztHvS0VjanBZioWGKNAV6zD6SlNiv2W&sz=w1000" 
-                    alt="AI Assessment Workshop" 
-                    className="w-full h-auto object-cover opacity-[0.98]"
-                  />
-                  {/* Subtle inner shadow for depth */}
-                  <div className="absolute inset-0 shadow-[inset_0_2px_10px_rgba(0,0,0,0.05)] pointer-events-none"></div>
-                </div>
-                
-                {/* Floating Hero Components - Kept for dynamic effect */}
-                <div className="absolute top-[20%] -right-[5%] z-20 glass-panel p-3 rounded-2xl animate-float-continuous shadow-lg bg-white/80 border-white/60 hidden sm:block">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-blue-100 p-2 rounded-full text-[#284e7f]">
-                      <BarChart3 size={20} />
-                    </div>
-                    <div>
-                      <div className="text-[10px] text-gray-500 font-bold font-sans">تحليل البيانات</div>
-                      <div className="text-xs font-black text-[#284e7f] font-sans">متقدم</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="absolute bottom-[10%] -left-[5%] z-20 glass-panel p-3 rounded-2xl animate-float-in-out shadow-lg bg-white/80 border-white/60 hidden sm:block" style={{ animationDelay: '1s' }}>
-                  <div className="flex items-center gap-3">
-                    <div className="bg-green-100 p-2 rounded-full text-green-600">
-                      <CheckCircle2 size={20} />
-                    </div>
-                    <div>
-                      <div className="text-[10px] text-gray-500 font-bold font-sans">دقة النتائج</div>
-                      <div className="text-xs font-black text-green-700 font-sans">99.8%</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
+            {/* Right Column (Hero AI Widget - First in RTL) */}
+            <div className="relative order-1 lg:order-1 flex justify-center lg:justify-start">
+               <HeroAIWidget />
             </div>
 
-            {/* Left Column (Text Content - Now Second in RTL) */}
+            {/* Left Column (Text Content - Second in RTL) */}
             <div className="flex flex-col items-center text-center z-20 order-2 lg:order-2">
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 border border-blue-100 shadow-sm text-[#284e7f] text-sm font-bold mb-6 animate-in fade-in slide-in-from-bottom-3 font-sans" dir="ltr">
                 <Calendar className="w-4 h-4 text-[#b11e22]" />
@@ -1021,11 +970,6 @@ export default function App() {
           </div>
         </div>
       </section>
-
-      {/* AI */}
-      <div id="ai-advisor">
-        <AIAdvisorSection />
-      </div>
 
       {/* Pillars */}
       <section className="py-24 bg-slate-50 relative overflow-hidden w-full">
