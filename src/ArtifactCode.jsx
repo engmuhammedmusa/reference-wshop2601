@@ -236,9 +236,9 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
             alt={name}
         />
         
-        {/* Transparent Info Box - Full Width, Lower Profile */}
-        <div className="absolute bottom-0 left-0 right-0 p-5 pt-6 rounded-t-[2.5rem] bg-white/95 backdrop-blur-xl border-t border-white/40 animate-shimmer-border flex flex-col items-start text-right z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-slate-100/80 border border-slate-200 text-[10px] md:text-xs font-bold text-[#284e7f] shadow-sm">
+        {/* Modern Gradient Mix - Blends details with photo */}
+        <div className="absolute bottom-0 left-0 right-0 pt-32 pb-6 px-6 bg-gradient-to-t from-white via-white/90 to-transparent flex flex-col items-start text-right z-20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-white/80 border border-slate-200 backdrop-blur-sm text-[10px] md:text-xs font-bold text-[#284e7f] shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#b11e22] animate-pulse"></span>
                 مدرب خبير
             </div>
@@ -250,7 +250,7 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
                 {title}
             </p>
             
-            <div className="w-full h-px bg-slate-200 mb-2" />
+            <div className="w-full h-px bg-slate-200/80 mb-2" />
             
             <p className="text-slate-700 text-xs md:text-sm leading-relaxed line-clamp-3 font-sans font-bold">
                 {bio}
@@ -762,32 +762,15 @@ export default function App() {
                 {/* Integration Glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-[#284e7f]/20 via-[#b11e22]/10 to-transparent rounded-full blur-[60px] pointer-events-none -z-10" />
                 
-                {/* macOS Window Frame */}
-                <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/40 bg-white/50 backdrop-blur-sm ring-1 ring-black/5">
-                  {/* Title Bar */}
-                  <div className="h-9 bg-gray-50/90 border-b border-white/60 flex items-center px-4 gap-2 backdrop-blur-md">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50 shadow-sm" />
-                      <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50 shadow-sm" />
-                      <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/50 shadow-sm" />
-                    </div>
-                    <div className="flex-1 text-center">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-md bg-white/50 border border-black/5">
-                        <span className="text-[10px] font-semibold text-gray-500 font-sans tracking-wide">AI Assessment Platform</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* App Screenshot */}
-                  <div className="relative bg-white">
-                    <img 
-                      src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop" 
-                      alt="AI Assessment App Dashboard on macOS" 
-                      className="w-full h-auto object-cover opacity-[0.98]"
-                    />
-                    {/* Subtle inner shadow for depth */}
-                    <div className="absolute inset-0 shadow-[inset_0_2px_10px_rgba(0,0,0,0.05)] pointer-events-none"></div>
-                  </div>
+                {/* Rounder Box Container */}
+                <div className="rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/40 bg-white/50 backdrop-blur-sm ring-1 ring-black/5">
+                  <img 
+                    src="https://drive.google.com/thumbnail?id=1ZztHvS0VjanBZioWGKNAV6zD6SlNiv2W&sz=w1000" 
+                    alt="AI Assessment Workshop" 
+                    className="w-full h-auto object-cover opacity-[0.98]"
+                  />
+                  {/* Subtle inner shadow for depth */}
+                  <div className="absolute inset-0 shadow-[inset_0_2px_10px_rgba(0,0,0,0.05)] pointer-events-none"></div>
                 </div>
                 
                 {/* Floating Hero Components - Kept for dynamic effect */}
@@ -893,13 +876,6 @@ export default function App() {
           {/* Wrapper for Stack + Floating Comments + Icons */}
           <div className="relative w-full max-w-4xl mx-auto">
              
-             {/* Floating Icons Background */}
-             <FloatingIcon icon={Brain} className="top-0 right-[10%] lg:right-[20%]" delay="0s" color="text-[#b11e22]" />
-             <FloatingIcon icon={Cpu} className="bottom-20 left-[5%] lg:left-[15%]" delay="2s" color="text-[#284e7f]" size={32} />
-             <FloatingIcon icon={Network} className="top-20 left-[10%]" delay="1s" color="text-indigo-600" />
-             <FloatingIcon icon={Binary} className="bottom-40 right-[5%]" delay="3s" color="text-slate-500" />
-             <FloatingIcon icon={CircuitBoard} className="top-1/3 right-[25%] opacity-30" delay="4s" size={18} />
-
              {/* Card Stack Container */}
              <div className="relative mx-auto w-full max-w-md h-[550px] md:h-[650px] flex justify-center items-center perspective-1000">
                 
