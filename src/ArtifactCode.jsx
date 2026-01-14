@@ -781,10 +781,10 @@ export default function App() {
 
               {/* Paragraph */}
               <p className="text-sm md:text-base text-gray-700 mb-8 max-w-xl leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 font-sans font-bold">
-                تخيل لو استطعت تحويل بيانات مؤسستك إلى خريطة طريق تدريبية ذكية، تحدد بالضبط ما يحتاجه فريقك، وتُقاس نتائجه بأرقام واضحة، ويعود عليك بعائد استثمار حقيقي.
+                تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك — يحتوي على شات بوت ذكي تماماً مثل الذي في الأعلى — يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
                 <br className="hidden md:block" />
-                <span className="block mt-3 text-[#b11e22] font-black text-base md:text-lg">
-                  هذا ليس خيالاً – هذه ورشتنا الجديدة!
+                <span className="block mt-4 text-[#b11e22] font-black text-base md:text-lg bg-red-50/80 px-4 py-2 rounded-lg border border-red-100 shadow-sm inline-block transform hover:scale-105 transition-transform duration-300 cursor-default">
+                  هذا ليس خيالاً ، هـــذه ورشتنـــا الجديـــدة
                 </span>
               </p>
 
