@@ -189,20 +189,34 @@ const TrainerCard = ({ name, title, bio, imageId, isActive }) => (
     <div className="relative h-full shadow-[0_18px_60px_rgba(0,0,0,0.12)]">
       <div className="flex flex-col md:flex-row h-full">
         {/* Image Side */}
-        <div className="w-full md:w-2/5 relative overflow-hidden group h-[38svh] min-h-[220px] max-h-[340px] sm:h-64 md:h-auto">
-          <img
-            src={`https://lh3.googleusercontent.com/d/${imageId}`}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src =
-                'https://ui-avatars.com/api/?name=' + name + '&background=284e7f&color=fff&size=500';
-            }}
-            alt={name}
-            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-          />
+        <div className="w-full md:w-2/5 flex flex-col overflow-hidden">
+          <div className="relative w-full h-[42svh] min-h-[240px] max-h-[420px] sm:h-80 md:h-full flex items-center justify-center bg-white/10 backdrop-blur-xl border-b md:border-b-0 md:border-l border-white/15 p-3 sm:p-4">
+            <img
+              src={`https://drive.google.com/thumbnail?id=${imageId}&sz=w1400`}
+              data-backup={`https://lh3.googleusercontent.com/d/${imageId}`}
+              data-tried="0"
+              onError={(e) => {
+                const img = e.currentTarget;
+                // First fallback: googleusercontent direct
+                if (img.dataset.tried !== '1' && img.dataset.backup) {
+                  img.dataset.tried = '1';
+                  img.src = img.dataset.backup;
+                  return;
+                }
+                // Final fallback: avatar
+                img.onerror = null;
+                img.src =
+                  'https://ui-avatars.com/api/?name=' +
+                  encodeURIComponent(name) +
+                  '&background=284e7f&color=fff&size=500';
+              }}
+              alt={name}
+              className="w-full h-full object-contain object-center"
+            />
+          </div>
 
-          {/* Mobile overlay header */}
-          <div className="absolute bottom-4 right-4 left-4 z-20 md:hidden">
+          {/* Mobile header (kept off the photo so it stays fully visible) */}
+          <div className="px-4 pb-4 pt-3 md:hidden">
             <div className="px-4 py-3 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/25 shadow-lg">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
@@ -511,19 +525,22 @@ export default function App() {
     {
       name: 'د. رامي شاهين',
       title: 'خبير الذكاء الاصطناعي العالمي',
-      imageId: '1gwL1YOxAQCLiwXM0KPockBJ21gAyK0fR',
+      imageId: '1Agf19eCAbARzkPgKNQ13Rg2PoydTlo2-',
+      bio: 'خبير عالمي في الذكاء الاصطناعي والتحول الرقمي، يقود مشاريع استراتيجية في عدة دول. حاصل على دكتوراه في إدارة الموارد البشرية الدولية.',
       bio: 'خبير عالمي في الذكاء الاصطناعي والتحول الرقمي، يقود مشاريع استراتيجية في عدة دول. حاصل على دكتوراه في إدارة الموارد البشرية الدولية.',
     },
     {
       name: 'أ. أحمد الطويل',
       title: 'خبير التطوير المؤسسي',
-      imageId: '1vPbj5AULuI0lRLjJqDakI71eb6ChRs78',
+      imageId: '1hG5wGbMOjcCvaWSSfeyWNLhrhcfA0Srq',
+      bio: 'خبير أردني في التطوير المؤسسي والقيادة بخبرة تتجاوز 18 عامًا في إدارة التغيير وبناء الكفاءات. مستشار لهيئات محلية ودولية.',
       bio: 'خبير أردني في التطوير المؤسسي والقيادة بخبرة تتجاوز 18 عامًا في إدارة التغيير وبناء الكفاءات. مستشار لهيئات محلية ودولية.',
     },
     {
       name: 'د. سالم موسى',
       title: 'استشاري التطوير وجودة التدريب',
-      imageId: '1fvRFsuV8l6Lfbgqz1NwlBa4HJ_ZLCJ-S',
+      imageId: '12r7lppBDqCAX5oFBldy-7O77uREbwMVr',
+      bio: 'دكتوراه في الإدارة العامة وتطوير المنظمات، وماجستير إدارة أعمال في علم النفس الإداري. استشاري جودة معتمد ومدرب دولي.',
       bio: 'دكتوراه في الإدارة العامة وتطوير المنظمات، وماجستير إدارة أعمال في علم النفس الإداري. استشاري جودة معتمد ومدرب دولي.',
     },
   ];
@@ -958,7 +975,7 @@ export default function App() {
                             <img
                               key={i}
                               className="inline-block h-6 w-6 md:h-8 md:w-8 rounded-full ring-2 ring-[#284e7f] object-cover"
-                              src={`https://lh3.googleusercontent.com/d/${t.imageId}`}
+                              src={`https://drive.google.com/thumbnail?id=${t.imageId}&sz=w300`}
                               alt=""
                             />
                           ))}
