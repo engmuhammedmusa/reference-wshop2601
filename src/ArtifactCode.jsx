@@ -86,6 +86,17 @@ const GlobalStyles = () => (
       100% { transform: rotate(360deg); }
     }
     .animate-rotate-border { animation: rotate-border 4s linear infinite; }
+
+    /* RefeAI brand treatment */
+    .refeai-brand {
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      /* keep exact casing: RefeAI */
+      text-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+    .refeai-pill {
+      box-shadow: 0 16px 48px rgba(99,102,241,0.18);
+    }
   `}</style>
 );
 
@@ -138,12 +149,17 @@ const SectionHeading = ({ subtitle, title, align = 'center' }) => (
 );
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
-  <div className="relative group p-6 md:p-8 bg-white rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1">
-    <div className="h-14 w-14 md:h-16 md:w-16 rounded-[1.5rem] bg-[#284e7f]/5 flex items-center justify-center mb-6 group-hover:bg-[#284e7f] transition-colors duration-300">
-      <Icon className="h-7 w-7 md:h-8 md:w-8 text-[#284e7f] group-hover:text-white transition-colors duration-300" />
+  <div className="relative group p-6 md:p-7 rounded-[2rem] md:rounded-[2.5rem] bg-white/25 backdrop-blur-2xl border border-white/45 shadow-[0_18px_60px_rgba(0,0,0,0.06)] hover:shadow-[0_22px_70px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
+    <div className="flex items-center gap-4 mb-4">
+      <div className="h-12 w-12 rounded-[1.25rem] bg-white/22 border border-white/35 flex items-center justify-center shadow-sm">
+        <Icon className="h-6 w-6 text-[#284e7f]" />
+      </div>
+      <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] leading-snug font-sans">{title}</h3>
     </div>
-    <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] mb-3 font-sans">{title}</h3>
-    <p className="text-gray-600 leading-relaxed font-sans font-bold text-sm">{description}</p>
+
+    <p className="text-gray-700/90 leading-relaxed font-sans font-bold text-sm md:text-[15px]">{description}</p>
+
+    <div className="pointer-events-none absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] ring-1 ring-white/30" />
   </div>
 );
 
@@ -400,7 +416,7 @@ const AIAdvisorSection = () => {
             <div className="flex justify-center mb-8">
               <div className="flex items-center gap-2 px-6 py-2 bg-white border border-blue-100 rounded-full shadow-md transform hover:scale-105 transition-transform cursor-default">
                 <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
-                <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans">
+                <span className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans refeai-brand">
                   RefeAI BETA
                 </span>
               </div>
@@ -632,10 +648,10 @@ export default function App() {
             <div className="hidden md:flex items-center gap-3">
               <a
                 href="#ai-advisor"
-                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 border border-white/20 font-sans"
+                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 border border-white/20 font-sans refeai-pill"
               >
                 <Sparkles className="w-4 h-4 text-yellow-300 fill-yellow-300 animate-pulse" />
-                <span>RefeAI</span>
+                <span className="refeai-brand">RefeAI</span>
               </a>
 
               <button
@@ -850,9 +866,16 @@ export default function App() {
       </div>
 
       {/* Pillars */}
-      <section className="py-24 bg-slate-50 w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-slate-50 relative overflow-hidden w-full">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
+          <div className="absolute -top-[20%] left-[5%] w-[55%] h-[55%] bg-[#284e7f]/8 rounded-full blur-[120px]" />
+          <div className="absolute top-[30%] -right-[10%] w-[45%] h-[45%] bg-[#b11e22]/8 rounded-full blur-[120px]" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading title="ركائز الورشة الأساسية" />
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <FeatureCard icon={Brain} title="الاحتياجات الذكية" description="إتقان تحديد الاحتياجات التدريبية باستخدام أدوات الذكاء الاصطناعي المتقدمة." />
             <FeatureCard icon={Target} title="القرار التدريبي" description="تعزيز كفاءة واتزان قرارات التدريب في إدارات الموارد البشرية." />
