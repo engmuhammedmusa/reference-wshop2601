@@ -333,27 +333,29 @@ export default function App() {
       {/* Main Container */}
       <main className="w-full relative flex flex-col items-center text-center">
         
-        {/* NEW HERO SECTION WITH BACKGROUND IMAGE */}
-        <section className="w-full relative flex flex-col items-center justify-center overflow-hidden min-h-[85vh] sm:min-h-[75vh]">
+        {/* NEW HERO SECTION - SAAS STYLE */}
+        <section className="w-full relative flex flex-col items-center pt-24 pb-48 sm:pt-32 sm:pb-64 overflow-hidden">
             
             {/* Full Width Background Image */}
             <div className="absolute inset-0 z-0">
+                {/* Use Direct Link format for Google Drive */}
                 <img 
-                    src="https://lh3.googleusercontent.com/d/1NYayb9JQ6p-nxdQJsxrYdEvv8XqyMdkP" 
+                    src="https://drive.google.com/uc?export=view&id=1NYayb9JQ6p-nxdQJsxrYdEvv8XqyMdkP" 
+                    onError={(e) => e.target.src = "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop"}
                     alt="AI Technology Background" 
                     className="w-full h-full object-cover"
                 />
                 
-                {/* GLASSY LAYER: White overlay with blur + increased opacity */}
-                <div className="absolute inset-0 bg-white/85 backdrop-blur-[2px] mix-blend-overlay"></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-transparent"></div>
+                {/* GLASSY LAYER: White overlay with 60% opacity */}
+                <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/50 to-transparent"></div>
                 
-                {/* SMOOTH INTEGRATION: Gradient at the bottom to merge with next section color (#e2e8f0) */}
-                <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#e2e8f0] to-transparent"></div>
+                {/* SMOOTH INTEGRATION: Gradient at the bottom */}
+                <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#e2e8f0] via-[#e2e8f0]/60 to-transparent"></div>
             </div>
 
-            {/* Rounded Glassy Navbar - Inside Hero */}
-            <nav className="w-[92%] max-w-7xl mx-auto mt-6 px-4 py-3 rounded-full flex flex-col md:flex-row justify-between items-center z-20 relative glass shadow-lg shadow-[#284e7f]/5 transition-all mb-auto">
+            {/* Fixed Navbar */}
+            <nav className="fixed top-6 left-0 right-0 z-50 w-[92%] max-w-7xl mx-auto px-4 py-3 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
                 {/* Logo Section */}
                 <div className="flex items-center mb-3 md:mb-0">
                     <img 
@@ -374,37 +376,55 @@ export default function App() {
                 </div>
             </nav>
 
-            {/* Hero Content Area */}
-            <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 relative z-10 flex flex-col items-center">
+            {/* Hero Content Area - SaaS Style */}
+            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
                 
-                {/* Title Block */}
-                <div className="relative mb-6 w-full text-center">
-                    <h1 className="text-xl sm:text-2xl md:text-4xl font-black text-[#284e7f] leading-tight tracking-tight">
-                        تحديد الاحتياجات التدريبية
-                        <span className="block mt-3 text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] via-[#284e7f] to-[#b11e22] text-2xl sm:text-3xl md:text-5xl drop-shadow-sm filter pb-1">
-                            باستخدام الذكاء الاصطناعي
-                        </span>
-                    </h1>
+                {/* Announcement Pill */}
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 border border-[#284e7f]/20 shadow-sm mb-6 backdrop-blur-sm animate-[fadeIn_1s_ease-out]">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#b11e22]"></span>
+                    </span>
+                    <span className="text-xs font-bold text-[#284e7f] tracking-wide">تسجيل الورشة مفتوح لعام 2026</span>
                 </div>
 
-                {/* Description */}
-                <p className="text-base sm:text-lg text-[#284e7f]/90 leading-relaxed max-w-[650px] mb-8 font-medium text-center shadow-black/5">
+                {/* Main Headline */}
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#284e7f] leading-tight tracking-tight mb-4 text-center">
+                    تحديد الاحتياجات التدريبية
+                    <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] via-[#284e7f] to-[#b11e22] drop-shadow-sm filter pb-2">
+                        باستخدام الذكاء الاصطناعي
+                    </span>
+                </h1>
+
+                {/* Subheadline */}
+                <p className="text-lg sm:text-xl text-[#284e7f]/80 leading-relaxed max-w-2xl mb-10 font-medium text-center">
                     كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                    <span className="font-bold text-[#284e7f]">
+                    <span className="font-bold text-[#b11e22]">
                         أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.
                     </span>
                 </p>
 
-                {/* Date & Countdown - Smaller Box in Hero */}
-                <div className="w-full max-w-md bg-white/50 border border-[#284e7f]/10 rounded-xl p-3 sm:p-4 backdrop-blur-md shadow-md hover:shadow-lg transition-all duration-300">
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="text-right">
-                            <div className="text-sm font-bold text-[#284e7f]/60 mb-0.5">تاريخ الورشة</div>
-                            <div className="text-lg font-black text-[#284e7f]">19–23 يناير <span className="text-sm font-bold text-[#284e7f]/50">2026</span></div>
+                {/* Primary CTAs */}
+                <div className="flex flex-wrap justify-center gap-4 mb-12">
+                    <button className="px-8 py-4 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] text-white font-black text-lg hover:-translate-y-1 transition-all shadow-xl shadow-[#b11e22]/30 flex items-center gap-2">
+                        <span>سجل الآن</span>
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                    </button>
+                    <button className="px-8 py-4 rounded-full bg-white/60 hover:bg-white/80 border border-[#284e7f]/30 text-[#284e7f] font-bold text-lg transition-all shadow-lg backdrop-blur-sm">
+                        عرض التفاصيل
+                    </button>
+                </div>
+
+                {/* Countdown / Stats Bar - Centered with equal spacing */}
+                <div className="w-full max-w-2xl mx-auto mt-12 bg-white/50 border border-[#284e7f]/10 rounded-xl p-4 backdrop-blur-md shadow-md hover:shadow-lg transition-all duration-300">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
+                        <div className="text-center">
+                            <div className="text-sm font-bold text-[#284e7f]/60 mb-1">تاريخ الورشة</div>
+                            <div className="text-xl font-black text-[#284e7f]">19–23 يناير</div>
                         </div>
-                        <div className="h-8 w-px bg-[#284e7f]/10"></div>
-                        <div className="flex flex-col items-center min-w-[140px]">
-                             <div className="text-[9px] text-[#284e7f]/50 font-bold mb-1 uppercase tracking-wider">الوقت المتبقي</div>
+                        <div className="h-px w-24 sm:h-10 sm:w-px bg-[#284e7f]/20"></div>
+                        <div className="flex flex-col items-center">
+                             <div className="text-[10px] text-[#284e7f]/60 font-bold mb-1 uppercase tracking-wider">الوقت المتبقي</div>
                              <Countdown />
                         </div>
                     </div>
@@ -413,116 +433,110 @@ export default function App() {
             </div>
         </section>
 
-        {/* DASHBOARD SECTION - Unified Block with Scroll Animation */}
-        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        {/* DASHBOARD PRODUCT SHOT - Overlapping Hero */}
+        <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-32 sm:-mt-48 mb-20">
             <FadeIn>
-                <div className="glass rounded-[22px] p-1 shadow-xl shadow-[#284e7f]/10 overflow-hidden border border-[#284e7f]/20">
-                    {/* Header / Text Section - MOVED INSIDE DASHBOARD BLOCK */}
-                    <div className="p-6 pb-4 relative overflow-hidden text-center">
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-[#284e7f]/5 rounded-bl-full -mr-4 -mt-4"></div>
-                        <p className="relative z-10 text-sm sm:text-base md:text-lg font-bold text-[#284e7f] leading-snug">
-                            من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ.
-                        </p>
-                        <p className="relative z-10 text-sm sm:text-base md:text-lg font-medium text-[#b11e22] mt-1">
-                            هذا هو الفرق بين التقييم التقليدي، ومركز التقييم الذكي.
-                        </p>
+                <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl">
+                    
+                    {/* Browser-like Header */}
+                    <div className="h-8 bg-[#284e7f]/5 border-b border-[#284e7f]/5 flex items-center px-4 gap-2">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-400/60"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-400/60"></div>
+                        <div className="ml-auto text-[10px] font-mono text-[#284e7f]/40">AI Assessment Center v2.0</div>
                     </div>
 
-                    {/* Dashboards Wrapper - Grid Layout for Tablets/Desktop */}
-                    <div className="bg-white/40 rounded-[18px] p-4 border border-white/40">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-6 sm:p-10 bg-white/40">
+                        {/* Text Header Inside Dashboard */}
+                        <div className="text-center mb-8">
+                            <p className="text-lg sm:text-xl font-bold text-[#284e7f] leading-snug">
+                                من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ
+                            </p>
+                            <p className="text-base sm:text-lg font-medium text-[#b11e22] mt-2">
+                                هذا هو الفرق بين التقييم التقليدي، ومركز التقييم الذكي
+                            </p>
+                        </div>
+
+                        {/* Dashboards Wrapper */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             
                             {/* 1. Skill Analysis Simulator */}
-                            <div className="bg-white/60 border border-[#284e7f]/10 rounded-xl p-4 shadow-sm backdrop-blur-sm relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-12 h-12 bg-[#284e7f]/5 rounded-bl-full"></div>
-                                
+                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
                                 {/* Header with Employee ID */}
-                                <div className="flex justify-between items-start mb-4">
+                                <div className="flex justify-between items-start mb-6">
                                     <div className="text-right">
-                                        <div className="text-[10px] text-[#284e7f]/60 font-bold mb-1">تحليل الكفاءات الحية</div>
-                                        <div className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">
-                                            الموظف: #8492
+                                        <div className="text-xs text-[#284e7f]/60 font-bold mb-1">تحليل الكفاءات الحية</div>
+                                        <div className="text-base font-black text-[#284e7f]">
+                                            الموظف: <span className="text-[#b11e22]">#8492</span>
                                         </div>
                                     </div>
-                                    <span className="flex h-2 w-2 relative mt-1">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#284e7f] opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#284e7f]"></span>
-                                    </span>
+                                    <div className="px-2 py-1 rounded bg-green-100 text-green-700 text-[10px] font-bold border border-green-200">نشط الآن</div>
                                 </div>
                                 
-                                <div className="space-y-3">
-                                    <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono font-bold">
-                                        <span>القيادة الاستراتيجية</span>
-                                        <span>85%</span>
-                                    </div>
-                                    <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
-                                        <div className="h-full bg-[#284e7f] w-[85%] rounded-full animate-[pulse_3s_infinite]"></div>
+                                <div className="space-y-4">
+                                    <div>
+                                        <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
+                                            <span>القيادة الاستراتيجية</span>
+                                            <span>85%</span>
+                                        </div>
+                                        <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                            <div className="h-full bg-[#284e7f] w-[85%] rounded-full"></div>
+                                        </div>
                                     </div>
                                     
-                                    <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono font-bold">
-                                        <span>التحليل الرقمي</span>
-                                        <span>42% <span className="text-[#b11e22] font-bold">(فجوة)</span></span>
+                                    <div>
+                                        <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
+                                            <span>التحليل الرقمي</span>
+                                            <span className="text-[#b11e22]">42% (فجوة)</span>
+                                        </div>
+                                        <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                            <div className="h-full bg-[#b11e22] w-[42%] rounded-full"></div>
+                                        </div>
                                     </div>
-                                    <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
-                                        <div className="h-full bg-[#b11e22] w-[42%] rounded-full"></div>
-                                    </div>
-                                </div>
-                                
-                                <div className="mt-3 pt-2 border-t border-zinc-200/50 flex justify-end items-center">
-                                    <span className="text-[10px] bg-[#284e7f]/10 text-[#284e7f] px-1.5 py-0.5 rounded border border-[#284e7f]/20 font-bold">جاري المعالجة</span>
                                 </div>
                             </div>
 
                             {/* 2. Simplified Live Log */}
-                            <div className="bg-white/60 border border-[#284e7f]/10 rounded-xl p-4 shadow-sm backdrop-blur-sm relative overflow-hidden text-right"> 
-                                <div className="flex justify-between items-center mb-3 border-b border-zinc-200/50 pb-2">
+                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden text-right hover:shadow-md transition-shadow"> 
+                                <div className="flex justify-between items-center mb-4 border-b border-[#284e7f]/10 pb-3">
                                     <div className="text-xs text-[#284e7f]/60 font-bold uppercase">سجل المعالجة</div>
-                                    <div className="flex gap-1">
+                                    <div className="flex items-center gap-1.5">
                                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                         <span className="text-[10px] text-emerald-600 font-bold">متصل</span>
                                     </div>
                                 </div>
                                 
                                 <div className="space-y-3 relative">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 shrink-0 rounded-full bg-[#284e7f]/10 flex items-center justify-center text-[#284e7f]">
-                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                                    <div className="flex items-center gap-3 p-2 rounded-lg bg-[#284e7f]/5">
+                                        <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#284e7f] shadow-sm">
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-[11px] font-bold text-[#284e7f] truncate">فحص بيانات الأداء</div>
-                                            <div className="text-[9px] text-[#284e7f]/60 truncate font-bold">تم تحليل 450 سجل وظيفي</div>
+                                            <div className="text-xs font-bold text-[#284e7f] truncate">فحص بيانات الأداء</div>
+                                            <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">تم تحليل 450 سجل وظيفي</div>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 shrink-0 rounded-full bg-[#b11e22]/10 flex items-center justify-center text-[#b11e22]">
-                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    <div className="flex items-center gap-3 p-2 rounded-lg bg-[#b11e22]/5">
+                                        <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#b11e22] shadow-sm">
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-[11px] font-bold text-[#284e7f] truncate">تنبيه: فجوة مهارات</div>
-                                            <div className="text-[9px] text-[#284e7f]/60 truncate font-bold">نقص في مهارات التفاوض (45%)</div>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-center gap-3 opacity-70">
-                                        <div className="w-6 h-6 shrink-0 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="text-[11px] font-bold text-[#284e7f] truncate">توليد خطة علاجية</div>
-                                            <div className="text-[9px] text-[#284e7f]/60 truncate font-bold">جاري إنشاء المسار...</div>
+                                            <div className="text-xs font-bold text-[#284e7f] truncate">تنبيه: فجوة مهارات</div>
+                                            <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">نقص في مهارات التفاوض (45%)</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Tiny Note */}
-                    <div className="py-3 text-center">
-                        <span className="text-[10px] text-[#284e7f]/50 font-bold tracking-wide">
-                            * مثال حي عن تحليل بيانات موظف
-                        </span>
+                        {/* Tiny Note */}
+                        <div className="mt-6 pt-4 border-t border-[#284e7f]/10 text-center">
+                            <span className="text-[10px] text-[#284e7f]/50 font-bold tracking-wide flex items-center justify-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40"></span>
+                                مثال حي من نظام التقييم الذكي
+                            </span>
+                        </div>
                     </div>
                 </div>
             </FadeIn>
