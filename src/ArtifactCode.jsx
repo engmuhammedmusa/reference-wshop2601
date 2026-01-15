@@ -39,6 +39,21 @@ const quotesData = [
 
 // --- Sub-Components ---
 
+const FloatingWhatsApp = () => (
+  <a
+    href="https://wa.me/905337642450"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-transform duration-300 hover:shadow-green-500/50 group"
+    aria-label="تواصل معنا عبر واتساب"
+  >
+    <div className="absolute inset-0 rounded-full animate-ping bg-[#25D366] opacity-30"></div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+    </svg>
+  </a>
+);
+
 const Background = () => (
   <>
     <div className="fixed inset-0 pointer-events-none z-[-2] gridGlow" />
@@ -51,22 +66,6 @@ const Background = () => (
         --accent2: 244 63 94; /* Rose 500 */
         --fg: 24 24 27;       /* Zinc 900 (Dark Text) */
         --bg: 240 249 255;    /* Very Light Blue Base */
-      }
-
-      /* FULL-WIDTH FIX */
-      html, body, #root {
-        width: 100%;
-        max-width: 100%;
-      }
-
-      #root {
-        min-height: 100%;
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
       }
 
       body {
@@ -135,7 +134,7 @@ const Background = () => (
 
 const StarIcon = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path fillRule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813a3.75 3.75 0 002.576-2.576l.813-2.846A.75.75 0 019 4.5zM9 15a.75.75 0 01.721.544l.195.682a1.125 1.125 0 00.773.773l.682.195a.75.75 0 010 1.442l-.682.195a1.125 1.125 0 00-.773.773l-.195.682a.75.75 0 01-1.442 0l-.195-.682a1.125 1.125 0 00-.773-.773l-.682-.195a.75.75 0 010-1.442l.682-.195a1.125 1.125 0 00.773-.773l.195-.682A.75.75 0 919 15z" clipRule="evenodd" />
+    <path fillRule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813a3.75 3.75 0 002.576-2.576l.813-2.846A.75.75 0 019 4.5zM9 15a.75.75 0 01.721.544l.195.682a1.125 1.125 0 00.773.773l.682.195a.75.75 0 010 1.442l-.682.195a1.125 1.125 0 00-.773.773l-.195.682a.75.75 0 01-1.442 0l-.195-.682a1.125 1.125 0 00-.773-.773l-.682-.195a.75.75 0 010-1.442l.682-.195a1.125 1.125 0 00.773-.773l.195-.682A.75.75 0 019 15z" clipRule="evenodd" />
   </svg>
 );
 
@@ -172,6 +171,7 @@ const Countdown = () => {
   const [t, setT] = useState({ d: "00", h: "00", m: "00", s: "00" });
 
   useEffect(() => {
+    // Set target date: Jan 19, 2026, 09:00:00 GMT+0300
     const target = new Date("2026-01-19T09:00:00+03:00").getTime();
     
     const tick = () => {
@@ -193,25 +193,25 @@ const Countdown = () => {
   }, []);
 
   return (
-    <div className="flex items-end justify-center sm:justify-start gap-2.5 font-mono text-rose-500" dir="ltr">
+    <div className="flex items-end justify-center sm:justify-start gap-1.5 sm:gap-2.5 font-mono text-rose-500 w-full" dir="ltr">
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.d}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">DD</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.d}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">DD</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.h}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">HH</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.h}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">HH</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.m}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">MM</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.m}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">MM</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.s}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">SS</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.s}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">SS</div>
       </div>
     </div>
   );
@@ -256,6 +256,12 @@ const TrainersCarousel = () => {
             alt={t.name}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
             loading="eager"
+            onError={(e) => {
+                e.target.onerror = null;
+                // Fallback using a solid color div if image fails
+                e.target.style.display = 'none';
+                e.target.parentNode.style.backgroundColor = '#cbd5e1'; 
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
         </div>
@@ -292,58 +298,72 @@ const TrainersCarousel = () => {
 
 export default function App() {
   return (
-    <div dir="rtl" className="min-h-screen text-zinc-900 selection:bg-rose-500/20 w-full">
+    <div dir="rtl" className="min-h-screen text-zinc-900 selection:bg-rose-500/20">
       <Background />
+      <FloatingWhatsApp />
 
-      <main className="w-full max-w-none px-0 relative flex flex-col items-center text-center">
+      <main className="w-full mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative flex flex-col items-center text-center">
         
         {/* SYSTEM HERO SECTION */}
-        <section className="py-12 w-full relative z-10">
-          {/* Main System Frame */}
-          <div className="glass rounded-[32px] border border-white/60 p-1 shadow-2xl shadow-sky-200/50 overflow-hidden relative">
+        <section className="py-8 sm:py-12 w-full max-w-7xl mx-auto relative z-10">
+          {/* Main System Frame - Optimized padding/radius for mobile */}
+          <div className="glass rounded-2xl sm:rounded-[32px] border border-white/60 p-0.5 sm:p-1 shadow-2xl shadow-sky-200/50 overflow-hidden relative">
             
             {/* Top System Bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-sky-400/50 to-transparent opacity-70"></div>
             
-            <div className="bg-white/30 rounded-[28px] p-6 md:p-10 relative overflow-hidden backdrop-blur-sm">
+            <div className="bg-white/30 rounded-xl sm:rounded-[28px] p-4 sm:p-10 relative overflow-hidden backdrop-blur-sm">
                 
                 {/* Decorative Grid inside */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-50"></div>
 
-                {/* Header Status Bar (Translated) */}
-                <div className="flex justify-between items-center mb-8 text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest relative z-10 border-b border-zinc-200/50 pb-2">
-                    <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-                        <span className="font-bold">النظام نشط</span>
+                {/* Header Navbar (Logo + CTA) */}
+                <div className="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-10 relative z-10 border-b border-zinc-200/50 pb-4 gap-4">
+                    {/* Logo Section */}
+                    <div className="flex items-center">
+                        <img 
+                          src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
+                          alt="Company Logo" 
+                          className="h-10 sm:h-12 object-contain filter drop-shadow-sm" 
+                        />
                     </div>
-                    <div className="hidden sm:block">معرف الجلسة: AI-ASSESS-2026</div>
+                    
+                    {/* Header CTA Buttons */}
+                    <div className="flex items-center gap-3">
+                        <button className="px-5 py-2.5 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-zinc-800 text-sm font-bold transition-all shadow-sm">
+                            تحميل الكتيب
+                        </button>
+                        <button className="px-5 py-2.5 rounded-full bg-gradient-to-l from-sky-500 to-rose-500 hover:scale-105 text-white text-sm font-bold transition-transform shadow-lg shadow-rose-500/20">
+                            احجز مقعدك
+                        </button>
+                    </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-12 items-center relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-8 lg:gap-12 items-center relative z-10">
                     
                     {/* Left: Main Interface Content */}
-                    <div className="flex flex-col items-center lg:items-start text-center lg:text-right">
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-right w-full">
                         
                         {/* Title Block */}
-                        <div className="relative mb-6">
-                            <h1 className="text-3xl md:text-5xl font-black text-zinc-800 leading-tight tracking-tight">
+                        <div className="relative mb-6 w-full">
+                            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-zinc-800 leading-tight tracking-tight">
                                 تحديد الاحتياجات التدريبية
-                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-4xl md:text-6xl drop-shadow-sm filter pb-1">
+                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-3xl sm:text-4xl md:text-6xl drop-shadow-sm filter pb-1">
                                     باستخدام الذكاء الاصطناعي
                                 </span>
                             </h1>
                         </div>
 
                         {/* Description */}
-                        <p className="text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
+                        <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
                             تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك، يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
-                            <span className="block mt-3 text-xl font-bold text-sky-700">
+                            <span className="block mt-3 text-lg sm:text-xl font-bold text-sky-700">
                                 هذا ليس خيالاً ، هــذه ورشتنـــا الجديـــدة
                             </span>
                         </p>
 
                         {/* Date & Counter System Block */}
-                        <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-5 backdrop-blur-md shadow-lg shadow-indigo-100/40 group hover:border-sky-300/50 transition-colors duration-300">
+                        <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-4 sm:p-5 backdrop-blur-md shadow-lg shadow-indigo-100/40 group hover:border-sky-300/50 transition-colors duration-300">
                             <div className="flex items-center justify-between mb-3 border-b border-zinc-300/30 pb-2">
                                  <span className="text-xs font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1">
                                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -354,13 +374,13 @@ export default function App() {
                             
                             <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4">
                                 <div className="text-center sm:text-right w-full sm:w-auto">
-                                    <div className="text-2xl font-black text-zinc-800">19–23 يناير</div>
-                                    <div className="text-sm font-bold text-zinc-400">2026</div>
+                                    <div className="text-xl sm:text-2xl font-black text-zinc-800">19–23 يناير</div>
+                                    <div className="text-xs sm:text-sm font-bold text-zinc-400">2026</div>
                                 </div>
                                 
                                 <div className="hidden sm:block h-8 w-px bg-zinc-300/50"></div>
 
-                                <div className="text-center sm:text-left w-full sm:w-auto bg-zinc-50/50 rounded-lg px-4 py-2 border border-zinc-200/50">
+                                <div className="text-center sm:text-left w-full sm:w-auto bg-zinc-50/50 rounded-lg px-3 py-2 border border-zinc-200/50">
                                      <div className="text-[10px] text-zinc-400 font-bold mb-2 uppercase tracking-wide">الوقت المتبقي</div>
                                      <Countdown />
                                 </div>
@@ -421,36 +441,36 @@ export default function App() {
                                  
                                  <div className="space-y-3 relative">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="text-[11px] font-bold text-zinc-700">فحص بيانات الأداء</div>
-                                            <div className="text-[9px] text-zinc-500">تم تحليل 450 سجل وظيفي</div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-[11px] font-bold text-zinc-700 truncate">فحص بيانات الأداء</div>
+                                            <div className="text-[9px] text-zinc-500 truncate">تم تحليل 450 سجل وظيفي</div>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="text-[11px] font-bold text-zinc-700">تنبيه: فجوة مهارات</div>
-                                            <div className="text-[9px] text-zinc-500">نقص في مهارات التفاوض (45%)</div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-[11px] font-bold text-zinc-700 truncate">تنبيه: فجوة مهارات</div>
+                                            <div className="text-[9px] text-zinc-500 truncate">نقص في مهارات التفاوض (45%)</div>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3 opacity-70">
-                                        <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="text-[11px] font-bold text-zinc-700">توليد خطة علاجية</div>
-                                            <div className="text-[9px] text-zinc-500">جاري إنشاء المسار...</div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-[11px] font-bold text-zinc-700 truncate">توليد خطة علاجية</div>
+                                            <div className="text-[9px] text-zinc-500 truncate">جاري إنشاء المسار...</div>
                                         </div>
                                     </div>
                                  </div>
-                             </div>
+                            </div>
 
                          </div>
                     </div>
@@ -461,7 +481,7 @@ export default function App() {
         </section>
 
         {/* QUOTES */}
-        <section className="w-full pb-12">
+        <section className="w-full max-w-7xl mx-auto pb-12">
           <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-rose-100/30">
             <div className="flex items-center justify-center gap-2 text-xs text-zinc-500 mb-2 font-bold uppercase tracking-wider">
                <StarIcon className="w-4 h-4 text-rose-400" /> RefeAI Says
@@ -473,16 +493,16 @@ export default function App() {
         </section>
 
         {/* TRAINERS */}
-        <section id="trainers" className="w-full pb-12">
+        <section id="trainers" className="w-full max-w-7xl mx-auto pb-12">
           <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">
-            مدربونا ليسوا متحدثين؛
+            مدربونا ليسوا متحدثين…
             <span className="block text-zinc-500 mt-2 text-2xl">هم مهندسو التحول</span>
           </h2>
           <TrainersCarousel />
         </section>
 
         {/* REFE AI Chat */}
-        <section id="refeai" className="w-full pb-12">
+        <section id="refeai" className="w-full max-w-7xl mx-auto pb-12">
           <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">RefeAI</h2>
           <span className="block text-zinc-500 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
           
@@ -539,7 +559,7 @@ export default function App() {
         </section>
 
         {/* FINAL CTA */}
-        <section className="w-full pb-16">
+        <section className="w-full max-w-7xl mx-auto pb-16">
           <div className="glass rounded-[26px] p-8 shadow-2xl shadow-rose-100/50">
             <h3 className="text-2xl md:text-4xl font-black mb-3 text-zinc-900">كن جزءًا من مستقبل التدريب الذكي</h3>
             <p className="text-zinc-600 max-w-[700px] mx-auto leading-relaxed mb-6 font-medium">
