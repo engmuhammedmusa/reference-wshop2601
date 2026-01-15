@@ -333,51 +333,33 @@ export default function App() {
       {/* Main Container */}
       <main className="w-full relative flex flex-col items-center text-center">
         
-        {/* NEW HERO SECTION - SAAS STYLE */}
-        <section className="w-full relative flex flex-col items-center pt-24 pb-48 sm:pt-32 sm:pb-64 overflow-hidden">
+        {/* NEW HERO SECTION - SAAS STYLE (NO IMAGE BACKGROUND) */}
+        <section className="w-full relative flex flex-col items-center pt-24 pb-20 sm:pt-32 sm:pb-32 overflow-hidden">
             
-            {/* Full Width Background Image */}
-            <div className="absolute inset-0 z-0">
-                {/* Use Direct Link format for Google Drive */}
-                <img 
-                    src="https://drive.google.com/uc?export=view&id=1NYayb9JQ6p-nxdQJsxrYdEvv8XqyMdkP" 
-                    onError={(e) => e.target.src = "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop"}
-                    alt="AI Technology Background" 
-                    className="w-full h-full object-cover"
-                />
-                
-                {/* GLASSY LAYER: White overlay with 60% opacity */}
-                <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px]"></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/50 to-transparent"></div>
-                
-                {/* SMOOTH INTEGRATION: Gradient at the bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#e2e8f0] via-[#e2e8f0]/60 to-transparent"></div>
-            </div>
-
-            {/* Fixed Navbar */}
-            <nav className="fixed top-6 left-0 right-0 z-50 w-[92%] max-w-7xl mx-auto px-4 py-3 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
+            {/* Scrollable Navbar (Absolute) - Thinner and Moves with Page */}
+            <nav className="absolute top-6 left-0 right-0 z-50 w-[92%] max-w-7xl mx-auto px-4 py-2 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
                 {/* Logo Section */}
-                <div className="flex items-center mb-3 md:mb-0">
+                <div className="flex items-center mb-2 md:mb-0">
                     <img 
                       src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
                       alt="Company Logo" 
-                      className="h-10 sm:h-12 object-contain filter drop-shadow-sm" 
+                      className="h-9 sm:h-10 object-contain filter drop-shadow-sm" 
                     />
                 </div>
                 
                 {/* Header CTA Buttons */}
                 <div className="flex items-center gap-3">
-                    <button className="px-6 py-2 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-[#284e7f] text-sm font-bold transition-all shadow-sm">
+                    <button className="px-5 py-2 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-[#284e7f] text-xs sm:text-sm font-bold transition-all shadow-sm">
                         تحميل الكتيب
                     </button>
-                    <button className="px-6 py-2 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] hover:scale-105 text-white text-sm font-bold transition-transform shadow-lg shadow-[#b11e22]/20">
+                    <button className="px-5 py-2 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] hover:scale-105 text-white text-xs sm:text-sm font-bold transition-transform shadow-lg shadow-[#b11e22]/20">
                         احجز مقعدك
                     </button>
                 </div>
             </nav>
 
             {/* Hero Content Area - SaaS Style */}
-            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
+            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center mt-8">
                 
                 {/* Announcement Pill */}
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 border border-[#284e7f]/20 shadow-sm mb-6 backdrop-blur-sm animate-[fadeIn_1s_ease-out]">
@@ -416,14 +398,19 @@ export default function App() {
                 </div>
 
                 {/* Countdown / Stats Bar - Centered with equal spacing */}
-                <div className="w-full max-w-2xl mx-auto mt-12 bg-white/50 border border-[#284e7f]/10 rounded-xl p-4 backdrop-blur-md shadow-md hover:shadow-lg transition-all duration-300">
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
-                        <div className="text-center">
+                <div className="w-full max-w-2xl mx-auto mt-6 mb-12 bg-white/50 border border-[#284e7f]/10 rounded-xl p-6 backdrop-blur-md shadow-md hover:shadow-lg transition-all duration-300">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
+                        {/* Date */}
+                        <div className="flex flex-col items-center justify-center h-full">
                             <div className="text-sm font-bold text-[#284e7f]/60 mb-1">تاريخ الورشة</div>
-                            <div className="text-xl font-black text-[#284e7f]">19–23 يناير</div>
+                            <div className="text-xl font-black text-[#284e7f]">19–23 يناير <span className="text-base font-bold text-[#284e7f]/50">2026</span></div>
                         </div>
-                        <div className="h-px w-24 sm:h-10 sm:w-px bg-[#284e7f]/20"></div>
-                        <div className="flex flex-col items-center">
+                        
+                        {/* Divider */}
+                        <div className="h-px w-32 sm:h-12 sm:w-px bg-[#284e7f]/20"></div>
+
+                        {/* Countdown */}
+                        <div className="flex flex-col items-center justify-center h-full">
                              <div className="text-[10px] text-[#284e7f]/60 font-bold mb-1 uppercase tracking-wider">الوقت المتبقي</div>
                              <Countdown />
                         </div>
@@ -434,7 +421,7 @@ export default function App() {
         </section>
 
         {/* DASHBOARD PRODUCT SHOT - Overlapping Hero */}
-        <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-32 sm:-mt-48 mb-20">
+        <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-20 mb-20">
             <FadeIn>
                 <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl">
                     
