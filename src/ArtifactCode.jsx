@@ -384,11 +384,11 @@ const TrainersCarousel = () => {
 
 export default function App() {
   return (
-    <div dir="rtl" className="min-h-screen w-screen overflow-x-hidden text-[#284e7f] selection:bg-[#b11e22]/20">
+    <div dir="rtl" className="min-h-screen w-full overflow-x-hidden text-[#284e7f] selection:bg-[#b11e22]/20">
       <Background />
       <FloatingWhatsApp />
 
-      <main className="w-full relative flex flex-col items-center text-center overflow-x-hidden">
+      <main className="w-full relative flex flex-col items-center text-center mx-auto overflow-x-hidden">
         
         {/* NEW HERO SECTION - SAAS STYLE */}
         <section className="w-full relative flex flex-col items-center pt-24 pb-12 overflow-hidden">
