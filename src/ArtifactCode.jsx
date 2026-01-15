@@ -338,7 +338,7 @@ export default function App() {
                         <p className="text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
                             تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك، يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
                             <span className="block mt-3 text-xl font-bold text-sky-700">
-                                هذا ليس خيالاً ، هــهذه ورشتنـــا الجديـــدة
+                                هذا ليس خيالاً ، هــذه ورشتنـــا الجديـــدة
                             </span>
                         </p>
 
@@ -475,7 +475,7 @@ export default function App() {
         {/* TRAINERS */}
         <section id="trainers" className="w-full pb-12">
           <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">
-            مدربونا ليسوا متحدثين…
+            مدربونا ليسوا متحدثين؛
             <span className="block text-zinc-500 mt-2 text-2xl">هم مهندسو التحول</span>
           </h2>
           <TrainersCarousel />
