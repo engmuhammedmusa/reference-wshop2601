@@ -372,7 +372,7 @@ export default function App() {
       <main className="w-full relative flex flex-col items-center text-center">
         
         {/* NEW HERO SECTION - SAAS STYLE */}
-        <section className="w-full relative flex flex-col items-center pt-24 pb-20 sm:pt-32 sm:pb-32 overflow-hidden">
+        <section className="w-full relative flex flex-col items-center pt-24 pb-12 overflow-hidden">
             
             {/* Scrollable Navbar (Absolute) */}
             <nav className="absolute top-6 left-0 right-0 z-50 w-[92%] max-w-7xl mx-auto px-4 py-2 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
@@ -398,13 +398,13 @@ export default function App() {
                 
                 <FloatingParticles />
 
-                {/* Announcement Pill - Date as Requested (Attention Grabber) */}
-                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/90 border border-[#b11e22]/30 shadow-[0_0_20px_rgba(177,30,34,0.15)] mb-8 backdrop-blur-xl animate-[fadeIn_1s_ease-out] relative z-10 hover:scale-105 transition-transform duration-300">
+                {/* Date Announcement - Prominent & Glowing (Replaced "AI Assessment Center" Pill) */}
+                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/90 border border-[#b11e22]/30 shadow-[0_0_25px_rgba(177,30,34,0.2)] mb-8 backdrop-blur-xl animate-[fadeIn_1s_ease-out] relative z-10 hover:scale-105 transition-transform duration-300">
                     <span className="relative flex h-3 w-3">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-3 w-3 bg-[#b11e22]"></span>
                     </span>
-                    <span className="text-base font-black text-[#284e7f] tracking-wide">19–23 يناير 2026</span>
+                    <span className="text-lg font-black text-[#b11e22] tracking-wide font-mono">19–23 يناير 2026</span>
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#284e7f] leading-tight tracking-tight mb-4 text-center relative z-10">
@@ -414,14 +414,16 @@ export default function App() {
                     </span>
                 </h1>
 
-                <p className="text-lg sm:text-xl text-[#284e7f]/80 leading-relaxed max-w-2xl mb-10 font-medium text-center relative z-10">
+                {/* Subheadline */}
+                <p className="text-lg sm:text-xl text-zinc-600 leading-relaxed max-w-2xl mb-10 font-medium text-center relative z-10">
                     كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                    <span className="font-bold text-[#b11e22]">
+                    <span className="font-bold text-zinc-900">
                         أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.
                     </span>
                 </p>
 
-                <div className="flex flex-wrap justify-center gap-4 mb-8 relative z-10">
+                {/* Primary CTAs */}
+                <div className="flex flex-wrap justify-center gap-4 mb-12 relative z-10">
                     <button className="px-8 py-4 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] text-white font-black text-lg hover:-translate-y-1 transition-all shadow-xl shadow-[#b11e22]/30 flex items-center gap-2">
                         <span>سجل الآن</span>
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -430,98 +432,154 @@ export default function App() {
                         عرض التفاصيل
                     </button>
                 </div>
+            </div>
+        </section>
 
-                {/* DASHBOARD PRODUCT SHOT - MOVED HERE & MOVED UP */}
-                <FadeIn>
-                    <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl max-w-4xl mx-auto -mt-4 relative z-10">
-                        <div className="h-8 bg-[#284e7f]/5 border-b border-[#284e7f]/5 flex items-center px-4 gap-2">
-                            <div className="w-2.5 h-2.5 rounded-full bg-red-400/60"></div>
-                            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60"></div>
-                            <div className="w-2.5 h-2.5 rounded-full bg-green-400/60"></div>
-                            <div className="ml-auto text-[10px] font-mono text-[#284e7f]/40">AI Assessment Center v2.0</div>
+        {/* DASHBOARD PRODUCT SHOT - Standalone Section (Moved Up & Centered) */}
+        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 relative z-20">
+            <FadeIn>
+                <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl">
+                    <div className="h-8 bg-[#284e7f]/5 border-b border-[#284e7f]/5 flex items-center px-4 gap-2">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-400/60"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-400/60"></div>
+                        <div className="ml-auto text-[10px] font-mono text-[#284e7f]/40">AI Assessment Center v2.0</div>
+                    </div>
+                    
+                    <div className="p-6 sm:p-8 bg-white/40">
+                        {/* KPI Cards Row - New Feature */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
+                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">الموظفون قيد التقييم</div>
+                                <div className="text-xl sm:text-2xl font-black text-[#284e7f]">1,240</div>
+                            </div>
+                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
+                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">معدل اكتمال المهارات</div>
+                                <div className="text-xl sm:text-2xl font-black text-green-600">87%</div>
+                            </div>
+                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
+                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">الفجوات المكتشفة</div>
+                                <div className="text-xl sm:text-2xl font-black text-[#b11e22]">342</div>
+                            </div>
+                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
+                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">دقة التنبؤ</div>
+                                <div className="text-xl sm:text-2xl font-black text-[#284e7f]">98.5%</div>
+                            </div>
                         </div>
-                        <div className="p-6 sm:p-10 bg-white/40">
-                            <div className="text-center mb-8">
-                                <p className="text-lg sm:text-xl font-bold text-[#284e7f] leading-snug">
-                                    من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ
-                                </p>
-                                <p className="text-base sm:text-lg font-medium text-[#b11e22] mt-2">
-                                    هذا هو الفرق بين التقييم التقليدي، ومركز التقييم الذكي
-                                </p>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
-                                    <div className="flex justify-between items-start mb-6">
-                                        <div className="text-right">
-                                            <div className="text-xs text-[#284e7f]/60 font-bold mb-1">تحليل الكفاءات الحية</div>
-                                            <div className="text-base font-black text-[#284e7f]">
-                                                الموظف: <span className="text-[#b11e22]">#8492</span>
-                                            </div>
-                                        </div>
-                                        <div className="px-2 py-1 rounded bg-green-100 text-green-700 text-[10px] font-bold border border-green-200">نشط الآن</div>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div>
-                                            <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
-                                                <span>القيادة الاستراتيجية</span>
-                                                <span>85%</span>
-                                            </div>
-                                            <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
-                                                <div className="h-full bg-[#284e7f] w-[85%] rounded-full"></div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
-                                                <span>التحليل الرقمي</span>
-                                                <span className="text-[#b11e22]">42% (فجوة)</span>
-                                            </div>
-                                            <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
-                                                <div className="h-full bg-[#b11e22] w-[42%] rounded-full"></div>
-                                            </div>
+
+                        {/* Text Header Inside Dashboard */}
+                        <div className="text-center mb-8">
+                            <p className="text-lg sm:text-xl font-bold text-[#284e7f] leading-snug">
+                                من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ
+                            </p>
+                            <p className="text-base sm:text-lg font-bold text-[#b11e22] mt-2">
+                                هذا هو الفرق بين التقييم التقليدي، ومركز التقييم الذكي
+                            </p>
+                        </div>
+
+                        {/* Main Dashboards Grid (3 Columns) */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            
+                            {/* Col 1: Skill Analysis Simulator */}
+                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="text-right">
+                                        <div className="text-xs text-[#284e7f]/60 font-bold mb-1">تحليل الكفاءات الحية</div>
+                                        <div className="text-base font-black text-[#284e7f]">
+                                            الموظف: <span className="text-[#b11e22]">#8492</span>
                                         </div>
                                     </div>
+                                    <div className="px-2 py-1 rounded bg-green-100 text-green-700 text-[10px] font-bold border border-green-200">نشط الآن</div>
                                 </div>
-                                <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden text-right hover:shadow-md transition-shadow"> 
-                                    <div className="flex justify-between items-center mb-4 border-b border-[#284e7f]/10 pb-3">
-                                        <div className="text-xs text-[#284e7f]/60 font-bold uppercase">سجل المعالجة</div>
-                                        <div className="flex items-center gap-1.5">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                            <span className="text-[10px] text-emerald-600 font-bold">متصل</span>
+                                <div className="space-y-4">
+                                    <div>
+                                        <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
+                                            <span>القيادة الاستراتيجية</span>
+                                            <span>85%</span>
+                                        </div>
+                                        <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                            <div className="h-full bg-[#284e7f] w-[85%] rounded-full"></div>
                                         </div>
                                     </div>
-                                    <div className="space-y-3 relative">
-                                        <div className="flex items-center gap-3 p-2 rounded-lg bg-[#284e7f]/5">
-                                            <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#284e7f] shadow-sm">
-                                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="text-xs font-bold text-[#284e7f] truncate">فحص بيانات الأداء</div>
-                                                <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">تم تحليل 450 سجل وظيفي</div>
-                                            </div>
+                                    <div>
+                                        <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
+                                            <span>التحليل الرقمي</span>
+                                            <span className="text-[#b11e22]">42% (فجوة)</span>
                                         </div>
-                                        <div className="flex items-center gap-3 p-2 rounded-lg bg-[#b11e22]/5">
-                                            <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#b11e22] shadow-sm">
-                                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="text-xs font-bold text-[#284e7f] truncate">تنبيه: فجوة مهارات</div>
-                                                <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">نقص في مهارات التفاوض (45%)</div>
-                                            </div>
+                                        <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                            <div className="h-full bg-[#b11e22] w-[42%] rounded-full"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-6 pt-4 border-t border-[#284e7f]/10 text-center">
-                                <span className="text-[10px] text-[#284e7f]/50 font-bold tracking-wide flex items-center justify-center gap-1">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40"></span>
-                                    مثال حي من نظام التقييم الذكي
-                                </span>
+
+                            {/* Col 2: Recommended Path (New) */}
+                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow">
+                                <div className="flex justify-between items-center mb-4 border-b border-[#284e7f]/10 pb-3">
+                                    <div className="text-xs text-[#284e7f]/60 font-bold uppercase">مسار التطوير المقترح</div>
+                                    <BrainIcon className="w-4 h-4 text-[#284e7f]" />
+                                </div>
+                                <div className="space-y-3">
+                                    <div className="flex items-start gap-3">
+                                        <div className="mt-1 w-2 h-2 rounded-full bg-[#284e7f]"></div>
+                                        <div>
+                                            <div className="text-xs font-bold text-[#284e7f]">ورشة اتخاذ القرار</div>
+                                            <div className="text-[10px] text-[#284e7f]/60">الأولوية: عالية • 3 أيام</div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="mt-1 w-2 h-2 rounded-full bg-[#b11e22]"></div>
+                                        <div>
+                                            <div className="text-xs font-bold text-[#284e7f]">برنامج القيادة الرقمية</div>
+                                            <div className="text-[10px] text-[#284e7f]/60">لسد الفجوة • 5 أسابيع</div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 p-2 bg-[#284e7f]/5 rounded text-[10px] text-[#284e7f] font-medium text-center">
+                                        توصية AI: المسار ب سيوفر 15% من الوقت
+                                    </div>
+                                </div>
                             </div>
+
+                            {/* Col 3: Simplified Live Log */}
+                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden text-right hover:shadow-md transition-shadow"> 
+                                <div className="flex justify-between items-center mb-4 border-b border-[#284e7f]/10 pb-3">
+                                    <div className="text-xs text-[#284e7f]/60 font-bold uppercase">سجل المعالجة</div>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        <span className="text-[10px] text-emerald-600 font-bold">متصل</span>
+                                    </div>
+                                </div>
+                                <div className="space-y-3 relative">
+                                    <div className="flex items-center gap-3 p-2 rounded-lg bg-[#284e7f]/5">
+                                        <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#284e7f] shadow-sm">
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-xs font-bold text-[#284e7f] truncate">تحليل البيانات</div>
+                                            <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">تمت معالجة 450 سجل</div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-3 p-2 rounded-lg bg-[#b11e22]/5">
+                                        <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#b11e22] shadow-sm">
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-xs font-bold text-[#284e7f] truncate">تنبيه: فجوة</div>
+                                            <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">نقص في التفاوض (45%)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-6 pt-4 border-t border-[#284e7f]/10 text-center">
+                            <span className="text-[10px] text-[#284e7f]/50 font-bold tracking-wide flex items-center justify-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40"></span>
+                                مثال حي من نظام التقييم الذكي
+                            </span>
                         </div>
                     </div>
-                </FadeIn>
-
-            </div>
+                </div>
+            </FadeIn>
         </section>
 
         {/* TRAINERS - Moved Here */}
