@@ -389,10 +389,10 @@ export default function App() {
                             {/* Header / Text Section */}
                             <div className="p-6 pb-4 relative overflow-hidden text-center">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-[#284e7f]/5 rounded-bl-full -mr-4 -mt-4"></div>
-                                <p className="relative z-10 text-lg sm:text-xl font-bold text-[#284e7f] leading-snug">
+                                <p className="relative z-10 text-xs sm:text-sm font-bold text-[#284e7f] leading-snug">
                                     من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ.
                                 </p>
-                                <p className="relative z-10 text-lg sm:text-xl font-medium text-[#b11e22] mt-2">
+                                <p className="relative z-10 text-xs sm:text-sm font-medium text-[#b11e22] mt-2">
                                     هذا هو الفرق بين التقييم التقليدي، ومركز التقييم الذكي.
                                 </p>
                             </div>
