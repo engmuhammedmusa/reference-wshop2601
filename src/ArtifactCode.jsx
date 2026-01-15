@@ -302,54 +302,46 @@ export default function App() {
       <Background />
       <FloatingWhatsApp />
 
-      {/* Main Container: Removed max-width constraint (w-full only), Added responsive padding */}
-      <main className="w-full mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative flex flex-col items-center text-center">
+      {/* Main Container - Adjusted to allow full width hero */}
+      <main className="w-full relative flex flex-col items-center text-center">
         
-        {/* SYSTEM HERO SECTION: Added max-w-7xl constraint */}
-        <section className="py-8 sm:py-12 w-full max-w-7xl mx-auto relative z-10">
-          {/* Main System Frame - Optimized padding/radius for mobile */}
-          <div className="glass rounded-2xl sm:rounded-[32px] border border-white/60 p-0.5 sm:p-1 shadow-2xl shadow-sky-200/50 overflow-hidden relative">
+        {/* HERO SECTION: Full Width & Height, No Rounded Block */}
+        <section className="w-full min-h-screen relative flex flex-col overflow-hidden">
             
-            {/* Top System Bar */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-sky-400/50 to-transparent opacity-70"></div>
-            
-            <div className="bg-white/30 rounded-xl sm:rounded-[28px] p-4 sm:p-10 relative overflow-hidden backdrop-blur-sm">
-                
-                {/* Decorative Grid inside */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-50"></div>
-
-                {/* Header Navbar (Logo + CTA) */}
-                <div className="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-10 relative z-10 border-b border-zinc-200/50 pb-4 gap-4">
-                    {/* Logo Section */}
-                    <div className="flex items-center">
-                        <img 
-                          src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
-                          alt="Company Logo" 
-                          className="h-10 sm:h-12 object-contain filter drop-shadow-sm" 
-                        />
-                    </div>
-                    
-                    {/* Header CTA Buttons */}
-                    <div className="flex items-center gap-3">
-                        <button className="px-5 py-2.5 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-zinc-800 text-sm font-bold transition-all shadow-sm">
-                            تحميل الكتيب
-                        </button>
-                        <button className="px-5 py-2.5 rounded-full bg-gradient-to-l from-sky-500 to-rose-500 hover:scale-105 text-white text-sm font-bold transition-transform shadow-lg shadow-rose-500/20">
-                            احجز مقعدك
-                        </button>
-                    </div>
+            {/* Header Navbar (Logo + CTA) - Moved to top as requested */}
+            <nav className="w-full px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center z-20 relative border-b border-white/20 bg-white/10 backdrop-blur-sm">
+                {/* Logo Section */}
+                <div className="flex items-center mb-4 md:mb-0">
+                    <img 
+                      src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
+                      alt="Company Logo" 
+                      className="h-10 sm:h-12 object-contain filter drop-shadow-sm" 
+                    />
                 </div>
+                
+                {/* Header CTA Buttons */}
+                <div className="flex items-center gap-3">
+                    <button className="px-5 py-2.5 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-zinc-800 text-sm font-bold transition-all shadow-sm">
+                        تحميل الكتيب
+                    </button>
+                    <button className="px-5 py-2.5 rounded-full bg-gradient-to-l from-sky-500 to-rose-500 hover:scale-105 text-white text-sm font-bold transition-transform shadow-lg shadow-rose-500/20">
+                        احجز مقعدك
+                    </button>
+                </div>
+            </nav>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-8 lg:gap-12 items-center relative z-10">
+            {/* Main Content Area - Vertically Centered */}
+            <div className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-8 lg:gap-12 items-center w-full py-12">
                     
-                    {/* Left: Main Interface Content */}
+                    {/* Left: Text Content */}
                     <div className="flex flex-col items-center lg:items-start text-center lg:text-right w-full">
                         
                         {/* Title Block */}
                         <div className="relative mb-6 w-full">
-                            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-zinc-800 leading-tight tracking-tight">
+                            <h1 className="text-lg sm:text-xl md:text-3xl font-black text-zinc-800 leading-tight tracking-tight">
                                 تحديد الاحتياجات التدريبية
-                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-3xl sm:text-4xl md:text-6xl drop-shadow-sm filter pb-1">
+                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-xl sm:text-2xl md:text-4xl drop-shadow-sm filter pb-1">
                                     باستخدام الذكاء الاصطناعي
                                 </span>
                             </h1>
@@ -357,8 +349,8 @@ export default function App() {
 
                         {/* Description */}
                         <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
-                            كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،
-                            <span className="block mt-3 text-lg sm:text-xl font-bold text-sky-700">
+                            كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
+                            <span className="font-bold text-zinc-900">
                                 أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.
                             </span>
                         </p>
@@ -370,7 +362,6 @@ export default function App() {
                                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                     تاريخ الورشة
                                  </span>
-                                 <span className="text-[10px] font-mono font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">متزامن</span>
                             </div>
                             
                             <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4">
@@ -478,11 +469,10 @@ export default function App() {
 
                 </div>
             </div>
-          </div>
         </section>
 
-        {/* QUOTES: Added max-w-7xl constraint */}
-        <section className="w-full max-w-7xl mx-auto pb-12">
+        {/* QUOTES: Added max-w-7xl constraint and padding */}
+        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
           <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-rose-100/30">
             <div className="flex items-center justify-center gap-2 text-xs text-zinc-500 mb-2 font-bold uppercase tracking-wider">
                <StarIcon className="w-4 h-4 text-rose-400" /> RefeAI Says
@@ -493,8 +483,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* TRAINERS: Added max-w-7xl constraint */}
-        <section id="trainers" className="w-full max-w-7xl mx-auto pb-12">
+        {/* TRAINERS: Added max-w-7xl constraint and padding */}
+        <section id="trainers" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
           <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">
             مدربونا ليسوا متحدثين…
             <span className="block text-zinc-500 mt-2 text-2xl">هم مهندسو التحول</span>
@@ -502,8 +492,8 @@ export default function App() {
           <TrainersCarousel />
         </section>
 
-        {/* REFE AI Chat: Added max-w-7xl constraint */}
-        <section id="refeai" className="w-full max-w-7xl mx-auto pb-12">
+        {/* REFE AI Chat: Added max-w-7xl constraint and padding */}
+        <section id="refeai" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
           <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">RefeAI</h2>
           <span className="block text-zinc-500 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
           
@@ -559,8 +549,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* FINAL CTA: Added max-w-7xl constraint */}
-        <section className="w-full max-w-7xl mx-auto pb-16">
+        {/* FINAL CTA: Added max-w-7xl constraint and padding */}
+        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <div className="glass rounded-[26px] p-8 shadow-2xl shadow-rose-100/50">
             <h3 className="text-2xl md:text-4xl font-black mb-3 text-zinc-900">كن جزءًا من مستقبل التدريب الذكي</h3>
             <p className="text-zinc-600 max-w-[700px] mx-auto leading-relaxed mb-6 font-medium">
