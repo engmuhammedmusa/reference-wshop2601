@@ -402,16 +402,23 @@ export default function App() {
                                 {/* 1. Skill Analysis Simulator */}
                                 <div className="bg-white/60 border border-white/60 rounded-xl p-4 shadow-sm backdrop-blur-sm relative overflow-hidden group">
                                     <div className="absolute top-0 right-0 w-12 h-12 bg-[#284e7f]/5 rounded-bl-full"></div>
-                                    <div className="flex justify-between items-center mb-3">
-                                        <div className="text-xs text-[#284e7f]/60 font-bold">تحليل الكفاءات الحية</div>
-                                        <span className="flex h-2 w-2 relative">
+                                    
+                                    {/* Header with Employee ID */}
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="text-right">
+                                            <div className="text-[10px] text-[#284e7f]/60 font-bold mb-1">تحليل الكفاءات الحية</div>
+                                            <div className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">
+                                                الموظف: #8492
+                                            </div>
+                                        </div>
+                                        <span className="flex h-2 w-2 relative mt-1">
                                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#284e7f] opacity-75"></span>
                                             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#284e7f]"></span>
                                         </span>
                                     </div>
                                     
                                     <div className="space-y-3">
-                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono">
+                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono font-bold">
                                             <span>القيادة الاستراتيجية</span>
                                             <span>85%</span>
                                         </div>
@@ -419,7 +426,7 @@ export default function App() {
                                             <div className="h-full bg-[#284e7f] w-[85%] rounded-full animate-[pulse_3s_infinite]"></div>
                                         </div>
                                         
-                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono">
+                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono font-bold">
                                             <span>التحليل الرقمي</span>
                                             <span>42% <span className="text-[#b11e22] font-bold">(فجوة)</span></span>
                                         </div>
@@ -428,9 +435,8 @@ export default function App() {
                                         </div>
                                     </div>
                                     
-                                    <div className="mt-3 pt-2 border-t border-zinc-200/50 flex justify-between items-center">
-                                        <span className="text-[10px] text-[#284e7f]/60">الموظف: #8492</span>
-                                        <span className="text-[10px] bg-[#284e7f]/10 text-[#284e7f] px-1.5 py-0.5 rounded border border-[#284e7f]/20">جاري المعالجة</span>
+                                    <div className="mt-3 pt-2 border-t border-zinc-200/50 flex justify-end items-center">
+                                        <span className="text-[10px] bg-[#284e7f]/10 text-[#284e7f] px-1.5 py-0.5 rounded border border-[#284e7f]/20 font-bold">جاري المعالجة</span>
                                     </div>
                                 </div>
 
@@ -451,7 +457,7 @@ export default function App() {
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-[11px] font-bold text-[#284e7f] truncate">فحص بيانات الأداء</div>
-                                                <div className="text-[9px] text-[#284e7f]/60 truncate">تم تحليل 450 سجل وظيفي</div>
+                                                <div className="text-[9px] text-[#284e7f]/60 truncate font-bold">تم تحليل 450 سجل وظيفي</div>
                                             </div>
                                         </div>
 
@@ -461,7 +467,7 @@ export default function App() {
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-[11px] font-bold text-[#284e7f] truncate">تنبيه: فجوة مهارات</div>
-                                                <div className="text-[9px] text-[#284e7f]/60 truncate">نقص في مهارات التفاوض (45%)</div>
+                                                <div className="text-[9px] text-[#284e7f]/60 truncate font-bold">نقص في مهارات التفاوض (45%)</div>
                                             </div>
                                         </div>
 
@@ -471,11 +477,18 @@ export default function App() {
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-[11px] font-bold text-[#284e7f] truncate">توليد خطة علاجية</div>
-                                                <div className="text-[9px] text-[#284e7f]/60 truncate">جاري إنشاء المسار...</div>
+                                                <div className="text-[9px] text-[#284e7f]/60 truncate font-bold">جاري إنشاء المسار...</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* Tiny Note */}
+                            <div className="py-3 text-center">
+                                <span className="text-[10px] text-[#284e7f]/50 font-bold tracking-wide">
+                                    * مثال حي عن تحليل بيانات موظف
+                                </span>
                             </div>
                         </div>
                     </div>
