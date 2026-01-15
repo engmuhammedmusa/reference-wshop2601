@@ -392,18 +392,20 @@ export default function App() {
         
         {/* HERO SECTION - Banner */}
         <section className="w-full relative flex flex-col items-center overflow-hidden">
-          {/* Banner Background */}
+          {/* Banner */}
           <div className="w-full relative overflow-hidden h-[520px] sm:h-[600px]">
             <img
-              src="https://lh3.googleusercontent.com/d/1PbfSHIaKhHRnhiW7MfCRHGNtFaCLWFLt"
+              src="https://lh3.googleusercontent.com/d/1ZARm2qjsnI9E9-J7ioLeMai43s2mYUdc"
               alt="Hero Banner"
               className="absolute inset-0 w-full h-full object-cover"
               loading="eager"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/65 via-slate-900/20 to-transparent" />
+
+            {/* Contrast overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/25 to-transparent" />
             <div className="absolute inset-0 bg-[#0b1220]/10" />
 
-            {/* Scrollable Navbar (Absolute over banner) */}
+            {/* Navbar */}
             <nav className="absolute top-6 left-0 right-0 z-20 w-[92%] max-w-7xl mx-auto px-4 py-2 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
               <div className="flex items-center mb-2 md:mb-0">
                 <img
@@ -422,47 +424,43 @@ export default function App() {
               </div>
             </nav>
 
-            {/* Smooth fade at the end of the banner */}
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-[#e2e8f0]" />
-          </div>
-
-          {/* Content UNDER the image (no overlay) */}
-          <div className="w-full bg-[#e2e8f0]">
-            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-              <div className="glass rounded-[26px] p-6 sm:p-8 border border-white/60 shadow-2xl shadow-black/10 bg-white/70">
+            {/* Title + Paragraph floating on bottom of image */}
+            <div className="absolute inset-x-0 bottom-6 sm:bottom-8 z-10">
+              <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 {/* Date */}
-                <div className="flex justify-center mb-5">
-                  <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/90 border border-[#b11e22]/30 shadow-[0_0_25px_rgba(177,30,34,0.15)] backdrop-blur-xl">
+                <div className="flex justify-center mb-4">
+                  <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/85 border border-white/40 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl">
                     <span className="relative flex h-2.5 w-2.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#b11e22]"></span>
                     </span>
-                    <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-wide">
+                    <span className="text-sm sm:text-base font-black text-[#284e7f] tracking-wide">
                       19–23 يناير 2026
                     </span>
                   </div>
                 </div>
 
                 {/* Title */}
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#284e7f] leading-tight tracking-tight text-center">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white drop-shadow-[0_12px_28px_rgba(0,0,0,0.55)]">
                   تحديد الاحتياجات التدريبية
-                  <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] via-[#284e7f] to-[#b11e22] drop-shadow-sm filter pb-2">
-                    باستخدام الذكاء الاصطناعي
-                  </span>
+                  <span className="block mt-2 text-white/95">باستخدام الذكاء الاصطناعي</span>
                 </h1>
 
                 {/* Paragraph */}
-                <p className="mt-5 text-base sm:text-lg text-zinc-700 leading-relaxed max-w-3xl mx-auto font-medium text-center">
+                <p className="mt-4 text-base sm:text-lg text-white/90 leading-relaxed max-w-3xl mx-auto font-medium drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)]">
                   كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                  <span className="font-bold text-zinc-900">أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.</span>
+                  <span className="font-bold text-white">أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.</span>
                 </p>
               </div>
             </div>
+
+            {/* Smooth fade into page background */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-[#e2e8f0]" />
           </div>
         </section>
 
         {/* DASHBOARD PRODUCT SHOT - Standalone Section (Moved Up & Centered) */}
-        <section className="w-full pb-20 relative z-20">
+        <section className="w-full pb-20 relative z-20 mt-6 sm:mt-10">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeIn>
                 <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl">
