@@ -87,9 +87,9 @@ const Background = () => (
     <div className="fixed inset-0 pointer-events-none z-[-1] softGrid" />
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-
+      
       :root {
+        --font-tajawal: 'Tajawal', sans-serif;
         --accent: 40 78 127; 
         --accent2: 177 30 34; 
         --fg: 40 78 127;
@@ -98,12 +98,23 @@ const Background = () => (
 
       body {
         margin: 0;
-        font-family: "Tajawal", sans-serif;
+        font-family: var(--font-tajawal) !important;
         background-color: rgb(var(--bg));
         background-attachment: fixed;
         color: #284e7f;
         overflow-x: hidden;
       }
+
+      html, body, #root, #__next, * {
+        font-family: var(--font-tajawal) !important;
+      }
+
+      code, pre {
+        font-family: var(--font-tajawal) !important;
+      }
+
+      /* Force Tajawal everywhere (including Tailwind's) */
+      .font-mono { font-family: "Tajawal", sans-serif !important; }
 
       .gridGlow {
         background-image:
@@ -373,11 +384,11 @@ const TrainersCarousel = () => {
 
 export default function App() {
   return (
-    <div dir="rtl" className="min-h-screen text-[#284e7f] selection:bg-[#b11e22]/20">
+    <div dir="rtl" className="min-h-screen w-screen overflow-x-hidden text-[#284e7f] selection:bg-[#b11e22]/20">
       <Background />
       <FloatingWhatsApp />
 
-      <main className="w-full relative flex flex-col items-center text-center">
+      <main className="w-full relative flex flex-col items-center text-center overflow-x-hidden">
         
         {/* NEW HERO SECTION - SAAS STYLE */}
         <section className="w-full relative flex flex-col items-center pt-24 pb-12 overflow-hidden">
@@ -412,7 +423,7 @@ export default function App() {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#b11e22]"></span>
                     </span>
-                    <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-wide font-mono">19–23 يناير 2026</span>
+                    <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-wide">19–23 يناير 2026</span>
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#284e7f] leading-tight tracking-tight mb-4 text-center relative z-10">
@@ -444,14 +455,19 @@ export default function App() {
         </section>
 
         {/* DASHBOARD PRODUCT SHOT - Standalone Section (Moved Up & Centered) */}
-        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 relative z-20">
+        <section className="w-full pb-20 relative z-20">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeIn>
                 <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl">
-                    <div className="h-8 bg-[#284e7f]/5 border-b border-[#284e7f]/5 flex items-center px-4 gap-2">
+                    <div className="h-8 bg-[#284e7f]/5 border-b border-[#284e7f]/5 flex items-center px-4 gap-2 relative">
                         <div className="w-2.5 h-2.5 rounded-full bg-red-400/60"></div>
                         <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60"></div>
                         <div className="w-2.5 h-2.5 rounded-full bg-green-400/60"></div>
-                        <div className="ml-auto text-[10px] font-mono text-[#284e7f]/40">AI Assessment Center v2.0</div>
+
+                        {/* Version Pill */}
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-[#284e7f]/10 border border-[#284e7f]/10 text-[10px] font-bold text-[#284e7f]/60">
+                          AI Assessment Center v2.0
+                        </div>
                     </div>
                     
                     <div className="p-5 sm:p-6 bg-white/40">
@@ -561,10 +577,12 @@ export default function App() {
                     </div>
                 </div>
             </FadeIn>
+            </div>
         </section>
 
         {/* TRAINERS - Moved Here */}
-        <section id="trainers" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <section id="trainers" className="w-full pb-12">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn delay={200}>
             <h2 className="text-xl md:text-2xl font-black mb-4 text-[#284e7f]">
               مدربونا ليسوا متحدثين؛ بل هم مهندسوا التحول
@@ -574,10 +592,12 @@ export default function App() {
             </p>
             <TrainersCarousel />
           </FadeIn>
+          </div>
         </section>
 
         {/* REFE AI Chat (MOVED HERE) */}
-        <section id="refeai" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <section id="refeai" className="w-full pb-12">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn delay={300}>
             <h2 className="text-3xl md:text-4xl font-black mb-2 text-[#284e7f] flex items-center justify-center gap-3">
               <GeminiIcon className="w-8 h-8 text-[#284e7f] animate-pulse" />
@@ -631,15 +651,17 @@ export default function App() {
 
               {/* Input */}
               <div className="p-3 border-t border-white/60 bg-white/30 flex gap-2">
-                <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-[#284e7f] placeholder-[#284e7f]/40 focus:outline-none focus:bg-white/70 transition-all font-mono" />
+                <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-[#284e7f] placeholder-[#284e7f]/40 focus:outline-none focus:bg-white/70 transition-all" />
                 <button disabled className="px-4 py-2 rounded-xl bg-white/40 border border-white/60 text-[#284e7f]/40 font-bold text-sm cursor-not-allowed">إرسال</button>
               </div>
             </div>
           </FadeIn>
+          </div>
         </section>
 
         {/* QUOTES */}
-        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <section className="w-full pb-12">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn delay={100}>
             <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-[#b11e22]/20 border border-[#b11e22]/20">
               <div className="flex items-center justify-center gap-2 text-xs text-[#284e7f]/60 mb-2 font-bold uppercase tracking-wider">
@@ -650,10 +672,12 @@ export default function App() {
               </div>
             </div>
           </FadeIn>
+          </div>
         </section>
 
         {/* FINAL CTA */}
-        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <section className="w-full pb-16">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn delay={400}>
             <div className="glass rounded-[26px] p-8 shadow-2xl shadow-[#b11e22]/20 border border-[#b11e22]/20">
               <h3 className="text-2xl md:text-4xl font-black mb-3 text-[#284e7f]">كن جزءًا من مستقبل التدريب الذكي</h3>
@@ -670,10 +694,11 @@ export default function App() {
               </div>
             </div>
           </FadeIn>
+          </div>
         </section>
 
         <footer className="text-xs text-[#284e7f]/60 pb-10 font-semibold">
-          © 2026 — AI Assessment Center
+           © Reference Academy - All Reserved - 2026
         </footer>
 
       </main>
