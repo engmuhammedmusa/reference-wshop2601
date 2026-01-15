@@ -177,25 +177,25 @@ const Countdown = () => {
   }, []);
 
   return (
-    <div className="flex items-end justify-center sm:justify-start gap-2.5 font-mono text-rose-500" dir="ltr">
+    <div className="flex items-end justify-center sm:justify-start gap-1.5 sm:gap-2.5 font-mono text-rose-500 w-full" dir="ltr">
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.d}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">DD</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.d}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">DD</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.h}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">HH</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.h}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">HH</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.m}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">MM</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.m}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">MM</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
-        <div className="text-xl leading-none font-black tracking-tight">{t.s}</div>
-        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">SS</div>
+        <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.s}</div>
+        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">SS</div>
       </div>
     </div>
   );
@@ -279,23 +279,23 @@ export default function App() {
     <div dir="rtl" className="min-h-screen text-zinc-900 selection:bg-rose-500/20">
       <Background />
 
-      <main className="max-w-[1120px] mx-auto px-4 relative flex flex-col items-center text-center">
+      <main className="max-w-[1120px] mx-auto px-3 sm:px-4 relative flex flex-col items-center text-center">
         
         {/* SYSTEM HERO SECTION */}
-        <section className="py-12 w-full relative z-10">
-          {/* Main System Frame */}
-          <div className="glass rounded-[32px] border border-white/60 p-1 shadow-2xl shadow-sky-200/50 overflow-hidden relative">
+        <section className="py-8 sm:py-12 w-full relative z-10">
+          {/* Main System Frame - Optimized padding/radius for mobile */}
+          <div className="glass rounded-2xl sm:rounded-[32px] border border-white/60 p-0.5 sm:p-1 shadow-2xl shadow-sky-200/50 overflow-hidden relative">
             
             {/* Top System Bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-sky-400/50 to-transparent opacity-70"></div>
             
-            <div className="bg-white/30 rounded-[28px] p-6 md:p-10 relative overflow-hidden backdrop-blur-sm">
+            <div className="bg-white/30 rounded-xl sm:rounded-[28px] p-4 sm:p-10 relative overflow-hidden backdrop-blur-sm">
                 
                 {/* Decorative Grid inside */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-50"></div>
 
                 {/* Header Status Bar (Translated) */}
-                <div className="flex justify-between items-center mb-8 text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest relative z-10 border-b border-zinc-200/50 pb-2">
+                <div className="flex justify-between items-center mb-6 sm:mb-8 text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest relative z-10 border-b border-zinc-200/50 pb-2">
                     <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
                         <span className="font-bold">النظام نشط</span>
@@ -303,31 +303,31 @@ export default function App() {
                     <div className="hidden sm:block">معرف الجلسة: AI-ASSESS-2026</div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-12 items-center relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-8 lg:gap-12 items-center relative z-10">
                     
                     {/* Left: Main Interface Content */}
-                    <div className="flex flex-col items-center lg:items-start text-center lg:text-right">
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-right w-full">
                         
                         {/* Title Block */}
-                        <div className="relative mb-6">
-                            <h1 className="text-3xl md:text-5xl font-black text-zinc-800 leading-tight tracking-tight">
+                        <div className="relative mb-6 w-full">
+                            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-zinc-800 leading-tight tracking-tight">
                                 تحديد الاحتياجات التدريبية
-                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-4xl md:text-6xl drop-shadow-sm filter pb-1">
+                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-3xl sm:text-4xl md:text-6xl drop-shadow-sm filter pb-1">
                                     باستخدام الذكاء الاصطناعي
                                 </span>
                             </h1>
                         </div>
 
                         {/* Description */}
-                        <p className="text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
+                        <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
                             تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك، يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
-                            <span className="block mt-3 text-xl font-bold text-sky-700">
+                            <span className="block mt-3 text-lg sm:text-xl font-bold text-sky-700">
                                 هذا ليس خيالاً ، هــذه ورشتنـــا الجديـــدة
                             </span>
                         </p>
 
                         {/* Date & Counter System Block */}
-                        <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-5 backdrop-blur-md shadow-lg shadow-indigo-100/40 group hover:border-sky-300/50 transition-colors duration-300">
+                        <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-4 sm:p-5 backdrop-blur-md shadow-lg shadow-indigo-100/40 group hover:border-sky-300/50 transition-colors duration-300">
                             <div className="flex items-center justify-between mb-3 border-b border-zinc-300/30 pb-2">
                                  <span className="text-xs font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1">
                                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -338,13 +338,13 @@ export default function App() {
                             
                             <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4">
                                 <div className="text-center sm:text-right w-full sm:w-auto">
-                                    <div className="text-2xl font-black text-zinc-800">19–23 يناير</div>
-                                    <div className="text-sm font-bold text-zinc-400">2026</div>
+                                    <div className="text-xl sm:text-2xl font-black text-zinc-800">19–23 يناير</div>
+                                    <div className="text-xs sm:text-sm font-bold text-zinc-400">2026</div>
                                 </div>
                                 
                                 <div className="hidden sm:block h-8 w-px bg-zinc-300/50"></div>
 
-                                <div className="text-center sm:text-left w-full sm:w-auto bg-zinc-50/50 rounded-lg px-4 py-2 border border-zinc-200/50">
+                                <div className="text-center sm:text-left w-full sm:w-auto bg-zinc-50/50 rounded-lg px-3 py-2 border border-zinc-200/50">
                                      <div className="text-[10px] text-zinc-400 font-bold mb-2 uppercase tracking-wide">الوقت المتبقي</div>
                                      <Countdown />
                                 </div>
@@ -405,32 +405,32 @@ export default function App() {
                                  
                                  <div className="space-y-3 relative">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="text-[11px] font-bold text-zinc-700">فحص بيانات الأداء</div>
-                                            <div className="text-[9px] text-zinc-500">تم تحليل 450 سجل وظيفي</div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-[11px] font-bold text-zinc-700 truncate">فحص بيانات الأداء</div>
+                                            <div className="text-[9px] text-zinc-500 truncate">تم تحليل 450 سجل وظيفي</div>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="text-[11px] font-bold text-zinc-700">تنبيه: فجوة مهارات</div>
-                                            <div className="text-[9px] text-zinc-500">نقص في مهارات التفاوض (45%)</div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-[11px] font-bold text-zinc-700 truncate">تنبيه: فجوة مهارات</div>
+                                            <div className="text-[9px] text-zinc-500 truncate">نقص في مهارات التفاوض (45%)</div>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3 opacity-70">
-                                        <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="text-[11px] font-bold text-zinc-700">توليد خطة علاجية</div>
-                                            <div className="text-[9px] text-zinc-500">جاري إنشاء المسار...</div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-[11px] font-bold text-zinc-700 truncate">توليد خطة علاجية</div>
+                                            <div className="text-[9px] text-zinc-500 truncate">جاري إنشاء المسار...</div>
                                         </div>
                                     </div>
                                  </div>
