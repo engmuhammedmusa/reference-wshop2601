@@ -390,68 +390,75 @@ export default function App() {
 
       <main className="w-full relative flex flex-col items-center text-center mx-auto overflow-x-hidden">
         
-        {/* NEW HERO SECTION - SAAS STYLE */}
-        <section className="w-full relative flex flex-col items-center pt-24 pb-12 overflow-hidden">
-            
-            {/* Scrollable Navbar (Absolute) */}
-            <nav className="absolute top-6 left-0 right-0 z-50 w-[92%] max-w-7xl mx-auto px-4 py-2 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
-                <div className="flex items-center mb-2 md:mb-0">
-                    <img 
-                      src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
-                      alt="Company Logo" 
-                      className="h-9 sm:h-10 object-contain filter drop-shadow-sm" 
-                    />
-                </div>
-                <div className="flex items-center gap-3">
-                    <button className="px-5 py-2 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-[#284e7f] text-xs sm:text-sm font-bold transition-all shadow-sm">
-                        تحميل الكتيب
-                    </button>
-                    <button className="px-5 py-2 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] hover:scale-105 text-white text-xs sm:text-sm font-bold transition-transform shadow-lg shadow-[#b11e22]/20">
-                        احجز مقعدك
-                    </button>
-                </div>
+        {/* HERO SECTION - Banner */}
+        <section className="w-full relative flex flex-col items-center overflow-hidden">
+          {/* Banner Background */}
+          <div className="w-full relative overflow-hidden h-[520px] sm:h-[600px]">
+            <img
+              src="https://lh3.googleusercontent.com/d/1PbfSHIaKhHRnhiW7MfCRHGNtFaCLWFLt"
+              alt="Hero Banner"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/65 via-slate-900/20 to-transparent" />
+            <div className="absolute inset-0 bg-[#0b1220]/10" />
+
+            {/* Scrollable Navbar (Absolute over banner) */}
+            <nav className="absolute top-6 left-0 right-0 z-20 w-[92%] max-w-7xl mx-auto px-4 py-2 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
+              <div className="flex items-center mb-2 md:mb-0">
+                <img
+                  src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G"
+                  alt="Company Logo"
+                  className="h-9 sm:h-10 object-contain filter drop-shadow-sm"
+                />
+              </div>
+              <div className="flex items-center gap-3">
+                <button className="px-5 py-2 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-[#284e7f] text-xs sm:text-sm font-bold transition-all shadow-sm">
+                  تحميل الكتيب
+                </button>
+                <button className="px-5 py-2 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] hover:scale-105 text-white text-xs sm:text-sm font-bold transition-transform shadow-lg shadow-[#b11e22]/20">
+                  احجز مقعدك
+                </button>
+              </div>
             </nav>
 
-            {/* Hero Content Area */}
-            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center mt-8">
-                
-                <FloatingParticles />
+            {/* Smooth fade at the end of the banner */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-[#e2e8f0]" />
+          </div>
 
-                {/* Date Announcement - Prominent & Glowing (Replaced "AI Assessment Center" Pill) */}
-                <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/90 border border-[#b11e22]/30 shadow-[0_0_25px_rgba(177,30,34,0.15)] mb-8 backdrop-blur-xl animate-[fadeIn_1s_ease-out] relative z-10 hover:scale-105 transition-transform duration-300">
+          {/* Content UNDER the image (no overlay) */}
+          <div className="w-full bg-[#e2e8f0]">
+            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+              <div className="glass rounded-[26px] p-6 sm:p-8 border border-white/60 shadow-2xl shadow-black/10 bg-white/70">
+                {/* Date */}
+                <div className="flex justify-center mb-5">
+                  <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/90 border border-[#b11e22]/30 shadow-[0_0_25px_rgba(177,30,34,0.15)] backdrop-blur-xl">
                     <span className="relative flex h-2.5 w-2.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#b11e22]"></span>
                     </span>
-                    <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-wide">19–23 يناير 2026</span>
+                    <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-wide">
+                      19–23 يناير 2026
+                    </span>
+                  </div>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#284e7f] leading-tight tracking-tight mb-4 text-center relative z-10">
-                    تحديد الاحتياجات التدريبية
-                    <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] via-[#284e7f] to-[#b11e22] drop-shadow-sm filter pb-2">
-                        باستخدام الذكاء الاصطناعي
-                    </span>
+                {/* Title */}
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#284e7f] leading-tight tracking-tight text-center">
+                  تحديد الاحتياجات التدريبية
+                  <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] via-[#284e7f] to-[#b11e22] drop-shadow-sm filter pb-2">
+                    باستخدام الذكاء الاصطناعي
+                  </span>
                 </h1>
 
-                {/* Subheadline */}
-                <p className="text-lg sm:text-xl text-zinc-600 leading-relaxed max-w-2xl mb-10 font-medium text-center relative z-10">
-                    كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                    <span className="font-bold text-zinc-900">
-                        أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.
-                    </span>
+                {/* Paragraph */}
+                <p className="mt-5 text-base sm:text-lg text-zinc-700 leading-relaxed max-w-3xl mx-auto font-medium text-center">
+                  كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
+                  <span className="font-bold text-zinc-900">أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.</span>
                 </p>
-
-                {/* Primary CTAs */}
-                <div className="flex flex-wrap justify-center gap-4 mb-12 relative z-10">
-                    <button className="px-8 py-4 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] text-white font-black text-lg hover:-translate-y-1 transition-all shadow-xl shadow-[#b11e22]/30 flex items-center gap-2">
-                        <span>سجل الآن</span>
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                    </button>
-                    <button className="px-8 py-4 rounded-full bg-white/60 hover:bg-white/80 border border-[#284e7f]/30 text-[#284e7f] font-bold text-lg transition-all shadow-lg backdrop-blur-sm">
-                        عرض التفاصيل
-                    </button>
-                </div>
+              </div>
             </div>
+          </div>
         </section>
 
         {/* DASHBOARD PRODUCT SHOT - Standalone Section (Moved Up & Centered) */}
