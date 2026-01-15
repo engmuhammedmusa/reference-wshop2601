@@ -44,7 +44,7 @@ const FloatingWhatsApp = () => (
     href="https://wa.me/905337642450"
     target="_blank"
     rel="noopener noreferrer"
-    className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-transform duration-300 hover:shadow-green-500/50 group"
+    className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-transform duration-300 hover:shadow-green-500/50 group"
     aria-label="تواصل معنا عبر واتساب"
   >
     <div className="absolute inset-0 rounded-full animate-ping bg-[#25D366] opacity-30"></div>
@@ -302,9 +302,10 @@ export default function App() {
       <Background />
       <FloatingWhatsApp />
 
+      {/* Main Container: Removed max-width constraint (w-full only), Added responsive padding */}
       <main className="w-full mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative flex flex-col items-center text-center">
         
-        {/* SYSTEM HERO SECTION */}
+        {/* SYSTEM HERO SECTION: Added max-w-7xl constraint */}
         <section className="py-8 sm:py-12 w-full max-w-7xl mx-auto relative z-10">
           {/* Main System Frame - Optimized padding/radius for mobile */}
           <div className="glass rounded-2xl sm:rounded-[32px] border border-white/60 p-0.5 sm:p-1 shadow-2xl shadow-sky-200/50 overflow-hidden relative">
@@ -480,7 +481,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* QUOTES */}
+        {/* QUOTES: Added max-w-7xl constraint */}
         <section className="w-full max-w-7xl mx-auto pb-12">
           <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-rose-100/30">
             <div className="flex items-center justify-center gap-2 text-xs text-zinc-500 mb-2 font-bold uppercase tracking-wider">
@@ -492,7 +493,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* TRAINERS */}
+        {/* TRAINERS: Added max-w-7xl constraint */}
         <section id="trainers" className="w-full max-w-7xl mx-auto pb-12">
           <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">
             مدربونا ليسوا متحدثين…
@@ -501,7 +502,7 @@ export default function App() {
           <TrainersCarousel />
         </section>
 
-        {/* REFE AI Chat */}
+        {/* REFE AI Chat: Added max-w-7xl constraint */}
         <section id="refeai" className="w-full max-w-7xl mx-auto pb-12">
           <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">RefeAI</h2>
           <span className="block text-zinc-500 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
@@ -558,7 +559,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* FINAL CTA */}
+        {/* FINAL CTA: Added max-w-7xl constraint */}
         <section className="w-full max-w-7xl mx-auto pb-16">
           <div className="glass rounded-[26px] p-8 shadow-2xl shadow-rose-100/50">
             <h3 className="text-2xl md:text-4xl font-black mb-3 text-zinc-900">كن جزءًا من مستقبل التدريب الذكي</h3>
