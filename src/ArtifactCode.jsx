@@ -1,1398 +1,508 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Menu,
-  X,
-  ArrowLeft,
-  Download,
-  CheckCircle2,
-  Brain,
-  Target,
-  Layers,
-  BarChart3,
-  Users,
-  Calendar,
-  ChevronDown,
-  Layout,
-  Award,
-  Smartphone,
-  Sparkles,
-  Send,
-  Loader2,
-  Bot,
-  Search,
-  Bell,
-  MoreHorizontal,
-  TrendingUp,
-  Database,
-  Zap,
-  ClipboardCheck,
-  Puzzle,
-  Scale,
-  Quote,
-  Lightbulb,
-  FileSignature,
-  DownloadCloud,
-} from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-// Keep trainer slide + comment timing perfectly in sync
-const TRAINER_SLIDE_MS = 5000;
-
-const TRAINER_COMMENTS = [
-  'لا تخف من القياس، ففيه بداية كل تحسن حقيقي',
-  'نتائج لا تخمن.. تُقاس',
-  'نحن لا نترجم البيانات فحسب، بل نفسر لغة النجاح',
-  'عندما تصبح الخوارزميات حدسًا عمليًا',
-  'التدريب المؤثر لا يغير طريقة عملك، بل يغير طريقة تفكيرك',
-  'نحن لا نقدم أدوات فقط، بل نُعرِّف مسارات',
-  'لا يوجد عظمة بدون قياس دقيق، ولا تطور بدون تقييم ذكي',
+// --- Assets & Data ---
+const trainersData = [
+  {
+    name: "د. رامي شاهين",
+    title: "خبير الذكاء الاصطناعي العالمي والتحول الرقمي الاستراتيجي",
+    bio: "قائد مشاريع ذكاء اصطناعي دولية، ومحور علاقة الذكاء الاصطناعي بصنع القرار المؤسسي في المنطقة. يحمل دكتوراه في إدارة الموارد البشرية الذكية، ومعتمد من مؤسسات عالمية مثل IBM وISO.",
+    image: "https://lh3.googleusercontent.com/d/1Agf19eCAbARzkPgKNQ13Rg2PoydTlo2-"
+  },
+  {
+    name: "د. سالم موسى",
+    title: "خبير التطوير المؤسسي وجودة التدريب الدولي",
+    bio: "يجمع بين علم النفس الإداري والتطوير العملي للمنظمات. يحمل شهادات متقدمة في الجودة والقيادة، وقاد تحولات مؤسسية في قطاعات حكومية وخاصة في معظم الدول العربية.",
+    image: "https://lh3.googleusercontent.com/d/12r7lppBDqCAX5oFBldy-7O77uREbwMVr"
+  },
+  {
+    name: "أ. أحمد الطويل",
+    title: "خبير التطوير المؤسسي وإدارة التغيير",
+    bio: "يمتلك أكثر من 18 عامًا في تصميم وتنفيذ استراتيجيات تطوير المؤسسات والقيادات، يُدير هيئات محلية ودولية لتحقيق التميز المؤسسي والاستدامة التنظيمية.",
+    image: "https://lh3.googleusercontent.com/d/1hG5wGbMOjcCvaWSSfeyWNLhrhcfA0Srq"
+  }
 ];
 
-// --- Fonts & Global Styles ---
-const GlobalStyles = () => (
-  <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
+const headlinesData = [
+  "ليس تدريبًا… بل قرارًا ذكيًا",
+  "توقف عن التخمين",
+  "ابدأ التشخيص"
+];
 
-    :root { --font-tajawal: 'Tajawal', sans-serif; }
+const quotesData = [
+  "التدريب بلا بيانات… مجرد أمل.",
+  "لا تموّل البرامج… موّل الأثر.",
+  "التقييم أولًا. التدريب ثانيًا.",
+  "العائد لا يُحسب بعد التدريب… بل يُصمَّم قبله.",
+  "ليس كل موظف يحتاج تدريبًا… بعضهم يحتاج اتجاهًا.",
+  "من الافتراضات إلى قرارات ذكية — هذه هي النقلة."
+];
 
-    /* Full-width hard reset (fixes Vite/React template max-width constraints) */
-    html, body, #root {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
+// --- Sub-Components ---
 
-    /* Some templates set #root { max-width: 1280px; margin: 0 auto; padding: 2rem; } */
-    #root {
-      max-width: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
+const Background = () => (
+  <>
+    <div className="fixed inset-0 pointer-events-none z-[-2] gridGlow" />
+    <div className="fixed inset-0 pointer-events-none z-[-1] softGrid" />
+    <style>{`
+      @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
-    body {
-      font-family: 'Tajawal', sans-serif !important;
-      background-color: #f8fafc;
-      overflow-x: hidden;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; }
-
-    .font-sans { font-family: 'Tajawal', sans-serif !important; }
-    .rtl-flip { transform: scaleX(-1); }
-
-    /* Subtle Grid Texture */
-    .bg-grid-slate {
-      background-size: 40px 40px;
-      background-image: linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-    }
-
-    .glass-panel {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-    }
-
-    @keyframes rotate-border {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .animate-rotate-border { animation: rotate-border 4s linear infinite; }
-
-    @keyframes float-y {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .float-slow { animation: float-y 7.5s ease-in-out infinite; }
-    .float-med { animation: float-y 6s ease-in-out infinite; animation-delay: 0.6s; }
-    .float-fast { animation: float-y 4.8s ease-in-out infinite; animation-delay: 1.1s; }
-
-    /* One-line full comment marquee (RTL) */
-    @keyframes marquee-rtl {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-    .animate-marquee-rtl {
-      animation: marquee-rtl 10s linear infinite;
-      direction: rtl;
-      unicode-bidi: plaintext;
-      text-align: right;
-    }
-
-    /* Trainers comment: simple enter animation on change */
-    @keyframes comment-in {
-      0% { opacity: 0; transform: translateY(10px) scale(0.98); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .animate-comment-in {
-      animation: comment-in 420ms ease-out;
-    }
-
-    /* Red glassy light sweep for comment border */
-    @keyframes red-sweep {
-      0% { transform: translateX(-50%); }
-      100% { transform: translateX(50%); }
-    }
-    .animate-red-sweep { animation: red-sweep 2.6s linear infinite; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .animate-rotate-border,
-      .float-slow,
-      .float-med,
-      .float-fast,
-      .animate-marquee-rtl,
-      .animate-comment-in,
-      .animate-red-sweep {
-        animation: none !important;
+      :root {
+        --accent: 14 165 233; /* Sky 500 */
+        --accent2: 244 63 94; /* Rose 500 */
+        --fg: 24 24 27;       /* Zinc 900 (Dark Text) */
+        --bg: 240 249 255;    /* Very Light Blue Base */
       }
-    }
 
-    /* RefeAI brand treatment */
-    .refeai-brand {
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      /* keep exact casing: RefeAI */
-      text-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    }
-    /* Hero: AI Assessment Center explosive hover */
-    .hover-container {
-      display: inline-block;
-      position: relative;
-      overflow: visible;
-    }
+      body {
+        margin: 0;
+        font-family: "Tajawal", sans-serif;
+        background-color: rgb(var(--bg));
+        /* Glassy Light Blue to Light Red Gradient */
+        background-image: 
+          radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15), transparent 40%),
+          radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15), transparent 40%),
+          linear-gradient(135deg, #e0f2fe 0%, #ffe4e6 100%);
+        background-attachment: fixed;
+        color: rgb(var(--fg));
+        overflow-x: hidden;
+      }
 
-    .explosive-text {
-      font-weight: 900;
-      color: #b11e22;
-      text-decoration-line: underline;
-      text-decoration-color: #b11e22;
-      text-decoration-thickness: 3px;
-      text-underline-offset: 10px;
-      letter-spacing: 0.08em;
-      text-transform: none;
-      display: inline-block;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 280ms ease-out;
-      font-size: clamp(22px, 3.2vw, 34px);
-      line-height: 1.1;
-    }
+      .gridGlow {
+        background-image:
+          radial-gradient(900px 600px at 50% -20%, rgba(14, 165, 233, 0.1), transparent 70%),
+          radial-gradient(600px 400px at 90% 60%, rgba(244, 63, 94, 0.08), transparent 60%);
+        filter: saturate(1.2) contrast(1.1);
+        animation: drift 15s ease-in-out infinite alternate;
+      }
 
-    .explosive-text:hover { transform: scale(1.08); }
+      .softGrid {
+        background-image:
+          linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        opacity: 0.5;
+      }
 
-    .explosive-text:hover::before,
-    .explosive-text:hover::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 260%;
-      height: 260%;
-      border-radius: 9999px;
-      transform: translate(-50%, -50%) scale(0);
-      animation: burst 0.8s ease-out forwards;
-      pointer-events: none;
-    }
+      @keyframes drift {
+        0% { transform: translate3d(0,0,0) scale(1); }
+        50% { transform: translate3d(18px,-22px,0) scale(1.03); }
+        100% { transform: translate3d(0,0,0) scale(1); }
+      }
 
-    .explosive-text:hover::before {
-      background: radial-gradient(circle, rgba(177, 30, 34, 0.45), transparent 70%);
-      z-index: -1;
-    }
+      /* Updated Glass for Light Mode */
+      .glass {
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+      }
 
-    .explosive-text:hover::after {
-      background: radial-gradient(circle, rgba(40, 78, 127, 0.40), transparent 70%);
-      z-index: -2;
-      animation-delay: 0.1s;
-    }
+      .gradient-text {
+        background: linear-gradient(to left, #0ea5e9, #1e293b, #f43f5e);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
 
-    @keyframes burst {
-      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-      50% { opacity: 0.75; }
-      100% { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
-    }
-
-    @media (min-width: 768px) {
-      .explosive-text { font-size: clamp(26px, 2.8vw, 40px); }
-    }
-
-      `}</style>
+      .dotPulse { animation: dotPulse 1.2s infinite ease-in-out; }
+      .dotPulse:nth-child(2) { animation-delay: .15s; }
+      .dotPulse:nth-child(3) { animation-delay: .30s; }
+      @keyframes dotPulse {
+        0%,80%,100% { transform: translateY(0); opacity:.4; }
+        40% { transform: translateY(-4px); opacity:1; }
+      }
+    `}</style>
+  </>
 );
 
-
-// --- Components ---
-const Button = ({ children, variant = 'primary', className = '', icon: Icon, ...props }) => {
-  const baseStyle =
-    'inline-flex items-center justify-center px-8 py-3.5 md:py-4 text-sm md:text-base font-bold rounded-[2rem] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-sans gap-3 group';
-
-  const variants = {
-    primary:
-      'border-transparent text-white bg-[#b11e22] hover:bg-[#8a1619] shadow-lg shadow-red-900/10 hover:shadow-red-900/20 hover:-translate-y-0.5',
-    secondary:
-      'border-transparent text-white bg-[#284e7f] hover:bg-[#1d3a61] shadow-md hover:shadow-lg',
-    outline:
-      'border border-gray-200 text-[#284e7f] bg-white/50 hover:bg-white hover:border-[#284e7f]/20 shadow-sm hover:shadow-md backdrop-blur-sm',
-    white: 'bg-white text-[#284e7f] hover:bg-gray-50 shadow-lg',
-    ai: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:shadow-lg hover:shadow-indigo-500/30',
-  };
-
-  const iconContainerStyle =
-    variant === 'primary'
-      ? 'bg-white/20 text-white'
-      : variant === 'outline'
-        ? 'bg-[#284e7f]/10 text-[#284e7f]'
-        : 'bg-white/20 text-white';
-
-  return (
-    <button className={`${baseStyle} ${variants[variant]} ${className}`} {...props}>
-      <span>{children}</span>
-      {Icon && (
-        <div
-          className={`w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-translate-x-1 ${iconContainerStyle}`}
-        >
-          <Icon size={18} />
-        </div>
-      )}
-    </button>
-  );
-};
-
-const SectionHeading = ({ subtitle, title, align = 'center', titleClassName = '' }) => (
-  <div className={`mb-12 md:mb-16 ${align === 'center' ? 'text-center' : 'text-right'} max-w-4xl mx-auto px-4`}>
-    {subtitle && (
-      <span className="inline-block py-2 px-5 rounded-[1.5rem] bg-[#284e7f]/5 text-[#284e7f] text-sm font-bold tracking-wider mb-4 border border-[#284e7f]/10 font-sans">
-        {subtitle}
-      </span>
-    )}
-    <h2 className={`text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#284e7f] leading-tight font-sans ${titleClassName}`}>{title}</h2>
-  </div>
-);
-
-const FeatureCard = ({ icon: Icon, title, description }) => (
-  <div className="relative group p-6 md:p-7 rounded-[2rem] md:rounded-[2.5rem] bg-white/25 backdrop-blur-2xl border border-white/45 shadow-[0_18px_60px_rgba(0,0,0,0.06)] hover:shadow-[0_22px_70px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 h-full flex flex-col items-center text-center md:items-start md:text-right">
-    <div className="flex items-center gap-4 mb-4 w-full max-w-[22rem] mx-auto justify-center md:max-w-none md:mx-0 md:justify-start">
-      <div className="h-12 w-12 rounded-[1.25rem] bg-white/22 border border-white/35 flex items-center justify-center shadow-sm shrink-0">
-        <Icon className="h-6 w-6 text-[#284e7f]" />
-      </div>
-      <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] leading-snug font-sans">
-        {title}
-      </h3>
-    </div>
-
-    <p className="w-full max-w-[22rem] mx-auto text-gray-700/90 leading-relaxed font-sans font-bold text-sm md:text-[15px] md:max-w-none md:mx-0">
-      {description}
-    </p>
-
-    <div className="pointer-events-none absolute inset-0 rounded-[2rem] md:rounded-[2.5rem] ring-1 ring-white/30" />
-  </div>
-);
-
-const AxisCard = ({ number, title, description, icon: Icon }) => (
-  <div className="group relative bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden h-full flex flex-col">
-    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#284e7f]/5 to-transparent rounded-bl-[4rem] transition-all duration-500 group-hover:scale-110 group-hover:from-[#284e7f]/10" />
-    <div className="flex justify-between items-start mb-6 relative z-10">
-      <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center text-[#284e7f] group-hover:bg-[#284e7f] group-hover:text-white transition-colors duration-300 shadow-sm">
-        <Icon size={28} strokeWidth={1.5} />
-      </div>
-      <span className="text-3xl md:text-4xl font-extrabold text-slate-100 group-hover:text-slate-200/80 transition-colors font-sans select-none">
-        {number}
-      </span>
-    </div>
-    <div className="relative z-10 flex-1 flex flex-col">
-      <h3 className="text-lg md:text-xl font-extrabold text-[#284e7f] mb-3 leading-snug font-sans group-hover:text-[#b11e22] transition-colors">
-        {title}
-      </h3>
-      <p className="text-gray-500 text-sm leading-relaxed font-sans opacity-90 group-hover:opacity-100 font-bold">
-        {description}
-      </p>
-    </div>
-    <div className="absolute bottom-0 left-0 w-full h-2 bg-gray-100 overflow-hidden">
-      <div className="h-full w-full bg-gradient-to-r from-[#284e7f] to-[#b11e22] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
-    </div>
-  </div>
-);
-
-/* Trainers: Tinder-style deck (Ecommerce-card inspired layout) */
-const TrainerCard = ({ name, title, bio, imageId, isActive, deckPos = 0 }) => {
-  const deckTransforms = [
-    'translate-y-0 scale-100 rotate-0 opacity-100',
-    'translate-y-5 scale-[0.975] -rotate-[1deg] opacity-90',
-    'translate-y-10 scale-[0.95] rotate-[1deg] opacity-75',
-  ];
-
-  const posClass = deckTransforms[Math.min(deckPos, deckTransforms.length - 1)];
-
-  const primarySrc = `https://lh3.googleusercontent.com/d/${imageId}=w1600`;
-  const fallbackSrc = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1600`;
-
-  return (
-    <div
-      className={`relative h-full w-full rounded-[2.75rem] md:rounded-[3.25rem] transition-all duration-700 ease-out ${posClass} ${
-        isActive ? '' : 'pointer-events-none'
-      }`}
-    >
-      {/* Glassy animated border (outside only) */}
-      <div className="absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] p-[2px] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#284e7f]/40 to-transparent opacity-70 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
-        <div className="absolute inset-[2px] rounded-[2.75rem] md:rounded-[3.25rem] bg-white" />
-      </div>
-
-      {/* Card */}
-      <div className="relative h-full rounded-[2.75rem] md:rounded-[3.25rem] overflow-hidden bg-white shadow-[0_22px_70px_rgba(0,0,0,0.14)] flex flex-col">
-        {/* CardHeader (image) */}
-        <div className="relative h-[70%] min-h-[420px] sm:min-h-[480px] bg-white overflow-hidden flex items-center justify-center px-4 py-3">
-          <img
-            src={primarySrc}
-            alt={name}
-            className="h-full w-full object-contain object-top bg-white"
-            loading="lazy"
-            onError={(e) => {
-              if (e.currentTarget.getAttribute('data-fallback') === '1') return;
-              e.currentTarget.setAttribute('data-fallback', '1');
-              e.currentTarget.src = fallbackSrc;
-            }}
-          />
-
-          {/* Photo frame (no overlays covering the photo) */}
-          <div className="pointer-events-none absolute inset-3 rounded-[2.25rem] sm:rounded-[2.5rem] border border-slate-900/10 ring-1 ring-white/70" />
-          <div className="pointer-events-none absolute inset-0 ring-1 ring-slate-900/5" />
-
-          {/* Soft fade into body */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent via-white/65 to-white" />
-        </div>
-
-        {/* CardBody */}
-        <div className="flex-1 px-5 sm:px-7 pt-5 pb-4 flex flex-col justify-between">
-          <div>
-            <div className="mb-2 flex items-center justify-between gap-4">
-              <div className="text-slate-900 font-extrabold text-[18px] sm:text-[20px] leading-tight font-sans">
-                {name}
-              </div>
-              <div className="text-slate-700/90 font-bold text-[12px] sm:text-[13px] font-sans whitespace-nowrap">
-                {title}
-              </div>
-            </div>
-
-            <div className="h-px w-full bg-slate-900/10 my-3" />
-
-            <p className="text-slate-800/95 text-[12px] sm:text-[13px] leading-relaxed font-sans font-medium text-center">
-              {bio}
-            </p>
-          </div>
-
-          {/* CardFooter */}
-          <div className="pt-4">
-            <div className="w-full rounded-[1.25rem] bg-slate-900/5 border border-slate-900/10 px-4 py-3 text-center">
-              <span className="text-slate-900/80 font-extrabold text-[12px] sm:text-[13px] font-sans">
-                مدرب خبير
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Active card lift */}
-      <div
-        className={`pointer-events-none absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] transition-opacity duration-700 ${
-          isActive ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        <div className="absolute inset-0 rounded-[2.75rem] md:rounded-[3.25rem] ring-1 ring-white/25" />
-      </div>
-    </div>
-  );
-};
-
-const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+const AnimatedText = ({ text, interval = 3000, className = "" }) => {
+  const [currentText, setCurrentText] = useState(text[0]);
+  const [isVisible, setIsVisible] = useState(true);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const target = new Date('2026-01-19T09:00:00').getTime();
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = target - now;
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
+    const timer = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % text.length);
+        setIsVisible(true);
+      }, 300);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [text, interval]);
+
+  useEffect(() => {
+    if (isVisible) setCurrentText(text[index]);
+  }, [isVisible, index, text]);
+
+  return (
+    <div 
+      className={`${className} transition-all duration-300 ease-in-out transform ${isVisible ? 'opacity-100 blur-0 translate-y-0' : 'opacity-0 blur-sm translate-y-1'}`}
+    >
+      {currentText}
+    </div>
+  );
+};
+
+const Countdown = () => {
+  const [timeLeft, setTimeLeft] = useState("—");
+
+  useEffect(() => {
+    const target = new Date("2026-01-19T09:00:00+03:00").getTime();
+    
+    const tick = () => {
+      const now = Date.now();
+      const diff = Math.max(0, target - now);
+      const s = Math.floor(diff / 1000);
+      const d = Math.floor(s / 86400);
+      const h = Math.floor((s % 86400) / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const sec = s % 60;
+      
+      const pad = (n) => String(n).padStart(2, "0");
+      setTimeLeft(`${d} يوم ${pad(h)}:${pad(m)}:${pad(sec)}`);
+    };
+
+    tick();
+    const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const GlassUnit = ({ value, label }) => (
-    <div className="group relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 rounded-[2rem] blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
-      <div className="relative w-16 h-20 md:w-24 md:h-28 flex flex-col items-center justify-center bg-white/20 backdrop-blur-2xl rounded-2xl md:rounded-[2rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] hover:-translate-y-1 transition-all duration-300">
-        <div className="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-[#284e7f] to-[#1a3558] mb-1 tabular-nums tracking-tight font-sans">
-          {String(value).padStart(2, '0')}
+  return <span className="font-mono">{timeLeft}</span>;
+};
+
+const TrainersCarousel = () => {
+  const [active, setActive] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  const switchTrainer = useCallback((index) => {
+    if (index === active || animating) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setActive(index);
+      setAnimating(false);
+    }, 250); 
+  }, [active, animating]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!animating) {
+        setAnimating(true);
+        setTimeout(() => {
+          setActive((prev) => (prev + 1) % trainersData.length);
+          setAnimating(false);
+        }, 250);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [animating]);
+
+  const t = trainersData[active];
+
+  return (
+    <div className="glass rounded-[22px] p-6 relative min-h-[380px] mt-6 shadow-xl shadow-indigo-100/40">
+      <div className="md:grid md:grid-cols-[4fr_8fr] md:gap-6 md:items-center md:text-right">
+        
+        {/* Photo Area */}
+        <div className="order-1 relative mx-auto md:mx-0 mb-4 md:mb-0 aspect-[4/5] max-w-[300px] md:max-w-none rounded-[18px] overflow-hidden border border-white/60 bg-gradient-to-b from-white/40 to-white/10 shadow-lg">
+          <img 
+            src={t.image} 
+            alt={t.name}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
         </div>
-        <div className="text-[9px] md:text-xs font-semibold text-[#b11e22] uppercase tracking-widest font-sans">{label}</div>
-        <div className="absolute top-0 left-0 w-full h-full rounded-[2rem] pointer-events-none bg-gradient-to-br from-white/30 to-transparent" />
+
+        {/* Info Area */}
+        <div className={`order-2 flex flex-col items-center md:items-start transition-all duration-300 ${animating ? 'opacity-0 blur-sm translate-y-2' : 'opacity-100 blur-0 translate-y-0'}`}>
+          <div className="text-xs text-sky-600 font-bold mb-2 tracking-wide uppercase">Team • Experts</div>
+          <div className="text-3xl font-black text-zinc-900">{t.name}</div>
+          <div className="text-zinc-600 mt-2 leading-relaxed max-w-full font-medium">{t.title}</div>
+          
+          <div className="mt-4 p-4 rounded-2xl bg-white/40 border border-white/60 w-full text-center md:text-right shadow-sm">
+            <div className="text-xs text-zinc-500 mb-1 font-semibold">Bio & Vision</div>
+            <div className="text-[15px] leading-relaxed text-zinc-800">{t.bio}</div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Indicators */}
+      <div className="flex justify-center gap-2 mt-6">
+        {trainersData.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => switchTrainer(idx)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${active === idx ? 'bg-sky-500 scale-125' : 'bg-black/10 hover:bg-black/20'}`}
+          />
+        ))}
       </div>
     </div>
   );
-
-  return (
-    <div className="flex gap-2 md:gap-4 justify-center mb-0" dir="ltr">
-      <GlassUnit value={timeLeft.days} label="Days" />
-      <GlassUnit value={timeLeft.hours} label="Hours" />
-      <GlassUnit value={timeLeft.minutes} label="Mins" />
-      <GlassUnit value={timeLeft.seconds} label="Secs" />
-    </div>
-  );
 };
 
-const FloatingWhatsApp = () => {
-  const phoneNumber = '905337642450';
-  const whatsappUrl = `https://wa.me/${phoneNumber}`;
+// --- Main App Component ---
 
-  const WhatsAppIcon = () => (
-    <svg viewBox="0 0 24 24" className="w-6 h-6 md:w-7 md:h-7 fill-white" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-    </svg>
-  );
-
-  return (
-    <a
-      href={whatsappUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 left-6 z-50 group hover:-translate-y-1 transition-transform duration-300"
-      aria-label="Chat on WhatsApp"
-    >
-      <div className="bg-[#25D366] p-3 md:p-4 rounded-full shadow-[0_8px_30px_rgba(37,211,102,0.3)] flex items-center justify-center">
-        <WhatsAppIcon />
-      </div>
-    </a>
-  );
-};
-
-// --- AI Advisor Section ---
-const AIAdvisorSection = ({ compact = false }) => {
-  const [query, setQuery] = useState('');
-  const [response, setResponse] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const handleAnalyze = async () => {
-    if (!query.trim()) return;
-    setLoading(true);
-    setError('');
-    setResponse('');
-
-    const apiKey = ''; // Set at runtime
-    const prompt = `
-      You are a senior HR consultant promoting a high-level workshop titled "Training Needs Analysis using AI & Smart Assessment Centers".
-      User Challenge: "${query}"
-      Output Language: Arabic. Style: Executive, concise (max 3-4 sentences), helpful.
-    `;
-
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
-        }
-      );
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
-      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (aiText) setResponse(aiText);
-      else throw new Error('No response generated');
-    } catch {
-      setError('عذراً، حدث خطأ في الاتصال بالمستشار الذكي.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Compact mode: used inside Hero (no outer section wrapper)
-  if (compact) {
-    return (
-      <div className="w-full max-w-xl mx-auto">
-        <div className="relative group p-[2px] rounded-[2.75rem] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22] to-transparent opacity-40 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
-          <div className="absolute inset-[2px] bg-white/20 rounded-[2.75rem] backdrop-blur-2xl border border-white/35" />
-
-          <div className="relative bg-white/65 backdrop-blur-2xl rounded-[2.75rem] p-4 sm:p-6 shadow-[0_22px_70px_rgba(0,0,0,0.10)]">
-            <div className="flex flex-col items-center justify-center text-center gap-3 mb-4">
-              <div className="flex items-center justify-center gap-2 px-5 py-2 bg-white/70 border border-white/60 rounded-full shadow-sm">
-                <Sparkles className="w-4 h-4 text-yellow-500 fill-yellow-500 animate-pulse" />
-                <span className="inline-flex items-baseline gap-2 text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans">
-                  <span className="refeai-brand text-base sm:text-lg">RefeAI</span>
-                  <span className="text-[10px] sm:text-xs font-extrabold">BETA</span>
-                </span>
-              </div>
-            </div>
-
-            {!response ? (
-              <div>
-                <label className="block text-xs sm:text-sm font-extrabold text-slate-700 mb-2 font-sans">
-                  صف التحدي الذي تواجهه:
-                </label>
-                <textarea
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="مثال: نحتاج طريقة أدق لربط التدريب بمؤشرات الأداء الخاصة بالموظف محمد سالم.."
-                  className="w-full bg-white/70 border border-slate-900/10 rounded-[1.75rem] p-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#284e7f]/15 focus:border-[#284e7f]/30 outline-none min-h-[140px] resize-none text-right transition-all font-sans text-sm font-bold"
-                  dir="rtl"
-                />
-
-                <div className="mt-3">
-                  <button
-                    onClick={handleAnalyze}
-                    disabled={loading || !query.trim()}
-                    className={`w-full rounded-[1.5rem] py-4 px-5 font-extrabold font-sans transition-all flex items-center justify-center gap-2 border border-slate-900/10 bg-white/75 hover:bg-white shadow-sm hover:shadow-md active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed ${loading ? 'cursor-wait' : ''}`}
-                  >
-                    {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Send className="h-5 w-5" />}
-                    <span>{loading ? 'جاري التحليل...' : 'تحليل الآن'}</span>
-                  </button>
-                </div>
-
-                {error && <p className="text-red-600 text-sm mt-3 text-center font-sans font-bold">{error}</p>}
-              </div>
-            ) : (
-              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-5 sm:p-6 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-24 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-full bg-white/18 flex items-center justify-center backdrop-blur-md border border-white/25">
-                      <Bot className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="font-extrabold text-lg font-sans">رأي المستشار الذكي</h3>
-                  </div>
-
-                  <div className="text-blue-50 leading-loose text-sm sm:text-base font-sans border-r-2 border-yellow-400/50 pr-4 mb-4 font-bold">
-                    {response}
-                  </div>
-
-                  <button
-                    onClick={() => setResponse('')}
-                    className="text-sm font-extrabold text-yellow-300 hover:text-white transition-colors flex items-center gap-2"
-                  >
-                    <ArrowLeft size={16} /> تحليل تحدي آخر
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <section className="py-20 md:py-24 bg-white relative w-full overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="relative group p-[2px] rounded-[3.5rem] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22] to-transparent opacity-50 animate-rotate-border w-[200%] h-[200%] -left-[50%] -top-[50%]" />
-          <div className="absolute inset-[2px] bg-white rounded-[3.5rem]" />
-
-          <div className="bg-white/60 backdrop-blur-2xl rounded-[3.5rem] p-6 md:p-12 lg:p-16 relative overflow-hidden h-full">
-            <div className="flex justify-center mb-8">
-              <div className="flex items-center gap-2 px-6 py-2 bg-white border border-blue-100 rounded-full shadow-md transform hover:scale-105 transition-transform cursor-default">
-                <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
-                <span className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-widest font-sans refeai-brand">
-                  RefeAI BETA
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-              <div className="flex flex-col justify-center h-full text-center lg:text-right">
-                <h2 className="text-2xl md:text-3xl lg:text-5xl font-extrabold mb-4 md:mb-6 text-[#284e7f] leading-tight font-sans">
-                  مستشار التدريب <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] to-[#b11e22]">الذكي والشخصي</span>
-                </h2>
-                <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-sans font-medium">
-                  هل تواجه تحدياً في تحديد الاحتياجات التدريبية؟ أو تبحث عن طريقة لربط التدريب بالأهداف الاستراتيجية؟
-                  <br />
-                  <br />
-                  اكتب التحدي الذي تواجهه هنا، وسيقوم نموذج الذكاء الاصطناعي الخاص بنا بتحليله فوراً وتقديم استشارة مبدئية توضح كيف يمكن لهذه الورشة أن تكون الحل الأمثل لك.
-                </p>
-              </div>
-
-              <div className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-2 h-full flex flex-col justify-center">
-                {!response ? (
-                  <div className="p-4 md:p-6">
-                    <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">صف التحدي الذي تواجهه:</label>
-                    <textarea
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      placeholder="مثال: نجد صعوبة في قياس العائد الاستثماري من برامج التدريب الحالية..."
-                      className="w-full bg-gray-50 border border-gray-200 rounded-[1.5rem] p-4 md:p-5 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#284e7f]/20 focus:border-[#284e7f] outline-none min-h-[150px] md:min-h-[180px] resize-none text-right transition-all font-sans mb-4 text-sm md:text-base font-medium"
-                      dir="rtl"
-                    />
-                    <div className="w-full">
-                      <Button
-                        variant="ai"
-                        onClick={handleAnalyze}
-                        disabled={loading || !query.trim()}
-                        className="w-full !py-4 !px-6 !text-base rounded-[1.5rem] shadow-lg hover:shadow-xl active:scale-[0.99] transition-all justify-center"
-                      >
-                        <span className="inline-flex items-center gap-2">
-                          {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
-                          <span>{loading ? 'جاري التحليل...' : 'تحليل الآن'}</span>
-                        </span>
-                      </Button>
-                    </div>
-                    {error && <p className="text-red-500 text-sm mt-4 text-center font-sans">{error}</p>}
-                  </div>
-                ) : (
-                  <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-[2rem] p-6 md:p-8 text-white relative overflow-hidden h-full flex flex-col justify-center">
-                    <div className="absolute top-0 right-0 p-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30">
-                          <Bot className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="font-bold text-xl font-sans">رأي المستشار الذكي</h3>
-                      </div>
-                      <div className="text-blue-50 leading-loose text-base md:text-lg font-sans border-r-2 border-yellow-400/50 pr-4 mb-6 font-medium">
-                        {response}
-                      </div>
-                      <button
-                        onClick={() => setResponse('')}
-                        className="text-sm font-bold text-yellow-400 hover:text-white transition-colors flex items-center gap-2"
-                      >
-                        <ArrowLeft size={16} /> تحليل تحدي آخر
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- Main App ---
 export default function App() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTrainerIndex, setActiveTrainerIndex] = useState(0);
-  const [trainerCommentIndex, setTrainerCommentIndex] = useState(0);
-  const [activeAudienceIndex, setActiveAudienceIndex] = useState(0);
-
-  const registerUrl = 'https://forms.cloud.microsoft/r/FPLwbAsYyU';
-  const handleRegister = () => window.open(registerUrl, '_blank');
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Page title (matches hero)
-  useEffect(() => {
-    document.title = 'AI Assessment Center | RefeAI';
-  }, []);
-
-  // Trainer Carousel Loop (synced with side comment)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTrainerIndex((prev) => {
-        const next = (prev + 1) % trainers.length;
-        setTrainerCommentIndex((cPrev) => (cPrev + 1) % TRAINER_COMMENTS.length);
-        return next;
-      });
-    }, TRAINER_SLIDE_MS);
-    return () => clearInterval(interval);
-  }, []);
-
-  const audienceRoles = [
-    'قيادات الموارد البشرية',
-    'القيادات التنفيذية',
-    'مدراء التحول الرقمي',
-    'مدراء التدريب والتطوير',
-    'صناع القرار',
-  ];
-
-  // Audience Carousel Loop (3s)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveAudienceIndex((prev) => (prev + 1) % audienceRoles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [audienceRoles.length]);
-
-  const navLinks = [
-    { name: 'الرئيسية', href: '#' },
-    { name: 'عن الورشة', href: '#about' },
-    { name: 'المحاور', href: '#axes' },
-    { name: 'المدربين', href: '#trainers' },
-    { name: 'التسجيل', href: '#register' },
-  ];
-
-  const trainers = [
-    {
-      name: 'د. رامي شاهين',
-      title: 'خبير الذكاء الاصطناعي العالمي',
-      imageId: '1Agf19eCAbARzkPgKNQ13Rg2PoydTlo2-',
-      bio: 'خبير عالمي في الذكاء الاصطناعي والتحول الرقمي، يقود مشاريع استراتيجية في عدة دول. حاصل على دكتوراه في إدارة الموارد البشرية الدولية.',
-    },
-    {
-      name: 'أ. أحمد الطويل',
-      title: 'خبير التطوير المؤسسي',
-      imageId: '1hG5wGbMOjcCvaWSSfeyWNLhrhcfA0Srq',
-      bio: 'خبير أردني في التطوير المؤسسي والقيادة بخبرة تتجاوز 18 عامًا في إدارة التغيير وبناء الكفاءات. مستشار لهيئات محلية ودولية.',
-    },
-    {
-      name: 'د. سالم موسى',
-      title: 'استشاري التطوير وجودة التدريب',
-      imageId: '12r7lppBDqCAX5oFBldy-7O77uREbwMVr',
-      bio: 'دكتوراه في الإدارة العامة وتطوير المنظمات، وماجستير إدارة أعمال في علم النفس الإداري. استشاري جودة معتمد ومدرب دولي.',
-    },
-  ];
-
-  const axesData = [
-    {
-      number: '01',
-      title: 'قياس أثر التدريب والعائد على الاستثمار (ROI)',
-      description: 'كيفية حساب القيمة الحقيقية للتدريب وتأثيره المباشر على الأرباح والأداء.',
-      icon: TrendingUp,
-    },
-    {
-      number: '02',
-      title: 'تحديد الاحتياجات التدريبية المعتمد على البيانات',
-      description: 'الانتقال من التخمين إلى اليقين باستخدام تحليلات البيانات الضخمة.',
-      icon: Database,
-    },
-    {
-      number: '03',
-      title: 'التحول الذكي في التدريب',
-      description: 'إعادة هيكلة عمليات التدريب لتتواكب مع الثورة الرقمية.',
-      icon: Zap,
-    },
-    {
-      number: '04',
-      title: 'اتخاذ القرار التدريبي باستخدام الذكاء الاصطناعي',
-      description: 'بناء أنظمة دعم قرار ذكية للموافقة على الخطط التدريبية.',
-      icon: Scale,
-    },
-    {
-      number: '05',
-      title: 'مراكز التقييم الذكية (AI Assessment Centers)',
-      description: 'تصميم وإدارة مراكز تقييم حديثة تعتمد على المحاكاة والذكاء الاصطناعي.',
-      icon: ClipboardCheck,
-    },
-    {
-      number: '06',
-      title: 'تحليل فجوات الأداء والكفاءات',
-      description: 'رسم خرائط الكفاءات وتحديد الفجوات بدقة لردمها بالتدريب المناسب.',
-      icon: Puzzle,
-    },
-  ];
-
   return (
-    <div dir="rtl" className="min-h-screen w-full bg-[#f8fafc] text-gray-900 selection:bg-[#b11e22] selection:text-white overflow-x-hidden">
-      <GlobalStyles />
-      <FloatingWhatsApp />
+    <div dir="rtl" className="min-h-screen text-zinc-900 selection:bg-rose-500/20">
+      <Background />
 
-      {/* Navigation */}
-      <nav className={`fixed z-50 transition-all duration-300 ease-in-out ${'top-0 left-0 right-0 w-full md:top-4 md:px-4'}`}>
-        <div
-          className={`mx-auto transition-all duration-300 ${
-            'md:max-w-7xl md:rounded-full ' +
-            (isScrolled
-              ? 'bg-white/25 backdrop-blur-2xl shadow-lg border-b md:border border-white/35 py-2'
-              : 'bg-white/15 md:bg-transparent border-b md:border border-white/25 py-3 md:py-4')
-          }`}
-        >
-          <div className="px-4 md:px-8 flex justify-between items-center h-14">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <img
-                src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G"
-                alt="Reference Training Center"
-                className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
-              />
-            </div>
+      <main className="max-w-[1120px] mx-auto px-4 relative flex flex-col items-center text-center">
+        
+        {/* SYSTEM HERO SECTION */}
+        <section className="py-12 w-full relative z-10">
+          {/* Main System Frame */}
+          <div className="glass rounded-[32px] border border-white/60 p-1 shadow-2xl shadow-sky-200/50 overflow-hidden relative">
+            
+            {/* Top System Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-sky-400/50 to-transparent opacity-70"></div>
+            
+            <div className="bg-white/30 rounded-[28px] p-6 md:p-10 relative overflow-hidden backdrop-blur-sm">
+                
+                {/* Decorative Grid inside */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-50"></div>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="text-sm font-semibold text-gray-600 hover:text-[#284e7f] transition-colors relative group font-sans"
-                >
-                  {link.name}
-                  <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-[#b11e22] transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100" />
-                </a>
-              ))}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="hidden md:flex items-center gap-3">
-              <button
-                onClick={handleRegister}
-                className="px-6 py-2.5 text-sm font-bold text-[#b11e22] bg-red-50 border border-red-100 rounded-full hover:bg-red-100 transition-colors font-sans"
-              >
-                احجز مقعدك
-              </button>
-            </div>
-
-            {/* Mobile Menu Toggle */}
-            <button className="md:hidden p-2 text-gray-600 rounded-full hover:bg-gray-100" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-4 shadow-xl animate-in slide-in-from-top-5 z-40 md:hidden">
-            <div className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="text-base font-bold text-gray-700 p-3 hover:bg-gray-50 rounded-xl text-right font-sans"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </a>
-              ))}
-              <div className="h-px bg-gray-100 my-2" />
-              <Button onClick={handleRegister} className="w-full justify-center rounded-xl">
-                سجل الآن
-              </Button>
-            </div>
-          </div>
-        )}
-      </nav>
-      {/* Hero */}
-      <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-24 overflow-hidden bg-grid-slate w-full">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#284e7f]/5 rounded-full blur-[100px]" />
-          <div className="absolute top-[10%] right-[10%] w-[40%] h-[40%] bg-[#b11e22]/5 rounded-full blur-[100px]" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="min-h-[calc(100svh-220px)] lg:min-h-[calc(100svh-260px)] flex items-center">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center w-full">
-              {/* Left Text */}
-              <div className="order-2 lg:order-1 w-full flex items-center justify-center">
-                <div className="w-full max-w-2xl mx-auto lg:mx-0 text-center flex flex-col items-center justify-center space-y-6 md:space-y-7 lg:space-y-8">
-                  {/* 1) Paragraph + Focus line */}
-                  <div className="w-full flex flex-col items-center space-y-4 md:space-y-5">
-                    <p className="text-lg md:text-xl text-gray-500 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 font-sans font-bold">
-                      تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك — يحتوي على شات بوت ذكي تماماً مثل الذي في الأعلى — يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
-                    </p>
-
-                    <div className="flex items-center justify-center animate-in fade-in slide-in-from-bottom-7 duration-700 delay-100">
-                      <div className="relative p-[2px] rounded-[2.25rem] overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/80 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
-                        <div className="relative px-6 py-4 md:px-8 md:py-5 rounded-[2.25rem] bg-white/70 backdrop-blur-2xl border border-white/70 shadow-[0_22px_70px_rgba(177,30,34,0.14)]">
-                          <span className="block text-[#b11e22] font-black text-xl md:text-2xl lg:text-[28px] leading-tight font-sans">
-                            هذا ليس خيالاً ، هــذه ورشتنـــا الجديـــدة
-                          </span>
-                        </div>
-                      </div>
+                {/* Header Status Bar (Translated) */}
+                <div className="flex justify-between items-center mb-8 text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest relative z-10 border-b border-zinc-200/50 pb-2">
+                    <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+                        <span className="font-bold">النظام نشط</span>
                     </div>
-                  </div>
-
-                  {/* 2) Title + AI Assessment Center */}
-                  <div className="w-full flex flex-col items-center space-y-4 md:space-y-5 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-200">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#284e7f] tracking-tight leading-[1.2] font-sans">
-                      <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">تحديد الاحتياجات التدريبية</span>
-                      <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#284e7f] to-[#1a3558]">باستخدام الذكاء الاصطناعي</span>
-                    </h1>
-
-                    <div className="inline-flex justify-center">
-                      <span className="hover-container">
-                        <span className="explosive-text" dir="ltr">AI Assessment Center</span>
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* 3) Date */}
-                  <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
-                    <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-blue-100 shadow-sm text-[#284e7f] text-lg font-bold font-sans" dir="ltr">
-                      <Calendar className="w-5 h-5 text-[#b11e22]" />
-                      <span>19 – 23 January, 2026</span>
-                    </div>
-                  </div>
-
-                  {/* 4) Time counter */}
-                  <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
-                    <CountdownTimer />
-                  </div>
-                </div>
-              </div>
-
-              {/* Right: RefeAI Chat (replaces hero image) */}
-              <div className="order-1 lg:order-2 flex items-center justify-center w-full">
-                <div id="ai-advisor" className="w-full flex items-center justify-center">
-                  <AIAdvisorSection compact />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trainers */}
-      <section id="trainers" className="relative w-full pt-24 pb-28 md:pt-28 md:pb-32 bg-[#f8fafc]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            subtitle=""
-            align="center"
-            titleClassName="text-xl md:text-3xl lg:text-4xl"
-            title={
-              <>
-                مدربونا ليسوا مجرد خبراء؛{' '}
-                <span className="relative inline-block px-3 py-1.5 rounded-full bg-white/35 backdrop-blur-xl border border-white/55 text-transparent bg-clip-text bg-gradient-to-l from-[#b11e22] to-[#284e7f] font-black shadow-[0_18px_60px_rgba(177,30,34,0.12)] overflow-hidden">
-                  هم صانعوا التحول
-                  <span className="pointer-events-none absolute inset-x-2 -bottom-1 h-[3px] rounded-full overflow-hidden">
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/80 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
-                  </span>
-                </span>
-              </>
-            }
-          />
-
-          <p className="mt-4 mb-10 text-center text-slate-700/90 font-sans font-bold text-[19px] sm:text-[20px] md:text-[21px] leading-relaxed max-w-3xl mx-auto">
-            من الذكاء الاصطناعي إلى تحليل البيانات الضخمة، ومن استراتيجيات الأداء إلى مراكز التقييم المتقدمة، كل مدرب يجمع بين المعرفة العميقة والخبرة العملية ليضمن لك تجربة تدريبية ذكية، ملموسة، ومؤثرة!
-          </p>
-
-          <div className="mx-auto w-full max-w-xl sm:max-w-2xl">
-            {/* Comment (synced with slide) */}
-            <div className="mb-4 sm:mb-5">
-              <div className="relative p-[2px] rounded-2xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#b11e22]/70 to-transparent opacity-90 w-[200%] -left-1/2 animate-red-sweep" />
-                <div
-                  key={trainerCommentIndex}
-                  className="relative bg-white/80 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.10)] px-4 py-3 animate-comment-in"
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    <Quote className="w-4 h-4 text-slate-900/70" />
-                    <p
-                      dir="rtl"
-                      className="text-slate-900 font-extrabold text-[12px] sm:text-[13px] font-sans leading-snug text-center"
-                    >
-                      {TRAINER_COMMENTS[trainerCommentIndex % TRAINER_COMMENTS.length]}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Main trainer card */}
-            <div className="bg-white rounded-[2.5rem] sm:rounded-[3rem] border border-slate-900/10 shadow-[0_22px_70px_rgba(0,0,0,0.12)] overflow-hidden">
-              {/* Photo */}
-              <div className="relative bg-white">
-                {(() => {
-                  const t = trainers[activeTrainerIndex];
-                  const primarySrc = `https://lh3.googleusercontent.com/d/${t.imageId}=w1600`;
-                  const fallbackSrc = `https://drive.google.com/thumbnail?id=${t.imageId}&sz=w1600`;
-
-                  return (
-                    <div className="relative h-[520px] sm:h-[660px] lg:h-[720px]">
-                      <img
-                        src={primarySrc}
-                        alt={t.name}
-                        className="h-full w-full object-cover object-top bg-white"
-                        loading="lazy"
-                        onError={(e) => {
-                          if (e.currentTarget.getAttribute('data-fallback') === '1') return;
-                          e.currentTarget.setAttribute('data-fallback', '1');
-                          e.currentTarget.src = fallbackSrc;
-                        }}
-                      />
-
-                      {/* Subtle frame (no overlay that covers the photo) */}
-                      <div className="pointer-events-none absolute inset-3 rounded-[2rem] sm:rounded-[2.25rem] border border-slate-900/10" />
-
-                      {/* Soft blend into details */}
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-white" />
-                    </div>
-                  );
-                })()}
-              </div>
-
-              {/* Details */}
-              <div className="px-5 sm:px-7 py-5">
-                <div className="text-center">
-                  <div className="text-slate-900 font-extrabold text-[20px] sm:text-[22px] leading-tight font-sans">
-                    {trainers[activeTrainerIndex].name}
-                  </div>
-
-                  <div className="mt-2 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-[1.25rem] bg-slate-900/5 border border-slate-900/10">
-                    <Users className="w-4 h-4 text-[#284e7f]" />
-                    <span className="text-slate-900/90 font-extrabold text-[12px] sm:text-[13px] font-sans">
-                      {trainers[activeTrainerIndex].title}
-                    </span>
-                  </div>
-
-                  <p className="mt-4 text-slate-800/95 text-[12px] sm:text-[13px] leading-relaxed font-sans font-medium">
-                    {trainers[activeTrainerIndex].bio}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Dots */}
-            <div className="flex justify-center gap-2 mt-5">
-              {trainers.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setActiveTrainerIndex(idx);
-                    setTrainerCommentIndex(idx % TRAINER_COMMENTS.length);
-                  }}
-                  className={`h-2 rounded-full ${idx === activeTrainerIndex ? 'w-8 bg-[#b11e22]' : 'w-2 bg-slate-900/15'}`}
-                  aria-label={`Trainer ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Axes */}
-      <section id="axes" className="py-20 w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-[3rem] p-8 md:p-16 shadow-xl border border-gray-100">
-            <SectionHeading title="محاور ورشة العمل" align="center" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-              {axesData.map((axis, index) => (
-                <AxisCard key={index} number={axis.number} title={axis.title} description={axis.description} icon={axis.icon} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="about" className="py-24 bg-white relative w-full overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="bg-gradient-to-br from-[#1e293b] via-[#284e7f] to-[#1e3a8a] rounded-[3rem] p-6 md:p-10 text-white shadow-2xl shadow-blue-900/40 relative overflow-hidden">
-            <div
-              className="absolute inset-0 opacity-20 mix-blend-overlay"
-              style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/grid-noise.png')" }}
-            />
-            <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#b11e22]/20 rounded-full blur-[100px]" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2" />
-
-            <div className="relative z-10">
-              <div className="text-center max-w-4xl mx-auto mb-16">
-                <h2 className="text-3xl md:text-5xl font-extrabold mb-8 font-sans leading-loose md:leading-[1.4] relative inline-block">
-                  <span className="relative z-10 drop-shadow-md">لماذا هذه الورشة</span>
-                  <span className="relative mx-3 inline-block transform -rotate-2">
-                    <span className="absolute inset-0 bg-[#b11e22] rounded-xl transform rotate-2 shadow-lg" />
-                    <span className="relative z-10 text-white px-3">الآن؟</span>
-                  </span>
-                </h2>
-
-                <p className="text-base md:text-lg text-blue-50 leading-loose font-medium font-sans opacity-95 max-w-3xl mx-auto">
-                  في ظل التطور المتسارع لتقنيات الذكاء الاصطناعي، لم يعد تحديد الاحتياجات التدريبية مجرد إجراء روتيني، بل أصبح ركيزة استراتيجية لبناء ميزة تنافسية مستدامة. تقدم هذه الورشة خارطة طريق عملية لدمج أدوات الذكاء الاصطناعي في صميم عمليات الموارد البشرية، مما يضمن دقة التقييم، وكفاءة الإنفاق، وتعظيم العائد على الاستثمار في رأس المال البشري.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-right rtl:text-right">
-                <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group shadow-lg">
-                  <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-white/5">
-                    <CheckCircle2 className="w-8 h-8 text-[#b11e22]" />
-                  </div>
-                  <h4 className="font-bold text-2xl mb-4 font-sans text-white">منهجيات حديثة</h4>
-                  <p className="text-base text-blue-100/80 leading-relaxed font-sans font-bold">
-                    الانتقال من الطرق التقليدية إلى أحدث الممارسات العالمية المعتمدة على البيانات.
-                  </p>
+                    <div className="hidden sm:block">معرف الجلسة: AI-ASSESS-2026</div>
                 </div>
 
-                <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group shadow-lg">
-                  <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-white/5">
-                    <Brain className="w-8 h-8 text-[#b11e22]" />
-                  </div>
-                  <h4 className="font-bold text-2xl mb-4 font-sans text-white">ذكاء اصطناعي</h4>
-                  <p className="text-base text-blue-100/80 leading-relaxed font-sans font-bold">
-                    استخدام خوارزميات ذكية لتحليل الفجوات بدقة متناهية وسرعة فائقة.
-                  </p>
-                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-12 items-center relative z-10">
+                    
+                    {/* Left: Main Interface Content */}
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-right">
+                        
+                        {/* Title Block */}
+                        <div className="relative mb-6">
+                            <h1 className="text-3xl md:text-5xl font-black text-zinc-800 leading-tight tracking-tight">
+                                تحديد الاحتياجات التدريبية
+                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-4xl md:text-6xl drop-shadow-sm filter pb-1">
+                                    باستخدام الذكاء الاصطناعي
+                                </span>
+                            </h1>
+                        </div>
 
-                <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group shadow-lg">
-                  <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-white/5">
-                    <Target className="w-8 h-8 text-[#b11e22]" />
-                  </div>
-                  <h4 className="font-bold text-2xl mb-4 font-sans text-white">أداء مؤسسي</h4>
-                  <p className="text-base text-blue-100/80 leading-relaxed font-sans font-bold">
-                    ربط مخرجات التدريب بالأهداف الاستراتيجية للمؤسسة بشكل مباشر وقابل للقياس.
-                  </p>
-                </div>
-              </div>
+                        {/* Description (Updated) */}
+                        <p className="text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
+                            تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك، يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
+                            <span className="block mt-3 text-xl font-bold text-sky-700">
+                                هذا ليس خيالاً ، هــذه ورشتنـــا الجديـــدة
+                            </span>
+                        </p>
 
+                        {/* Date & Counter System Block (The "Experience") - Translated */}
+                        <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-5 backdrop-blur-md shadow-lg shadow-indigo-100/40 group hover:border-sky-300/50 transition-colors duration-300">
+                            <div className="flex items-center justify-between mb-3 border-b border-zinc-300/30 pb-2">
+                                 <span className="text-xs font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1">
+                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    هدف الورشة
+                                 </span>
+                                 <span className="text-[10px] font-mono font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">متزامن</span>
+                            </div>
+                            
+                            <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4">
+                                <div className="text-center sm:text-right w-full sm:w-auto">
+                                    <div className="text-2xl font-black text-zinc-800">19–23 يناير</div>
+                                    <div className="text-sm font-bold text-zinc-400">2026</div>
+                                </div>
+                                
+                                <div className="hidden sm:block h-8 w-px bg-zinc-300/50"></div>
+
+                                <div className="text-center sm:text-left w-full sm:w-auto bg-zinc-50/50 rounded-lg px-4 py-2 border border-zinc-200/50">
+                                     <div className="text-[10px] text-zinc-400 font-bold mb-1 uppercase tracking-wide">الوقت المتبقي</div>
+                                     <div className="text-xl font-mono font-black text-rose-500 tracking-wider">
+                                        <Countdown />
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* Right: Active Visualizations */}
+                    <div className="relative w-full">
+                         <div className="grid gap-4">
+                            
+                            {/* 1. Skill Analysis Simulator */}
+                            <div className="bg-white/60 border border-white/60 rounded-xl p-4 shadow-sm backdrop-blur-sm relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-500/5 rounded-bl-full"></div>
+                                <div className="flex justify-between items-center mb-3">
+                                    <div className="text-xs text-zinc-500 font-bold">تحليل الكفاءات الحية</div>
+                                    <span className="flex h-2 w-2 relative">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                                    </span>
+                                </div>
+                                
+                                {/* Fake Chart/Bars */}
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between text-[10px] text-zinc-600 font-mono">
+                                        <span>القيادة الاستراتيجية</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div className="h-1.5 bg-zinc-200 rounded-full overflow-hidden">
+                                        <div className="h-full bg-indigo-500 w-[85%] rounded-full animate-[pulse_3s_infinite]"></div>
+                                    </div>
+                                    
+                                    <div className="flex items-center justify-between text-[10px] text-zinc-600 font-mono">
+                                        <span>التحليل الرقمي</span>
+                                        <span>42% <span className="text-rose-500 font-bold">(فجوة)</span></span>
+                                    </div>
+                                    <div className="h-1.5 bg-zinc-200 rounded-full overflow-hidden">
+                                        <div className="h-full bg-rose-500 w-[42%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-3 pt-2 border-t border-zinc-200/50 flex justify-between items-center">
+                                     <span className="text-[10px] text-zinc-400">الموظف: #8492</span>
+                                     <span className="text-[10px] bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded border border-indigo-100">جاري المعالجة</span>
+                                </div>
+                            </div>
+
+                            {/* 2. Live AI Log */}
+                             <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 shadow-lg relative overflow-hidden text-right" dir="ltr"> 
+                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-sky-500"></div>
+                                 <div className="flex justify-between items-center mb-3">
+                                     <div className="text-xs text-zinc-400 font-mono">AI_KERNEL_LOG</div>
+                                     <div className="text-[10px] text-emerald-500 font-mono animate-pulse">RUNNING</div>
+                                 </div>
+                                 
+                                 <div className="space-y-2 font-mono text-[10px] relative">
+                                    {/* Simulated Log Items */}
+                                    <div className="flex gap-2 text-zinc-300 items-start">
+                                        <span className="text-zinc-600 min-w-[50px]">[10:42:01]</span>
+                                        <span className="text-right">بدء فحص بيانات الأداء الوظيفي...</span>
+                                    </div>
+                                    <div className="flex gap-2 text-emerald-400 items-start">
+                                        <span className="text-zinc-600 min-w-[50px]">[10:42:05]</span>
+                                        <span className="text-right">✓ تم اكتمال تحليل القسم المالي</span>
+                                    </div>
+                                     <div className="flex gap-2 text-amber-400 items-start">
+                                        <span className="text-zinc-600 min-w-[50px]">[10:42:08]</span>
+                                        <span className="text-right">⚠ تنبيه: نقص مهارات التفاوض (45%)</span>
+                                    </div>
+                                    <div className="flex gap-2 text-sky-400 items-start">
+                                        <span className="text-zinc-600 min-w-[50px]">[10:42:12]</span>
+                                        <span className="text-right">⟳ توليد مسار تدريبي مقترح...</span>
+                                    </div>
+                                 </div>
+                             </div>
+
+                         </div>
+                    </div>
+
+                </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-            {/* Pillars */}
-      <section className="py-24 bg-slate-50 relative overflow-hidden w-full">
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')" }}
-          />
-          <div className="absolute -top-[20%] left-[5%] w-[55%] h-[55%] bg-[#284e7f]/8 rounded-full blur-[120px]" />
-          <div className="absolute top-[30%] -right-[10%] w-[45%] h-[45%] bg-[#b11e22]/8 rounded-full blur-[120px]" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeading title="ركائز الورشة الأساسية" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <FeatureCard icon={Brain} title="الاحتياجات الذكية" description="إتقان تحديد الاحتياجات التدريبية باستخدام أدوات الذكاء الاصطناعي المتقدمة." />
-            <FeatureCard icon={Target} title="القرار التدريبي" description="تعزيز كفاءة واتزان قرارات التدريب في إدارات الموارد البشرية." />
-            <FeatureCard icon={Layers} title="التكامل الاستراتيجي" description="مواءمة خطط التدريب بشكل كامل مع الاستراتيجية العامة للمؤسسة." />
-            <FeatureCard icon={BarChart3} title="فجوات الكفاءات" description="تحليل فجوات الكفاءات بطرق عملية وذكية تعتمد على البيانات." />
-          </div>
-        </div>
-      </section>
-
-      {/* Target Audience */}
-      <section className="py-12 w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#284e7f] rounded-[3rem] relative overflow-hidden p-8 md:p-16 shadow-2xl shadow-blue-900/20 flex flex-col items-center justify-center text-center">
-            <div
-            className="absolute inset-0 opacity-5"
-            style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')" }}
-          />
-            <div className="relative z-10 w-full max-w-3xl flex flex-col gap-8">
-              <div className="flex flex-col items-center">
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight font-sans">
-                  هذه الورشة <span className="text-[#FFFFFF]">موجهة إلى</span>
-                </h2>
-                <div className="h-1.5 w-24 bg-[#b11e22] mb-6 rounded-full" />
-                <p className="text-blue-100 text-lg font-light leading-relaxed font-sans font-medium mb-12">
-                  صممت هذه الورشة خصيصاً للقادة وصناع القرار الذين يسعون لإحداث نقلة نوعية في مؤسساتهم باستخدام أحدث التقنيات.
-                </p>
-              </div>
-
-              <div className="w-full relative h-32 flex items-center justify-center">
-                {audienceRoles.map((role, idx) => (
-                  <div
-                    key={idx}
-                    className={`absolute transition-all duration-700 ease-in-out transform w-full max-w-lg ${
-                      idx === activeAudienceIndex ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-                    }`}
-                  >
-                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-[2rem] flex items-center justify-center gap-4 text-white shadow-2xl mx-auto">
-                      <div className="w-3 h-3 rounded-full bg-[#b11e22] animate-pulse shrink-0" />
-                      <span className="font-bold text-2xl font-sans">{role}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex gap-2 justify-center mt-4">
-                {audienceRoles.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveAudienceIndex(idx)}
-                    className={`transition-all duration-300 rounded-full h-2 ${idx === activeAudienceIndex ? 'w-8 bg-[#b11e22]' : 'w-2 bg-white/30'}`}
-                    aria-label={`Go to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
+        {/* QUOTES */}
+        <section className="w-full pb-12">
+          <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-rose-100/30">
+            <div className="text-xs text-zinc-500 mb-2 font-bold uppercase tracking-wider">RefeAI Voice</div>
+            <div className="min-h-[60px] flex items-center justify-center">
+              <AnimatedText text={quotesData} interval={4000} className="text-2xl md:text-3xl font-black gradient-text leading-tight" />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Dashboard Visual */}
-      <section className="py-20 bg-grid-slate relative overflow-hidden w-full">
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="relative mx-auto max-w-5xl animate-in fade-in slide-in-from-bottom-10 duration-1000 perspective-1000">
-            <div className="relative bg-white rounded-[1.5rem] md:rounded-[2rem] border border-gray-200/60 shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden">
-              <div className="bg-gray-50 border-b border-gray-100 h-8 md:h-10 flex items-center px-4 gap-2">
-                <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-400/80" />
-                <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-400/80" />
-                <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-400/80" />
-                <div className="ml-4 w-32 md:w-40 h-3 md:h-4 bg-gray-200/50 rounded-md" />
-              </div>
+        {/* TRAINERS */}
+        <section id="trainers" className="w-full pb-12">
+          <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">
+            مدربونا ليسوا متحدثين…
+            <span className="block text-zinc-500 mt-2 text-2xl">هم مهندسو التحول</span>
+          </h2>
+          <TrainersCarousel />
+        </section>
 
-              <div className="p-1 bg-white">
-                <div className="flex flex-col md:flex-row h-auto min-h-[300px]">
-                  <div className="hidden md:flex w-16 border-l border-gray-100 flex-col items-center py-6 gap-6 bg-gray-50/50">
-                    <div className="w-8 h-8 rounded-lg bg-[#284e7f] flex items-center justify-center text-white font-bold">R</div>
-                    <div className="w-8 h-8 rounded-lg text-gray-400 hover:bg-white hover:shadow-sm flex items-center justify-center">
-                      <Layout size={18} />
-                    </div>
-                    <div className="w-8 h-8 rounded-lg text-[#b11e22] bg-white shadow-sm flex items-center justify-center">
-                      <BarChart3 size={18} />
-                    </div>
-                  </div>
-
-                  <div className="flex-1 p-4 md:p-8 bg-slate-50/30 overflow-hidden relative">
-                    <div className="flex justify-between items-center mb-6">
-                      <div>
-                        <h3 className="font-bold text-lg md:text-xl text-gray-800 font-sans">تحليل فجوات الأداء</h3>
-                        <p className="text-xs md:text-sm text-gray-400 font-sans">آخر تحديث: قبل 5 دقائق</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400">
-                          <Search size={14} />
-                        </div>
-                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400">
-                          <Bell size={14} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                      <div className="col-span-1 md:col-span-2 bg-white rounded-xl md:rounded-2xl p-4 md:p-5 shadow-sm border border-gray-100/50">
-                        <div className="flex justify-between mb-4">
-                          <div className="h-3 md:h-4 w-20 md:w-24 bg-gray-100 rounded-md" />
-                          <div className="h-3 md:h-4 w-3 md:w-4 bg-gray-100 rounded-full" />
-                        </div>
-                        <div className="flex items-end gap-2 md:gap-3 h-24 md:h-32 mt-2 px-1">
-                          <div className="w-full bg-blue-50 rounded-t-sm md:rounded-t-lg h-[40%]" />
-                          <div className="w-full bg-blue-100 rounded-t-sm md:rounded-t-lg h-[70%]" />
-                          <div className="w-full bg-[#284e7f] rounded-t-sm md:rounded-t-lg h-[90%]" />
-                          <div className="w-full bg-blue-100 rounded-t-sm md:rounded-t-lg h-[60%]" />
-                          <div className="w-full bg-blue-50 rounded-t-sm md:rounded-t-lg h-[30%]" />
-                        </div>
-                      </div>
-
-                      <div className="col-span-1 bg-gradient-to-br from-[#284e7f] to-[#1a3558] rounded-xl md:rounded-2xl p-4 md:p-5 text-white shadow-lg shadow-blue-900/10 flex flex-row md:flex-col items-center md:items-start justify-between md:justify-start">
-                        <div>
-                          <div className="text-xs md:text-sm opacity-80 mb-1 font-sans">ROI Score</div>
-                          <div className="text-2xl md:text-3xl font-bold mb-0 md:mb-4 font-sans">94%</div>
-                        </div>
-
-                        <div className="hidden md:block h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
-                          <div className="h-full w-[94%] bg-[#b11e22] rounded-full" />
-                        </div>
-
-                        <div className="flex -space-x-2 space-x-reverse overflow-hidden md:mt-4">
-                          {trainers.slice(0, 3).map((t, i) => (
-                            <img
-                              key={i}
-                              className="inline-block h-6 w-6 md:h-8 md:w-8 rounded-full ring-2 ring-[#284e7f] object-cover"
-                              src={`https://drive.google.com/thumbnail?id=${t.imageId}&sz=w300`}
-                              alt=""
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute -left-4 md:-left-8 top-12 md:top-20 bg-white p-3 md:p-4 rounded-xl md:rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] animate-bounce delay-700 border border-gray-100 transform scale-75 md:scale-100 origin-top-left">
+        {/* REFE AI Chat */}
+        <section id="refeai" className="w-full pb-12">
+          <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">RefeAI</h2>
+          <span className="block text-zinc-500 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
+          
+          <div className="glass rounded-[22px] overflow-hidden text-right shadow-xl shadow-sky-100/40">
+            {/* Header */}
+            <div className="px-4 py-3 bg-white/40 border-b border-white/60 flex items-center justify-between backdrop-blur-sm">
               <div className="flex items-center gap-3">
-                <div className="bg-green-100 p-1.5 md:p-2 rounded-full text-green-600">
-                  <CheckCircle2 size={16} />
+                <div className="w-9 h-9 rounded-xl bg-white/60 border border-white/60 flex items-center justify-center shadow-sm">
+                  <span className="font-black text-sky-600">AI</span>
                 </div>
                 <div>
-                  <div className="text-[10px] md:text-xs text-gray-400 font-bold font-sans">اكتمال التحليل</div>
-                  <div className="text-xs md:text-sm font-bold text-gray-800 font-sans">ناجح 100%</div>
+                  <div className="font-black leading-none text-zinc-800">RefeAI</div>
+                  <div className="text-[10px] text-zinc-500 mt-1 font-semibold">AI Decision Support</div>
+                </div>
+              </div>
+              <div className="px-2.5 py-1 rounded-full bg-emerald-100/50 border border-emerald-200/60 text-xs text-emerald-700 font-bold">Active</div>
+            </div>
+
+            {/* Body */}
+            <div className="p-4 min-h-[240px] flex flex-col gap-3">
+              <div className="flex justify-start">
+                <div className="max-w-[85%] p-3 rounded-2xl rounded-tr-sm border border-white/60 bg-white/40 text-sm text-zinc-800 font-medium shadow-sm">
+                  من يحتاج تدريبًا فعلًا؟
+                </div>
+              </div>
+              
+              <div className="flex justify-end">
+                <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-sky-100 bg-gradient-to-l from-sky-50 to-white/40 text-sm text-zinc-800 font-medium shadow-sm">
+                  دعني أحلل فجوات الأداء والكفاءات…
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-sky-100 bg-gradient-to-l from-sky-50 to-white/40 text-sm text-zinc-800 font-medium shadow-sm">
+                  تم رصد 3 فجوات حرجة. أولوية: إدارة الأداء + قيادة الفرق + تحليل البيانات.
+                </div>
+              </div>
+
+              <div className="flex justify-end mt-2">
+                <div className="px-3 py-2 rounded-2xl bg-white/40 border border-white/60 flex gap-1 items-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dotPulse"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dotPulse"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dotPulse"></div>
                 </div>
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section id="register" className="py-32 bg-white relative overflow-hidden w-full">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="inline-block p-4 rounded-full bg-blue-50 mb-6">
-            <Award className="w-8 h-8 text-[#b11e22]" />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#284e7f] mb-6 tracking-tight font-sans">
-            كن جزءاً من مستقبل التدريب الذكي
-          </h2>
-          <p className="text-xl text-gray-500 mb-12 max-w-2xl mx-auto font-light font-sans font-medium">
-            لا تفوت فرصة الانضمام إلى نخبة القادة في هذا البرنامج الاستثنائي. المقاعد محدودة لضمان جودة التجربة.
-          </p>
-          <div className="flex flex-col items-center justify-center gap-4">
-            <Button
-              variant="primary"
-              icon={FileSignature}
-              onClick={handleRegister}
-              className="!px-12 !py-5 text-lg shadow-xl shadow-red-900/20 w-full sm:w-auto min-w-[280px]"
-            >
-              سجل الآن
-            </Button>
-            <Button
-              variant="outline"
-              icon={DownloadCloud}
-              className="!px-12 !py-5 text-lg w-full sm:w-auto min-w-[280px]"
-            >
-              تحميل الكتيب
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative pt-20 pb-10 overflow-hidden w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-[2.5rem] shadow-2xl p-8 md:p-10">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="text-center md:text-right">
-                <img
-                  src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G"
-                  alt="Reference Training Center"
-                  className="h-16 w-auto object-contain mx-auto md:mx-0 mb-4"
-                />
-                <p className="text-gray-500 text-sm max-w-xs font-sans font-bold">
-                  نمكن المؤسسات من بناء مستقبلها من خلال حلول تدريبية ذكية ومبتكرة.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-sm font-bold text-[#284e7f] font-sans">
-                <a href="#" className="hover:text-[#b11e22] transition-colors">الرئيسية</a>
-                <a href="#axes" className="hover:text-[#b11e22] transition-colors">المحاور</a>
-                <a href="#trainers" className="hover:text-[#b11e22] transition-colors">المدربين</a>
-                <a href="#" className="hover:text-[#b11e22] transition-colors">سياسة الخصوصية</a>
-              </div>
-
-              <div className="text-center md:text-left" dir="ltr">
-                <div className="flex flex-col gap-2 text-sm text-gray-600 font-sans font-medium">
-                  <a
-                    href="tel:+905337642450"
-                    className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start font-bold"
-                  >
-                    <Smartphone size={16} className="text-[#b11e22]" /> +90 533 764 24 50
-                  </a>
-                  <a
-                    href="mailto:info@reference-rcb.com"
-                    className="hover:text-[#284e7f] transition-colors flex items-center gap-2 justify-center md:justify-start font-bold"
-                  >
-                    <Users size={16} className="text-[#b11e22]" /> info@reference-rcb.com
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-gray-200/60 text-center">
-              <p className="text-xs text-gray-400 font-sans font-bold">© 2026 Reference Training Center. All rights reserved.</p>
+            {/* Input */}
+            <div className="p-3 border-t border-white/60 bg-white/30 flex gap-2">
+              <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-zinc-800 placeholder-zinc-400 focus:outline-none focus:bg-white/70 transition-all" />
+              <button disabled className="px-4 py-2 rounded-xl bg-white/40 border border-white/60 text-zinc-400 font-bold text-sm cursor-not-allowed">إرسال</button>
             </div>
           </div>
-        </div>
-      </footer>
+        </section>
 
+        {/* FINAL CTA */}
+        <section className="w-full pb-16">
+          <div className="glass rounded-[26px] p-8 shadow-2xl shadow-rose-100/50">
+            <h3 className="text-2xl md:text-4xl font-black mb-3 text-zinc-900">كن جزءًا من مستقبل التدريب الذكي</h3>
+            <p className="text-zinc-600 max-w-[700px] mx-auto leading-relaxed mb-6 font-medium">
+              مقاعد محدودة لضمان تجربة عالية الجودة — التحول يبدأ عندما يصبح التدريب قرارًا.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <button className="px-6 py-3 rounded-xl bg-gradient-to-l from-sky-500 to-rose-500 text-white font-black hover:-translate-y-px transition-transform shadow-lg shadow-rose-500/20">
+                سجّل الآن
+              </button>
+              <button className="px-6 py-3 rounded-xl bg-white/40 border border-white/60 text-zinc-800 font-bold hover:bg-white/60 transition-colors">
+                تحميل الكتيّب
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <footer className="text-xs text-zinc-500 pb-10 font-semibold">
+          © 2026 — AI Assessment Center
+        </footer>
+
+      </main>
     </div>
   );
 }
