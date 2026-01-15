@@ -117,6 +117,12 @@ const Background = () => (
   </>
 );
 
+const StarIcon = ({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path fillRule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813a3.75 3.75 0 002.576-2.576l.813-2.846A.75.75 0 019 4.5zM9 15a.75.75 0 01.721.544l.195.682a1.125 1.125 0 00.773.773l.682.195a.75.75 0 010 1.442l-.682.195a1.125 1.125 0 00-.773.773l-.195.682a.75.75 0 01-1.442 0l-.195-.682a1.125 1.125 0 00-.773-.773l-.682-.195a.75.75 0 010-1.442l.682-.195a1.125 1.125 0 00.773-.773l.195-.682A.75.75 0 019 15z" clipRule="evenodd" />
+  </svg>
+);
+
 const AnimatedText = ({ text, interval = 3000, className = "" }) => {
   const [currentText, setCurrentText] = useState(text[0]);
   const [isVisible, setIsVisible] = useState(true);
@@ -147,7 +153,7 @@ const AnimatedText = ({ text, interval = 3000, className = "" }) => {
 };
 
 const Countdown = () => {
-  const [timeLeft, setTimeLeft] = useState("—");
+  const [t, setT] = useState({ d: "00", h: "00", m: "00", s: "00" });
 
   useEffect(() => {
     const target = new Date("2026-01-19T09:00:00+03:00").getTime();
@@ -162,7 +168,7 @@ const Countdown = () => {
       const sec = s % 60;
       
       const pad = (n) => String(n).padStart(2, "0");
-      setTimeLeft(`${d} يوم ${pad(h)}:${pad(m)}:${pad(sec)}`);
+      setT({ d: pad(d), h: pad(h), m: pad(m), s: pad(sec) });
     };
 
     tick();
@@ -170,7 +176,29 @@ const Countdown = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return <span className="font-mono">{timeLeft}</span>;
+  return (
+    <div className="flex items-end justify-center sm:justify-start gap-2.5 font-mono text-rose-500" dir="ltr">
+      <div className="flex flex-col items-center">
+        <div className="text-xl leading-none font-black tracking-tight">{t.d}</div>
+        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">DD</div>
+      </div>
+      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <div className="flex flex-col items-center">
+        <div className="text-xl leading-none font-black tracking-tight">{t.h}</div>
+        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">HH</div>
+      </div>
+      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <div className="flex flex-col items-center">
+        <div className="text-xl leading-none font-black tracking-tight">{t.m}</div>
+        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">MM</div>
+      </div>
+      <span className="text-sm font-bold text-zinc-300 mb-4 opacity-50">:</span>
+      <div className="flex flex-col items-center">
+        <div className="text-xl leading-none font-black tracking-tight">{t.s}</div>
+        <div className="text-[9px] text-zinc-400 font-sans font-bold mt-1">SS</div>
+      </div>
+    </div>
+  );
 };
 
 const TrainersCarousel = () => {
@@ -290,7 +318,7 @@ export default function App() {
                             </h1>
                         </div>
 
-                        {/* Description (Updated) */}
+                        {/* Description */}
                         <p className="text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
                             تخيل لو استطعت بناء نظام تقييم ذكي خاص بمؤسستك، يفحص أداء فريقك ويحلل مهاراتهم ويُحدِّد احتياجاتهم التدريبية فوراً، بل وينسق برامج تطوير مخصصة لكل موظف!
                             <span className="block mt-3 text-xl font-bold text-sky-700">
@@ -298,12 +326,12 @@ export default function App() {
                             </span>
                         </p>
 
-                        {/* Date & Counter System Block (The "Experience") - Translated */}
+                        {/* Date & Counter System Block */}
                         <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-5 backdrop-blur-md shadow-lg shadow-indigo-100/40 group hover:border-sky-300/50 transition-colors duration-300">
                             <div className="flex items-center justify-between mb-3 border-b border-zinc-300/30 pb-2">
                                  <span className="text-xs font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1">
                                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    هدف الورشة
+                                    تاريخ الورشة
                                  </span>
                                  <span className="text-[10px] font-mono font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">متزامن</span>
                             </div>
@@ -317,10 +345,8 @@ export default function App() {
                                 <div className="hidden sm:block h-8 w-px bg-zinc-300/50"></div>
 
                                 <div className="text-center sm:text-left w-full sm:w-auto bg-zinc-50/50 rounded-lg px-4 py-2 border border-zinc-200/50">
-                                     <div className="text-[10px] text-zinc-400 font-bold mb-1 uppercase tracking-wide">الوقت المتبقي</div>
-                                     <div className="text-xl font-mono font-black text-rose-500 tracking-wider">
-                                        <Countdown />
-                                     </div>
+                                     <div className="text-[10px] text-zinc-400 font-bold mb-2 uppercase tracking-wide">الوقت المتبقي</div>
+                                     <Countdown />
                                 </div>
                             </div>
                         </div>
@@ -367,31 +393,45 @@ export default function App() {
                                 </div>
                             </div>
 
-                            {/* 2. Live AI Log */}
-                             <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 shadow-lg relative overflow-hidden text-right" dir="ltr"> 
-                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-sky-500"></div>
-                                 <div className="flex justify-between items-center mb-3">
-                                     <div className="text-xs text-zinc-400 font-mono">AI_KERNEL_LOG</div>
-                                     <div className="text-[10px] text-emerald-500 font-mono animate-pulse">RUNNING</div>
+                            {/* 2. Simplified Live Log */}
+                            <div className="bg-white/60 border border-white/60 rounded-xl p-4 shadow-sm backdrop-blur-sm relative overflow-hidden text-right"> 
+                                 <div className="flex justify-between items-center mb-3 border-b border-zinc-200/50 pb-2">
+                                     <div className="text-xs text-zinc-500 font-bold uppercase">سجل المعالجة</div>
+                                     <div className="flex gap-1">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        <span className="text-[10px] text-emerald-600 font-bold">متصل</span>
+                                     </div>
                                  </div>
                                  
-                                 <div className="space-y-2 font-mono text-[10px] relative">
-                                    {/* Simulated Log Items */}
-                                    <div className="flex gap-2 text-zinc-300 items-start">
-                                        <span className="text-zinc-600 min-w-[50px]">[10:42:01]</span>
-                                        <span className="text-right">بدء فحص بيانات الأداء الوظيفي...</span>
+                                 <div className="space-y-3 relative">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-6 h-6 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
+                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-[11px] font-bold text-zinc-700">فحص بيانات الأداء</div>
+                                            <div className="text-[9px] text-zinc-500">تم تحليل 450 سجل وظيفي</div>
+                                        </div>
                                     </div>
-                                    <div className="flex gap-2 text-emerald-400 items-start">
-                                        <span className="text-zinc-600 min-w-[50px]">[10:42:05]</span>
-                                        <span className="text-right">✓ تم اكتمال تحليل القسم المالي</span>
+
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-[11px] font-bold text-zinc-700">تنبيه: فجوة مهارات</div>
+                                            <div className="text-[9px] text-zinc-500">نقص في مهارات التفاوض (45%)</div>
+                                        </div>
                                     </div>
-                                     <div className="flex gap-2 text-amber-400 items-start">
-                                        <span className="text-zinc-600 min-w-[50px]">[10:42:08]</span>
-                                        <span className="text-right">⚠ تنبيه: نقص مهارات التفاوض (45%)</span>
-                                    </div>
-                                    <div className="flex gap-2 text-sky-400 items-start">
-                                        <span className="text-zinc-600 min-w-[50px]">[10:42:12]</span>
-                                        <span className="text-right">⟳ توليد مسار تدريبي مقترح...</span>
+
+                                    <div className="flex items-center gap-3 opacity-70">
+                                        <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-[11px] font-bold text-zinc-700">توليد خطة علاجية</div>
+                                            <div className="text-[9px] text-zinc-500">جاري إنشاء المسار...</div>
+                                        </div>
                                     </div>
                                  </div>
                              </div>
@@ -407,7 +447,9 @@ export default function App() {
         {/* QUOTES */}
         <section className="w-full pb-12">
           <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-rose-100/30">
-            <div className="text-xs text-zinc-500 mb-2 font-bold uppercase tracking-wider">RefeAI Voice</div>
+            <div className="flex items-center justify-center gap-2 text-xs text-zinc-500 mb-2 font-bold uppercase tracking-wider">
+               <StarIcon className="w-4 h-4 text-rose-400" /> RefeAI Says
+            </div>
             <div className="min-h-[60px] flex items-center justify-center">
               <AnimatedText text={quotesData} interval={4000} className="text-2xl md:text-3xl font-black gradient-text leading-tight" />
             </div>
@@ -433,7 +475,7 @@ export default function App() {
             <div className="px-4 py-3 bg-white/40 border-b border-white/60 flex items-center justify-between backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-white/60 border border-white/60 flex items-center justify-center shadow-sm">
-                  <span className="font-black text-sky-600">AI</span>
+                  <StarIcon className="text-sky-600 w-5 h-5" />
                 </div>
                 <div>
                   <div className="font-black leading-none text-zinc-800">RefeAI</div>
