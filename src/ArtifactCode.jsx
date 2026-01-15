@@ -62,41 +62,41 @@ const Background = () => (
       @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
       :root {
-        --accent: 14 165 233; /* Sky 500 */
-        --accent2: 244 63 94; /* Rose 500 */
-        --fg: 24 24 27;       /* Zinc 900 (Dark Text) */
-        --bg: 240 249 255;    /* Very Light Blue Base */
+        --accent: 40 78 127; /* #284e7f Blue */
+        --accent2: 177 30 34; /* #b11e22 Red */
+        --fg: 40 78 127;      /* Dark Blue for Main Text */
+        --bg: 248 250 252;    /* Very Light/White */
       }
 
       body {
         margin: 0;
         font-family: "Tajawal", sans-serif;
         background-color: rgb(var(--bg));
-        /* Glassy Light Blue to Light Red Gradient */
+        /* Gradients based on Blue (#284e7f) and Red (#b11e22) */
         background-image: 
-          radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15), transparent 40%),
-          radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15), transparent 40%),
-          linear-gradient(135deg, #e0f2fe 0%, #ffe4e6 100%);
+          radial-gradient(circle at 10% 20%, rgba(40, 78, 127, 0.08), transparent 45%),
+          radial-gradient(circle at 90% 80%, rgba(177, 30, 34, 0.08), transparent 45%),
+          linear-gradient(135deg, #f8fafc 0%, #fffafa 100%);
         background-attachment: fixed;
-        color: rgb(var(--fg));
+        color: #284e7f; /* Set main text color to the dark blue */
         overflow-x: hidden;
       }
 
       .gridGlow {
         background-image:
-          radial-gradient(900px 600px at 50% -20%, rgba(14, 165, 233, 0.1), transparent 70%),
-          radial-gradient(600px 400px at 90% 60%, rgba(244, 63, 94, 0.08), transparent 60%);
+          radial-gradient(900px 600px at 50% -20%, rgba(40, 78, 127, 0.06), transparent 70%),
+          radial-gradient(600px 400px at 90% 60%, rgba(177, 30, 34, 0.06), transparent 60%);
         filter: saturate(1.2) contrast(1.1);
         animation: drift 15s ease-in-out infinite alternate;
       }
 
       .softGrid {
         background-image:
-          linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+          linear-gradient(rgba(40, 78, 127,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(40, 78, 127,0.03) 1px, transparent 1px);
         background-size: 48px 48px;
         mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-        opacity: 0.5;
+        opacity: 0.6;
       }
 
       @keyframes drift {
@@ -107,15 +107,15 @@ const Background = () => (
 
       /* Updated Glass for Light Mode */
       .glass {
-        background: rgba(255, 255, 255, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(40, 78, 127, 0.05);
       }
 
       .gradient-text {
-        background: linear-gradient(to left, #0ea5e9, #1e293b, #f43f5e);
+        background: linear-gradient(to left, #284e7f, #1e293b, #b11e22);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -193,25 +193,25 @@ const Countdown = () => {
   }, []);
 
   return (
-    <div className="flex items-end justify-center sm:justify-start gap-1.5 sm:gap-2.5 font-mono text-rose-500 w-full" dir="ltr">
+    <div className="flex items-end justify-center gap-1.5 sm:gap-2.5 font-mono text-[#b11e22] w-full" dir="ltr">
       <div className="flex flex-col items-center">
         <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.d}</div>
-        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">DD</div>
+        <div className="text-[8px] sm:text-[9px] text-[#284e7f]/60 font-sans font-bold mt-1">DD</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-[#284e7f]/30 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
         <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.h}</div>
-        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">HH</div>
+        <div className="text-[8px] sm:text-[9px] text-[#284e7f]/60 font-sans font-bold mt-1">HH</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-[#284e7f]/30 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
         <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.m}</div>
-        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">MM</div>
+        <div className="text-[8px] sm:text-[9px] text-[#284e7f]/60 font-sans font-bold mt-1">MM</div>
       </div>
-      <span className="text-sm font-bold text-zinc-300 mb-3 sm:mb-4 opacity-50">:</span>
+      <span className="text-sm font-bold text-[#284e7f]/30 mb-3 sm:mb-4 opacity-50">:</span>
       <div className="flex flex-col items-center">
         <div className="text-lg sm:text-xl leading-none font-black tracking-tight">{t.s}</div>
-        <div className="text-[8px] sm:text-[9px] text-zinc-400 font-sans font-bold mt-1">SS</div>
+        <div className="text-[8px] sm:text-[9px] text-[#284e7f]/60 font-sans font-bold mt-1">SS</div>
       </div>
     </div>
   );
@@ -246,7 +246,7 @@ const TrainersCarousel = () => {
   const t = trainersData[active];
 
   return (
-    <div className="glass rounded-[22px] p-6 relative min-h-[380px] mt-6 shadow-xl shadow-indigo-100/40">
+    <div className="glass rounded-[22px] p-6 relative min-h-[380px] mt-6 shadow-xl shadow-[#284e7f]/10">
       <div className="md:grid md:grid-cols-[4fr_8fr] md:gap-6 md:items-center md:text-right">
         
         {/* Photo Area */}
@@ -268,13 +268,13 @@ const TrainersCarousel = () => {
 
         {/* Info Area */}
         <div className={`order-2 flex flex-col items-center md:items-start transition-all duration-300 ${animating ? 'opacity-0 blur-sm translate-y-2' : 'opacity-100 blur-0 translate-y-0'}`}>
-          <div className="text-xs text-sky-600 font-bold mb-2 tracking-wide uppercase">Team • Experts</div>
-          <div className="text-3xl font-black text-zinc-900">{t.name}</div>
-          <div className="text-zinc-600 mt-2 leading-relaxed max-w-full font-medium">{t.title}</div>
+          <div className="text-xs text-[#b11e22] font-bold mb-2 tracking-wide uppercase">Team • Experts</div>
+          <div className="text-3xl font-black text-[#284e7f]">{t.name}</div>
+          <div className="text-[#284e7f]/80 mt-2 leading-relaxed max-w-full font-medium">{t.title}</div>
           
           <div className="mt-4 p-4 rounded-2xl bg-white/40 border border-white/60 w-full text-center md:text-right shadow-sm">
-            <div className="text-xs text-zinc-500 mb-1 font-semibold">Bio & Vision</div>
-            <div className="text-[15px] leading-relaxed text-zinc-800">{t.bio}</div>
+            <div className="text-xs text-[#284e7f]/60 mb-1 font-semibold">Bio & Vision</div>
+            <div className="text-[15px] leading-relaxed text-[#284e7f]">{t.bio}</div>
           </div>
         </div>
 
@@ -286,7 +286,7 @@ const TrainersCarousel = () => {
           <button
             key={idx}
             onClick={() => switchTrainer(idx)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${active === idx ? 'bg-sky-500 scale-125' : 'bg-black/10 hover:bg-black/20'}`}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${active === idx ? 'bg-[#b11e22] scale-125' : 'bg-black/10 hover:bg-black/20'}`}
           />
         ))}
       </div>
@@ -298,20 +298,20 @@ const TrainersCarousel = () => {
 
 export default function App() {
   return (
-    <div dir="rtl" className="min-h-screen text-zinc-900 selection:bg-rose-500/20">
+    <div dir="rtl" className="min-h-screen text-[#284e7f] selection:bg-[#b11e22]/20">
       <Background />
       <FloatingWhatsApp />
 
-      {/* Main Container - Adjusted to allow full width hero */}
+      {/* Main Container */}
       <main className="w-full relative flex flex-col items-center text-center">
         
-        {/* HERO SECTION: Full Width & Height, No Rounded Block */}
+        {/* HERO SECTION */}
         <section className="w-full min-h-screen relative flex flex-col overflow-hidden">
             
-            {/* Header Navbar (Logo + CTA) - Moved to top as requested */}
-            <nav className="w-full px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center z-20 relative border-b border-white/20 bg-white/10 backdrop-blur-sm">
+            {/* Rounded Glassy Navbar */}
+            <nav className="w-[92%] max-w-7xl mx-auto mt-6 px-4 py-3 rounded-full flex flex-col md:flex-row justify-between items-center z-20 relative border border-white/50 bg-white/30 backdrop-blur-lg shadow-lg shadow-[#284e7f]/5 transition-all">
                 {/* Logo Section */}
-                <div className="flex items-center mb-4 md:mb-0">
+                <div className="flex items-center mb-3 md:mb-0">
                     <img 
                       src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
                       alt="Company Logo" 
@@ -321,10 +321,10 @@ export default function App() {
                 
                 {/* Header CTA Buttons */}
                 <div className="flex items-center gap-3">
-                    <button className="px-5 py-2.5 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-zinc-800 text-sm font-bold transition-all shadow-sm">
+                    <button className="px-6 py-2 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-[#284e7f] text-sm font-bold transition-all shadow-sm">
                         تحميل الكتيب
                     </button>
-                    <button className="px-5 py-2.5 rounded-full bg-gradient-to-l from-sky-500 to-rose-500 hover:scale-105 text-white text-sm font-bold transition-transform shadow-lg shadow-rose-500/20">
+                    <button className="px-6 py-2 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] hover:scale-105 text-white text-sm font-bold transition-transform shadow-lg shadow-[#b11e22]/20">
                         احجز مقعدك
                     </button>
                 </div>
@@ -339,44 +339,57 @@ export default function App() {
                         
                         {/* Title Block */}
                         <div className="relative mb-6 w-full">
-                            <h1 className="text-lg sm:text-xl md:text-3xl font-black text-zinc-800 leading-tight tracking-tight">
+                            <h1 className="text-lg sm:text-xl md:text-3xl font-black text-[#284e7f] leading-tight tracking-tight">
                                 تحديد الاحتياجات التدريبية
-                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-sky-600 via-indigo-600 to-rose-500 text-xl sm:text-2xl md:text-4xl drop-shadow-sm filter pb-1">
+                                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] via-[#284e7f] to-[#b11e22] text-xl sm:text-2xl md:text-4xl drop-shadow-sm filter pb-1">
                                     باستخدام الذكاء الاصطناعي
                                 </span>
                             </h1>
                         </div>
 
                         {/* Description */}
-                        <p className="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-[550px] mb-8 font-medium">
+                        <p className="text-base sm:text-lg text-[#284e7f]/80 leading-relaxed max-w-[550px] mb-6 font-medium">
                             كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                            <span className="font-bold text-zinc-900">
+                            <span className="font-bold text-[#284e7f]">
                                 أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.
                             </span>
                         </p>
 
                         {/* Date & Counter System Block */}
-                        <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-4 sm:p-5 backdrop-blur-md shadow-lg shadow-indigo-100/40 group hover:border-sky-300/50 transition-colors duration-300">
-                            <div className="flex items-center justify-between mb-3 border-b border-zinc-300/30 pb-2">
-                                 <span className="text-xs font-black text-zinc-400 uppercase tracking-wider flex items-center gap-1">
+                        <div className="w-full max-w-lg bg-white/60 border border-white/80 rounded-2xl p-4 sm:p-5 backdrop-blur-md shadow-lg shadow-[#284e7f]/20 group hover:border-[#284e7f]/30 transition-colors duration-300">
+                            {/* Workshop Date Header - Centered */}
+                            <div className="flex items-center justify-center mb-3 border-b border-zinc-300/30 pb-2">
+                                 <span className="text-xs font-black text-[#284e7f]/60 uppercase tracking-wider flex items-center gap-1">
                                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                     تاريخ الورشة
                                  </span>
                             </div>
                             
                             <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4">
-                                <div className="text-center sm:text-right w-full sm:w-auto">
-                                    <div className="text-xl sm:text-2xl font-black text-zinc-800">19–23 يناير</div>
-                                    <div className="text-xs sm:text-sm font-bold text-zinc-400">2026</div>
+                                <div className="text-center sm:text-right w-full sm:w-auto text-center mx-auto">
+                                    <div className="text-xl sm:text-2xl font-black text-[#284e7f]">19–23 يناير</div>
+                                    <div className="text-xs sm:text-sm font-bold text-[#284e7f]/60">2026</div>
                                 </div>
                                 
                                 <div className="hidden sm:block h-8 w-px bg-zinc-300/50"></div>
 
-                                <div className="text-center sm:text-left w-full sm:w-auto bg-zinc-50/50 rounded-lg px-3 py-2 border border-zinc-200/50">
-                                     <div className="text-[10px] text-zinc-400 font-bold mb-2 uppercase tracking-wide">الوقت المتبقي</div>
+                                <div className="text-center w-full sm:w-auto bg-zinc-50/50 rounded-lg px-3 py-2 border border-zinc-200/50 mx-auto">
+                                     {/* Time Remaining - Centered */}
+                                     <div className="text-[10px] text-[#284e7f]/60 font-bold mb-2 uppercase tracking-wide text-center w-full">الوقت المتبقي</div>
                                      <Countdown />
                                 </div>
                             </div>
+                        </div>
+
+                        {/* New Highlight Paragraph */}
+                        <div className="mt-8 w-full max-w-[550px] p-5 rounded-2xl bg-white/30 border border-white/50 shadow-sm backdrop-blur-sm relative overflow-hidden group hover:bg-white/40 transition-all">
+                             <div className="absolute top-0 right-0 w-20 h-20 bg-[#284e7f]/5 rounded-bl-full -mr-6 -mt-6 transition-transform group-hover:scale-110"></div>
+                             <p className="relative z-10 text-lg sm:text-xl font-bold text-[#284e7f] leading-snug">
+                                 من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ.
+                             </p>
+                             <p className="relative z-10 text-base sm:text-lg font-medium text-[#b11e22] mt-2">
+                                 هذا هو الفرق بين التقييم التقليدي، ومركز التقييم الذكي.
+                             </p>
                         </div>
 
                     </div>
@@ -387,44 +400,44 @@ export default function App() {
                             
                             {/* 1. Skill Analysis Simulator */}
                             <div className="bg-white/60 border border-white/60 rounded-xl p-4 shadow-sm backdrop-blur-sm relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-500/5 rounded-bl-full"></div>
+                                <div className="absolute top-0 right-0 w-12 h-12 bg-[#284e7f]/5 rounded-bl-full"></div>
                                 <div className="flex justify-between items-center mb-3">
-                                    <div className="text-xs text-zinc-500 font-bold">تحليل الكفاءات الحية</div>
+                                    <div className="text-xs text-[#284e7f]/60 font-bold">تحليل الكفاءات الحية</div>
                                     <span className="flex h-2 w-2 relative">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#284e7f] opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#284e7f]"></span>
                                     </span>
                                 </div>
                                 
                                 {/* Fake Chart/Bars */}
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between text-[10px] text-zinc-600 font-mono">
+                                    <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono">
                                         <span>القيادة الاستراتيجية</span>
                                         <span>85%</span>
                                     </div>
-                                    <div className="h-1.5 bg-zinc-200 rounded-full overflow-hidden">
-                                        <div className="h-full bg-indigo-500 w-[85%] rounded-full animate-[pulse_3s_infinite]"></div>
+                                    <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-[#284e7f] w-[85%] rounded-full animate-[pulse_3s_infinite]"></div>
                                     </div>
                                     
-                                    <div className="flex items-center justify-between text-[10px] text-zinc-600 font-mono">
+                                    <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-mono">
                                         <span>التحليل الرقمي</span>
-                                        <span>42% <span className="text-rose-500 font-bold">(فجوة)</span></span>
+                                        <span>42% <span className="text-[#b11e22] font-bold">(فجوة)</span></span>
                                     </div>
-                                    <div className="h-1.5 bg-zinc-200 rounded-full overflow-hidden">
-                                        <div className="h-full bg-rose-500 w-[42%] rounded-full"></div>
+                                    <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-[#b11e22] w-[42%] rounded-full"></div>
                                     </div>
                                 </div>
                                 
                                 <div className="mt-3 pt-2 border-t border-zinc-200/50 flex justify-between items-center">
-                                     <span className="text-[10px] text-zinc-400">الموظف: #8492</span>
-                                     <span className="text-[10px] bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded border border-indigo-100">جاري المعالجة</span>
+                                     <span className="text-[10px] text-[#284e7f]/60">الموظف: #8492</span>
+                                     <span className="text-[10px] bg-[#284e7f]/10 text-[#284e7f] px-1.5 py-0.5 rounded border border-[#284e7f]/20">جاري المعالجة</span>
                                 </div>
                             </div>
 
                             {/* 2. Simplified Live Log */}
                             <div className="bg-white/60 border border-white/60 rounded-xl p-4 shadow-sm backdrop-blur-sm relative overflow-hidden text-right"> 
                                  <div className="flex justify-between items-center mb-3 border-b border-zinc-200/50 pb-2">
-                                     <div className="text-xs text-zinc-500 font-bold uppercase">سجل المعالجة</div>
+                                     <div className="text-xs text-[#284e7f]/60 font-bold uppercase">سجل المعالجة</div>
                                      <div className="flex gap-1">
                                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                         <span className="text-[10px] text-emerald-600 font-bold">متصل</span>
@@ -433,22 +446,22 @@ export default function App() {
                                  
                                  <div className="space-y-3 relative">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 shrink-0 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-[#284e7f]/10 flex items-center justify-center text-[#284e7f]">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-[11px] font-bold text-zinc-700 truncate">فحص بيانات الأداء</div>
-                                            <div className="text-[9px] text-zinc-500 truncate">تم تحليل 450 سجل وظيفي</div>
+                                            <div className="text-[11px] font-bold text-[#284e7f] truncate">فحص بيانات الأداء</div>
+                                            <div className="text-[9px] text-[#284e7f]/60 truncate">تم تحليل 450 سجل وظيفي</div>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-3">
-                                        <div className="w-6 h-6 shrink-0 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                                        <div className="w-6 h-6 shrink-0 rounded-full bg-[#b11e22]/10 flex items-center justify-center text-[#b11e22]">
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-[11px] font-bold text-zinc-700 truncate">تنبيه: فجوة مهارات</div>
-                                            <div className="text-[9px] text-zinc-500 truncate">نقص في مهارات التفاوض (45%)</div>
+                                            <div className="text-[11px] font-bold text-[#284e7f] truncate">تنبيه: فجوة مهارات</div>
+                                            <div className="text-[9px] text-[#284e7f]/60 truncate">نقص في مهارات التفاوض (45%)</div>
                                         </div>
                                     </div>
 
@@ -457,8 +470,8 @@ export default function App() {
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-[11px] font-bold text-zinc-700 truncate">توليد خطة علاجية</div>
-                                            <div className="text-[9px] text-zinc-500 truncate">جاري إنشاء المسار...</div>
+                                            <div className="text-[11px] font-bold text-[#284e7f] truncate">توليد خطة علاجية</div>
+                                            <div className="text-[9px] text-[#284e7f]/60 truncate">جاري إنشاء المسار...</div>
                                         </div>
                                     </div>
                                  </div>
@@ -471,42 +484,41 @@ export default function App() {
             </div>
         </section>
 
-        {/* QUOTES: Added max-w-7xl constraint and padding */}
+        {/* QUOTES */}
         <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-rose-100/30">
-            <div className="flex items-center justify-center gap-2 text-xs text-zinc-500 mb-2 font-bold uppercase tracking-wider">
-               <StarIcon className="w-4 h-4 text-rose-400" /> RefeAI Says
+          <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-[#b11e22]/20">
+            <div className="flex items-center justify-center gap-2 text-xs text-[#284e7f]/60 mb-2 font-bold uppercase tracking-wider">
+               <StarIcon className="w-4 h-4 text-[#b11e22]" /> RefeAI Says
             </div>
             <div className="min-h-[60px] flex items-center justify-center">
-              <AnimatedText text={quotesData} interval={4000} className="text-2xl md:text-3xl font-black gradient-text leading-tight" />
+              <AnimatedText text={quotesData} interval={4000} className="text-lg md:text-xl font-black gradient-text leading-tight" />
             </div>
           </div>
         </section>
 
-        {/* TRAINERS: Added max-w-7xl constraint and padding */}
+        {/* TRAINERS */}
         <section id="trainers" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">
-            مدربونا ليسوا متحدثين…
-            <span className="block text-zinc-500 mt-2 text-2xl">هم مهندسو التحول</span>
+          <h2 className="text-xl md:text-2xl font-black mb-2 text-[#284e7f]">
+            مدربونا ليسوا متحدثين؛ بل هم مهندسوا التحول
           </h2>
           <TrainersCarousel />
         </section>
 
-        {/* REFE AI Chat: Added max-w-7xl constraint and padding */}
+        {/* REFE AI Chat */}
         <section id="refeai" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <h2 className="text-3xl md:text-4xl font-black mb-2 text-zinc-900">RefeAI</h2>
-          <span className="block text-zinc-500 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
+          <h2 className="text-3xl md:text-4xl font-black mb-2 text-[#284e7f]">RefeAI</h2>
+          <span className="block text-[#284e7f]/80 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
           
-          <div className="glass rounded-[22px] overflow-hidden text-right shadow-xl shadow-sky-100/40">
+          <div className="glass rounded-[22px] overflow-hidden text-right shadow-xl shadow-[#284e7f]/20">
             {/* Header */}
             <div className="px-4 py-3 bg-white/40 border-b border-white/60 flex items-center justify-between backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-white/60 border border-white/60 flex items-center justify-center shadow-sm">
-                  <StarIcon className="text-sky-600 w-5 h-5" />
+                  <StarIcon className="text-[#284e7f] w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-black leading-none text-zinc-800">RefeAI</div>
-                  <div className="text-[10px] text-zinc-500 mt-1 font-semibold">AI Decision Support</div>
+                  <div className="font-black leading-none text-[#284e7f]">RefeAI</div>
+                  <div className="text-[10px] text-[#284e7f]/60 mt-1 font-semibold">AI Decision Support</div>
                 </div>
               </div>
               <div className="px-2.5 py-1 rounded-full bg-emerald-100/50 border border-emerald-200/60 text-xs text-emerald-700 font-bold">Active</div>
@@ -515,59 +527,59 @@ export default function App() {
             {/* Body */}
             <div className="p-4 min-h-[240px] flex flex-col gap-3">
               <div className="flex justify-start">
-                <div className="max-w-[85%] p-3 rounded-2xl rounded-tr-sm border border-white/60 bg-white/40 text-sm text-zinc-800 font-medium shadow-sm">
+                <div className="max-w-[85%] p-3 rounded-2xl rounded-tr-sm border border-white/60 bg-white/40 text-sm text-[#284e7f] font-medium shadow-sm">
                   من يحتاج تدريبًا فعلًا؟
                 </div>
               </div>
               
               <div className="flex justify-end">
-                <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-sky-100 bg-gradient-to-l from-sky-50 to-white/40 text-sm text-zinc-800 font-medium shadow-sm">
+                <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-[#284e7f]/30 bg-gradient-to-l from-[#284e7f]/10 to-white/40 text-sm text-[#284e7f] font-medium shadow-sm">
                   دعني أحلل فجوات الأداء والكفاءات…
                 </div>
               </div>
 
               <div className="flex justify-end">
-                <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-sky-100 bg-gradient-to-l from-sky-50 to-white/40 text-sm text-zinc-800 font-medium shadow-sm">
+                <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-[#284e7f]/30 bg-gradient-to-l from-[#284e7f]/10 to-white/40 text-sm text-[#284e7f] font-medium shadow-sm">
                   تم رصد 3 فجوات حرجة. أولوية: إدارة الأداء + قيادة الفرق + تحليل البيانات.
                 </div>
               </div>
 
               <div className="flex justify-end mt-2">
                 <div className="px-3 py-2 rounded-2xl bg-white/40 border border-white/60 flex gap-1 items-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dotPulse"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dotPulse"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dotPulse"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40 dotPulse"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40 dotPulse"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40 dotPulse"></div>
                 </div>
               </div>
             </div>
 
             {/* Input */}
             <div className="p-3 border-t border-white/60 bg-white/30 flex gap-2">
-              <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-zinc-800 placeholder-zinc-400 focus:outline-none focus:bg-white/70 transition-all" />
-              <button disabled className="px-4 py-2 rounded-xl bg-white/40 border border-white/60 text-zinc-400 font-bold text-sm cursor-not-allowed">إرسال</button>
+              <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-[#284e7f] placeholder-[#284e7f]/40 focus:outline-none focus:bg-white/70 transition-all" />
+              <button disabled className="px-4 py-2 rounded-xl bg-white/40 border border-white/60 text-[#284e7f]/40 font-bold text-sm cursor-not-allowed">إرسال</button>
             </div>
           </div>
         </section>
 
-        {/* FINAL CTA: Added max-w-7xl constraint and padding */}
+        {/* FINAL CTA */}
         <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-          <div className="glass rounded-[26px] p-8 shadow-2xl shadow-rose-100/50">
-            <h3 className="text-2xl md:text-4xl font-black mb-3 text-zinc-900">كن جزءًا من مستقبل التدريب الذكي</h3>
-            <p className="text-zinc-600 max-w-[700px] mx-auto leading-relaxed mb-6 font-medium">
+          <div className="glass rounded-[26px] p-8 shadow-2xl shadow-[#b11e22]/20">
+            <h3 className="text-2xl md:text-4xl font-black mb-3 text-[#284e7f]">كن جزءًا من مستقبل التدريب الذكي</h3>
+            <p className="text-[#284e7f]/80 max-w-[700px] mx-auto leading-relaxed mb-6 font-medium">
               مقاعد محدودة لضمان تجربة عالية الجودة — التحول يبدأ عندما يصبح التدريب قرارًا.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <button className="px-6 py-3 rounded-xl bg-gradient-to-l from-sky-500 to-rose-500 text-white font-black hover:-translate-y-px transition-transform shadow-lg shadow-rose-500/20">
+              <button className="px-6 py-3 rounded-xl bg-gradient-to-l from-[#284e7f] to-[#b11e22] text-white font-black hover:-translate-y-px transition-transform shadow-lg shadow-[#b11e22]/20">
                 سجّل الآن
               </button>
-              <button className="px-6 py-3 rounded-xl bg-white/40 border border-white/60 text-zinc-800 font-bold hover:bg-white/60 transition-colors">
+              <button className="px-6 py-3 rounded-xl bg-white/40 border border-white/60 text-[#284e7f] font-bold hover:bg-white/60 transition-colors">
                 تحميل الكتيّب
               </button>
             </div>
           </div>
         </section>
 
-        <footer className="text-xs text-zinc-500 pb-10 font-semibold">
+        <footer className="text-xs text-[#284e7f]/60 pb-10 font-semibold">
           © 2026 — AI Assessment Center
         </footer>
 
