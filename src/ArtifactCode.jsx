@@ -39,6 +39,13 @@ const StarIcon = ({ className }) => (
   </svg>
 );
 
+const GeminiIcon = ({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M10.854 2.128a1.372 1.372 0 0 1 2.292 0l1.246 2.164a7.946 7.946 0 0 0 3.974 3.974l2.164 1.246a1.372 1.372 0 0 1 0 2.292l-2.164 1.246a7.946 7.946 0 0 0-3.974 3.974l-1.246 2.164a1.372 1.372 0 0 1-2.292 0l-1.246-2.164a7.946 7.946 0 0 0-3.974-3.974l-2.164-1.246a1.372 1.372 0 0 1 0-2.292l2.164-1.246a7.946 7.946 0 0 0 3.974-3.974l1.246-2.164Z" />
+    <path opacity="0.5" d="M19.354 1.128a.8.8 0 0 1 1.292 0l.246.427a3.946 3.946 0 0 0 1.987 1.987l.427.246a.8.8 0 0 1 0 1.386l-.427.246a3.946 3.946 0 0 0-1.987 1.987l-.246.427a.8.8 0 0 1-1.292 0l-.246-.427a3.946 3.946 0 0 0-1.987-1.987l-.427-.246a.8.8 0 0 1 0-1.386l.427-.246a3.946 3.946 0 0 0 1.987-1.987l.246-.427Z" />
+  </svg>
+);
+
 const BrainIcon = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
@@ -80,6 +87,7 @@ const Background = () => (
     <div className="fixed inset-0 pointer-events-none z-[-1] softGrid" />
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
       :root {
         --accent: 40 78 127; 
@@ -190,11 +198,8 @@ const Background = () => (
 const FloatingParticles = () => {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
-      {/* Light Orbs */}
       <div className="absolute top-[10%] left-[10%] w-64 h-64 bg-[#284e7f]/10 rounded-full blur-[80px] animate-pulse-slow"></div>
       <div className="absolute bottom-[20%] right-[10%] w-80 h-80 bg-[#b11e22]/5 rounded-full blur-[100px] animate-pulse-slower"></div>
-      
-      {/* Floating Icons */}
       <div className="absolute top-[15%] left-[5%] opacity-30 animate-float-slow text-[#284e7f]">
         <div className="relative">
              <div className="absolute inset-0 bg-[#284e7f]/20 blur-xl rounded-full"></div>
@@ -213,8 +218,6 @@ const FloatingParticles = () => {
       <div className="absolute bottom-[40%] right-[20%] opacity-30 animate-float-slow text-[#b11e22] delay-500">
         <SparkleIcon className="w-8 h-8" />
       </div>
-      
-      {/* Small Particles */}
       <div className="absolute top-[40%] left-[30%] w-2 h-2 bg-[#284e7f]/40 rounded-full animate-float-random shadow-[0_0_10px_#284e7f]"></div>
       <div className="absolute top-[60%] right-[40%] w-3 h-3 bg-[#b11e22]/30 rounded-full animate-float-random delay-1000 shadow-[0_0_10px_#b11e22]"></div>
       <div className="absolute top-[25%] right-[25%] w-1.5 h-1.5 bg-[#284e7f]/50 rounded-full animate-float-random delay-2000"></div>
@@ -446,9 +449,9 @@ export default function App() {
                         <div className="ml-auto text-[10px] font-mono text-[#284e7f]/40">AI Assessment Center v2.0</div>
                     </div>
                     
-                    <div className="p-6 sm:p-8 bg-white/40">
+                    <div className="p-5 sm:p-6 bg-white/40">
                         {/* KPI Cards Row - New Feature */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                             <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
                                 <div className="text-xs text-[#284e7f]/60 font-bold mb-1">الموظفون قيد التقييم</div>
                                 <div className="text-xl sm:text-2xl font-black text-[#284e7f]">1,240</div>
@@ -468,7 +471,7 @@ export default function App() {
                         </div>
 
                         {/* Text Header Inside Dashboard */}
-                        <div className="text-center mb-8">
+                        <div className="text-center mb-6">
                             <p className="text-lg sm:text-xl font-bold text-[#284e7f] leading-snug">
                                 من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ
                             </p>
@@ -477,102 +480,75 @@ export default function App() {
                             </p>
                         </div>
 
-                        {/* Main Dashboards Grid (3 Columns) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Main Dashboards Grid (2 Columns - Compacted) */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             
                             {/* Col 1: Skill Analysis Simulator */}
-                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
-                                <div className="flex justify-between items-start mb-6">
+                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-4 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
+                                <div className="flex justify-between items-start mb-3">
                                     <div className="text-right">
-                                        <div className="text-xs text-[#284e7f]/60 font-bold mb-1">تحليل الكفاءات الحية</div>
-                                        <div className="text-base font-black text-[#284e7f]">
+                                        <div className="text-xs text-[#284e7f]/60 font-bold mb-0.5">تحليل الكفاءات الحية</div>
+                                        <div className="text-sm font-black text-[#284e7f]">
                                             الموظف: <span className="text-[#b11e22]">#8492</span>
                                         </div>
                                     </div>
-                                    <div className="px-2 py-1 rounded bg-green-100 text-green-700 text-[10px] font-bold border border-green-200">نشط الآن</div>
+                                    <div className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-[9px] font-bold border border-green-200">نشط الآن</div>
                                 </div>
-                                <div className="space-y-4">
+                                <div className="space-y-3">
                                     <div>
-                                        <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
+                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-bold mb-1">
                                             <span>القيادة الاستراتيجية</span>
                                             <span>85%</span>
                                         </div>
-                                        <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                        <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
                                             <div className="h-full bg-[#284e7f] w-[85%] rounded-full"></div>
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="flex items-center justify-between text-xs text-[#284e7f] font-bold mb-1">
+                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-bold mb-1">
                                             <span>التحليل الرقمي</span>
                                             <span className="text-[#b11e22]">42% (فجوة)</span>
                                         </div>
-                                        <div className="h-2 bg-[#284e7f]/10 rounded-full overflow-hidden">
+                                        <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
                                             <div className="h-full bg-[#b11e22] w-[42%] rounded-full"></div>
                                         </div>
                                     </div>
                                 </div>
+                                <div className="mt-3 pt-2 border-t border-zinc-200/50 flex justify-end items-center">
+                                    <span className="text-[9px] bg-[#284e7f]/10 text-[#284e7f] px-1.5 py-0.5 rounded border border-[#284e7f]/20 font-bold">جاري المعالجة</span>
+                                </div>
                             </div>
 
                             {/* Col 2: Recommended Path (New) */}
-                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow">
-                                <div className="flex justify-between items-center mb-4 border-b border-[#284e7f]/10 pb-3">
+                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-4 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow">
+                                <div className="flex justify-between items-center mb-3 border-b border-[#284e7f]/10 pb-2">
                                     <div className="text-xs text-[#284e7f]/60 font-bold uppercase">مسار التطوير المقترح</div>
                                     <BrainIcon className="w-4 h-4 text-[#284e7f]" />
                                 </div>
-                                <div className="space-y-3">
-                                    <div className="flex items-start gap-3">
-                                        <div className="mt-1 w-2 h-2 rounded-full bg-[#284e7f]"></div>
+                                <div className="space-y-2">
+                                    <div className="flex items-start gap-2">
+                                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#284e7f]"></div>
                                         <div>
                                             <div className="text-xs font-bold text-[#284e7f]">ورشة اتخاذ القرار</div>
-                                            <div className="text-[10px] text-[#284e7f]/60">الأولوية: عالية • 3 أيام</div>
+                                            <div className="text-[9px] text-[#284e7f]/60">الأولوية: عالية • 3 أيام</div>
                                         </div>
                                     </div>
-                                    <div className="flex items-start gap-3">
-                                        <div className="mt-1 w-2 h-2 rounded-full bg-[#b11e22]"></div>
+                                    <div className="flex items-start gap-2">
+                                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#b11e22]"></div>
                                         <div>
                                             <div className="text-xs font-bold text-[#284e7f]">برنامج القيادة الرقمية</div>
-                                            <div className="text-[10px] text-[#284e7f]/60">لسد الفجوة • 5 أسابيع</div>
+                                            <div className="text-[9px] text-[#284e7f]/60">لسد الفجوة • 5 أسابيع</div>
                                         </div>
                                     </div>
-                                    <div className="mt-3 p-2 bg-[#284e7f]/5 rounded text-[10px] text-[#284e7f] font-medium text-center">
+                                    <div className="mt-2 p-1.5 bg-[#284e7f]/5 rounded text-[9px] text-[#284e7f] font-medium text-center">
                                         توصية AI: المسار ب سيوفر 15% من الوقت
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Col 3: Simplified Live Log */}
-                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-5 shadow-sm relative overflow-hidden text-right hover:shadow-md transition-shadow"> 
-                                <div className="flex justify-between items-center mb-4 border-b border-[#284e7f]/10 pb-3">
-                                    <div className="text-xs text-[#284e7f]/60 font-bold uppercase">سجل المعالجة</div>
-                                    <div className="flex items-center gap-1.5">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                        <span className="text-[10px] text-emerald-600 font-bold">متصل</span>
-                                    </div>
-                                </div>
-                                <div className="space-y-3 relative">
-                                    <div className="flex items-center gap-3 p-2 rounded-lg bg-[#284e7f]/5">
-                                        <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#284e7f] shadow-sm">
-                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="text-xs font-bold text-[#284e7f] truncate">تحليل البيانات</div>
-                                            <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">تمت معالجة 450 سجل</div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3 p-2 rounded-lg bg-[#b11e22]/5">
-                                        <div className="w-8 h-8 shrink-0 rounded-full bg-white flex items-center justify-center text-[#b11e22] shadow-sm">
-                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="text-xs font-bold text-[#284e7f] truncate">تنبيه: فجوة</div>
-                                            <div className="text-[10px] text-[#284e7f]/60 truncate font-bold">نقص في التفاوض (45%)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                        <div className="mt-6 pt-4 border-t border-[#284e7f]/10 text-center">
-                            <span className="text-[10px] text-[#284e7f]/50 font-bold tracking-wide flex items-center justify-center gap-1">
+                        <div className="mt-4 pt-3 border-t border-[#284e7f]/10 text-center">
+                            <span className="text-[9px] text-[#284e7f]/50 font-bold tracking-wide flex items-center justify-center gap-1">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40"></span>
                                 مثال حي من نظام التقييم الذكي
                             </span>
@@ -592,24 +568,13 @@ export default function App() {
           </FadeIn>
         </section>
 
-        {/* QUOTES */}
-        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <FadeIn delay={100}>
-            <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-[#b11e22]/20 border border-[#b11e22]/20">
-              <div className="flex items-center justify-center gap-2 text-xs text-[#284e7f]/60 mb-2 font-bold uppercase tracking-wider">
-                 <StarIcon className="w-4 h-4 text-[#b11e22]" /> RefeAI Says
-              </div>
-              <div className="min-h-[60px] flex items-center justify-center">
-                <AnimatedText text={quotesData} interval={4000} className="text-lg md:text-xl font-black gradient-text leading-tight" />
-              </div>
-            </div>
-          </FadeIn>
-        </section>
-
-        {/* REFE AI Chat */}
+        {/* REFE AI Chat (MOVED HERE) */}
         <section id="refeai" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
           <FadeIn delay={300}>
-            <h2 className="text-3xl md:text-4xl font-black mb-2 text-[#284e7f]">RefeAI</h2>
+            <h2 className="text-3xl md:text-4xl font-black mb-2 text-[#284e7f] flex items-center justify-center gap-3">
+              <GeminiIcon className="w-8 h-8 text-[#284e7f] animate-pulse" />
+              <span className="font-mono bg-clip-text text-transparent bg-gradient-to-r from-[#284e7f] to-[#b11e22]">RefeAI</span>
+            </h2>
             <span className="block text-[#284e7f]/80 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
             
             <div className="glass rounded-[22px] overflow-hidden text-right shadow-xl shadow-[#284e7f]/20 border border-[#284e7f]/20">
@@ -617,10 +582,10 @@ export default function App() {
               <div className="px-4 py-3 bg-white/40 border-b border-white/60 flex items-center justify-between backdrop-blur-sm">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-white/60 border border-white/60 flex items-center justify-center shadow-sm">
-                    <StarIcon className="text-[#284e7f] w-5 h-5" />
+                    <GeminiIcon className="text-[#284e7f] w-5 h-5" />
                   </div>
                   <div>
-                    <div className="font-black leading-none text-[#284e7f]">RefeAI</div>
+                    <div className="font-mono font-bold leading-none text-[#284e7f]">RefeAI</div>
                     <div className="text-[10px] text-[#284e7f]/60 mt-1 font-semibold">AI Decision Support</div>
                   </div>
                 </div>
@@ -658,8 +623,22 @@ export default function App() {
 
               {/* Input */}
               <div className="p-3 border-t border-white/60 bg-white/30 flex gap-2">
-                <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-[#284e7f] placeholder-[#284e7f]/40 focus:outline-none focus:bg-white/70 transition-all" />
+                <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-[#284e7f] placeholder-[#284e7f]/40 focus:outline-none focus:bg-white/70 transition-all font-mono" />
                 <button disabled className="px-4 py-2 rounded-xl bg-white/40 border border-white/60 text-[#284e7f]/40 font-bold text-sm cursor-not-allowed">إرسال</button>
+              </div>
+            </div>
+          </FadeIn>
+        </section>
+
+        {/* QUOTES */}
+        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+          <FadeIn delay={100}>
+            <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-[#b11e22]/20 border border-[#b11e22]/20">
+              <div className="flex items-center justify-center gap-2 text-xs text-[#284e7f]/60 mb-2 font-bold uppercase tracking-wider">
+                 <StarIcon className="w-4 h-4 text-[#b11e22]" /> RefeAI Says
+              </div>
+              <div className="min-h-[60px] flex items-center justify-center">
+                <AnimatedText text={quotesData} interval={4000} className="text-lg md:text-xl font-black gradient-text leading-tight" />
               </div>
             </div>
           </FadeIn>
