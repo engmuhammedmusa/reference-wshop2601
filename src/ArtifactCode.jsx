@@ -103,6 +103,17 @@ const Background = () => (
         background-attachment: fixed;
         color: #284e7f;
         overflow-x: hidden;
+        width: 100%;
+      }
+
+      html {
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      #root, #__next {
+        width: 100%;
+        overflow-x: hidden;
       }
 
       html, body, #root, #__next, * {
@@ -391,9 +402,9 @@ export default function App() {
       <main className="w-full relative flex flex-col items-center text-center mx-auto overflow-x-hidden">
         
         {/* HERO SECTION - Banner (Reference-style layout) */}
-        <section className="w-full relative flex flex-col items-center overflow-hidden">
+        <section className="w-full max-w-none relative flex flex-col items-center overflow-hidden">
           {/* Full-bleed banner image */}
-          <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden h-[260px] sm:h-[320px] md:h-[360px]">
+          <div className="w-full max-w-none overflow-hidden h-[260px] sm:h-[320px] md:h-[360px] relative">
             <img
               src="https://lh3.googleusercontent.com/d/1ZARm2qjsnI9E9-J7ioLeMai43s2mYUdc"
               alt="Hero Banner"
@@ -418,10 +429,18 @@ export default function App() {
                 </div>
 
                 {/* Links (desktop) */}
-                <div dir="rtl" className="hidden md:flex items-center gap-10 text-[15px] font-bold text-white/95 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)]">
-                  <a href="#trainers" className="hover:text-white transition-colors">المدربين</a>
-                  <a href="#refeai" className="hover:text-white transition-colors">مركز التقييم الذكي</a>
-                  <a href="#contact" className="hover:text-white transition-colors">التواصل</a>
+                <div dir="rtl" className="hidden md:flex items-center">
+                  <div className="flex items-center gap-1 rounded-full bg-white/25 border border-white/35 backdrop-blur-xl px-2 py-1 shadow-lg shadow-black/10">
+                    <a href="#trainers" className="px-4 py-2 rounded-full text-[14px] font-bold text-white/95 hover:bg-white/20 hover:text-white transition-all">
+                      المدربين
+                    </a>
+                    <a href="#refeai" className="px-4 py-2 rounded-full text-[14px] font-bold text-white/95 hover:bg-white/20 hover:text-white transition-all">
+                      مركز التقييم الذكي
+                    </a>
+                    <a href="#contact" className="px-4 py-2 rounded-full text-[14px] font-bold text-white/95 hover:bg-white/20 hover:text-white transition-all">
+                      التواصل
+                    </a>
+                  </div>
                 </div>
 
                 {/* Action */}
