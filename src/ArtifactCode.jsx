@@ -390,10 +390,10 @@ export default function App() {
 
       <main className="w-full relative flex flex-col items-center text-center mx-auto overflow-x-hidden">
         
-        {/* HERO SECTION - Banner */}
+        {/* HERO SECTION - Banner (Reference-style layout) */}
         <section className="w-full relative flex flex-col items-center overflow-hidden">
-          {/* Banner */}
-          <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden h-[680px] sm:h-[720px]">
+          {/* Full-bleed banner image */}
+          <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden h-[260px] sm:h-[320px] md:h-[360px]">
             <img
               src="https://lh3.googleusercontent.com/d/1ZARm2qjsnI9E9-J7ioLeMai43s2mYUdc"
               alt="Hero Banner"
@@ -401,11 +401,11 @@ export default function App() {
               loading="eager"
             />
 
-            {/* Contrast overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/25 to-transparent" />
-            <div className="absolute inset-0 bg-[#0b1220]/10" />
+            {/* Soft overlays for navbar readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/65 via-white/25 to-transparent" />
+            <div className="absolute inset-0 bg-black/5" />
 
-            {/* Navbar (full-bleed like the reference) */}
+            {/* Navbar (full-bleed) */}
             <nav dir="ltr" className="absolute top-0 left-0 right-0 z-20 w-full">
               <div className="w-full px-5 sm:px-8 py-5 flex items-center justify-between">
                 {/* Logo */}
@@ -433,38 +433,36 @@ export default function App() {
               </div>
             </nav>
 
-            {/* Title + Paragraph floating on bottom of image */}
-            <div className="absolute inset-x-0 bottom-10 sm:bottom-12 z-10 translate-y-8 sm:translate-y-12 md:translate-y-14">
-              <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                {/* Date */}
-                <div className="flex justify-center mb-4">
-                  <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/85 border border-white/40 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl">
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#b11e22]"></span>
-                    </span>
-                    <span className="text-sm sm:text-base font-black text-[#284e7f] tracking-wide">
-                      19–23 يناير 2026
-                    </span>
-                  </div>
-                </div>
-
-                {/* Title */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight text-white drop-shadow-[0_12px_28px_rgba(0,0,0,0.55)]">
-                  تحديد الاحتياجات التدريبية
-                  <span className="block mt-2 text-white/95">باستخدام الذكاء الاصطناعي</span>
-                </h1>
-
-                {/* Paragraph */}
-                <p className="mt-4 text-base sm:text-lg text-slate-900/90 leading-7 sm:leading-8 max-w-4xl mx-auto font-medium px-1">
-                  كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                  <span className="font-bold text-slate-900">أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.</span>
-                </p>
-              </div>
-            </div>
-
             {/* Smooth fade into page background */}
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-[#e2e8f0]" />
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-[#e2e8f0]" />
+          </div>
+
+          {/* Text area BELOW the image (like the reference) */}
+          <div className="w-full bg-[#e2e8f0]">
+            <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 text-center">
+              {/* Date */}
+              <div className="flex justify-center mb-5">
+                <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/80 border border-white/60 shadow-sm backdrop-blur-xl">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#b11e22]"></span>
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-[#284e7f] tracking-wide">19–23 يناير 2026</span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight text-slate-900">
+                تحديد الاحتياجات التدريبية
+                <span className="block mt-2 text-slate-900/95">باستخدام الذكاء الاصطناعي</span>
+              </h1>
+
+              {/* Paragraph */}
+              <p className="mt-5 text-base sm:text-lg text-slate-700 leading-7 sm:leading-8 max-w-4xl mx-auto font-medium">
+                كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
+                <span className="font-bold text-slate-900">أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.</span>
+              </p>
+            </div>
           </div>
         </section>
 
