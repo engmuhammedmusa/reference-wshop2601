@@ -393,7 +393,7 @@ export default function App() {
         {/* HERO SECTION - Banner */}
         <section className="w-full relative flex flex-col items-center overflow-hidden">
           {/* Banner */}
-          <div className="w-full relative overflow-hidden h-[520px] sm:h-[600px]">
+          <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden h-[680px] sm:h-[720px]">
             <img
               src="https://lh3.googleusercontent.com/d/1ZARm2qjsnI9E9-J7ioLeMai43s2mYUdc"
               alt="Hero Banner"
@@ -405,27 +405,36 @@ export default function App() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/25 to-transparent" />
             <div className="absolute inset-0 bg-[#0b1220]/10" />
 
-            {/* Navbar */}
-            <nav className="absolute top-6 left-0 right-0 z-20 w-[92%] max-w-7xl mx-auto px-4 py-2 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
-              <div className="flex items-center mb-2 md:mb-0">
-                <img
-                  src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G"
-                  alt="Company Logo"
-                  className="h-9 sm:h-10 object-contain filter drop-shadow-sm"
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <button className="px-5 py-2 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-[#284e7f] text-xs sm:text-sm font-bold transition-all shadow-sm">
-                  تحميل الكتيب
-                </button>
-                <button className="px-5 py-2 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] hover:scale-105 text-white text-xs sm:text-sm font-bold transition-transform shadow-lg shadow-[#b11e22]/20">
-                  احجز مقعدك
-                </button>
+            {/* Navbar (full-bleed like the reference) */}
+            <nav dir="ltr" className="absolute top-0 left-0 right-0 z-20 w-full">
+              <div className="w-full px-5 sm:px-8 py-5 flex items-center justify-between">
+                {/* Logo */}
+                <div className="flex items-center gap-3">
+                  <img
+                    src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G"
+                    alt="Company Logo"
+                    className="h-9 sm:h-10 object-contain brightness-0 invert drop-shadow-[0_10px_22px_rgba(0,0,0,0.25)]"
+                  />
+                </div>
+
+                {/* Links (desktop) */}
+                <div dir="rtl" className="hidden md:flex items-center gap-10 text-[15px] font-bold text-white/95 drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)]">
+                  <a href="#trainers" className="hover:text-white transition-colors">المدربين</a>
+                  <a href="#refeai" className="hover:text-white transition-colors">مركز التقييم الذكي</a>
+                  <a href="#contact" className="hover:text-white transition-colors">التواصل</a>
+                </div>
+
+                {/* Action */}
+                <div className="flex items-center gap-3">
+                  <button className="px-5 py-2 rounded-full bg-white/35 border border-white/50 text-slate-900 text-sm font-black shadow-lg shadow-black/10 backdrop-blur-xl hover:bg-white/45 transition-colors">
+                    سجل الآن
+                  </button>
+                </div>
               </div>
             </nav>
 
             {/* Title + Paragraph floating on bottom of image */}
-            <div className="absolute inset-x-0 bottom-6 sm:bottom-8 z-10">
+            <div className="absolute inset-x-0 bottom-10 sm:bottom-12 z-10 translate-y-8 sm:translate-y-12 md:translate-y-14">
               <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 {/* Date */}
                 <div className="flex justify-center mb-4">
@@ -447,9 +456,9 @@ export default function App() {
                 </h1>
 
                 {/* Paragraph */}
-                <p className="mt-4 text-base sm:text-lg text-white/90 leading-relaxed max-w-3xl mx-auto font-medium drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)]">
+                <p className="mt-4 text-base sm:text-lg text-slate-900/90 leading-7 sm:leading-8 max-w-4xl mx-auto font-medium px-1">
                   كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                  <span className="font-bold text-white">أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.</span>
+                  <span className="font-bold text-slate-900">أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.</span>
                 </p>
               </div>
             </div>
@@ -460,7 +469,7 @@ export default function App() {
         </section>
 
         {/* DASHBOARD PRODUCT SHOT - Standalone Section (Moved Up & Centered) */}
-        <section className="w-full pb-20 relative z-20 mt-6 sm:mt-10">
+        <section className="w-full pb-20 relative z-20 mt-10 sm:mt-14">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeIn>
                 <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl">
