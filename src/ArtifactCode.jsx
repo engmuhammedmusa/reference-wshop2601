@@ -1,707 +1,1196 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reference Academy Landing Page</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-// --- Assets & Data ---
-const trainersData = [
-  {
-    name: "د. رامي شاهين",
-    title: "خبير الذكاء الاصطناعي العالمي والتحول الرقمي الاستراتيجي",
-    bio: "قائد مشاريع ذكاء اصطناعي دولية، ومحور علاقة الذكاء الاصطناعي بصنع القرار المؤسسي في المنطقة. يحمل دكتوراه في إدارة الموارد البشرية الذكية، ومعتمد من مؤسسات عالمية مثل IBM وISO.",
-    image: "https://lh3.googleusercontent.com/d/1Agf19eCAbARzkPgKNQ13Rg2PoydTlo2-"
-  },
-  {
-    name: "د. سالم موسى",
-    title: "خبير التطوير المؤسسي وجودة التدريب الدولي",
-    bio: "يجمع بين علم النفس الإداري والتطوير العملي للمنظمات. يحمل شهادات متقدمة في الجودة والقيادة، وقاد تحولات مؤسسية في قطاعات حكومية وخاصة في معظم الدول العربية.",
-    image: "https://lh3.googleusercontent.com/d/12r7lppBDqCAX5oFBldy-7O77uREbwMVr"
-  },
-  {
-    name: "أ. أحمد الطويل",
-    title: "خبير التطوير المؤسسي وإدارة التغيير",
-    bio: "يمتلك أكثر من 18 عامًا في تصميم وتنفيذ استراتيجيات تطوير المؤسسات والقيادات، يُدير هيئات محلية ودولية لتحقيق التميز المؤسسي والاستدامة التنظيمية.",
-    image: "https://lh3.googleusercontent.com/d/1hG5wGbMOjcCvaWSSfeyWNLhrhcfA0Srq"
-  }
-];
-
-const quotesData = [
-  "التدريب بلا بيانات… مجرد أمل.",
-  "لا تموّل البرامج… موّل الأثر.",
-  "التقييم أولًا. التدريب ثانيًا.",
-  "العائد لا يُحسب بعد التدريب… بل يُصمَّم قبله.",
-  "ليس كل موظف يحتاج تدريبًا… بعضهم يحتاج اتجاهًا.",
-  "من الافتراضات إلى قرارات ذكية — هذه هي النقلة."
-];
-
-// --- Icons ---
-
-const StarIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path fillRule="evenodd" d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813a3.75 3.75 0 002.576-2.576l.813-2.846A.75.75 0 019 4.5zM9 15a.75.75 0 01.721.544l.195.682a1.125 1.125 0 00.773.773l.682.195a.75.75 0 010 1.442l-.682.195a1.125 1.125 0 00-.773.773l-.195.682a.75.75 0 01-1.442 0l-.195-.682a1.125 1.125 0 00-.773-.773l-.682-.195a.75.75 0 010-1.442l.682-.195a1.125 1.125 0 00.773-.773l.195-.682A.75.75 0 019 15z" clipRule="evenodd" />
-  </svg>
-);
-
-const GeminiIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M10.854 2.128a1.372 1.372 0 0 1 2.292 0l1.246 2.164a7.946 7.946 0 0 0 3.974 3.974l2.164 1.246a1.372 1.372 0 0 1 0 2.292l-2.164 1.246a7.946 7.946 0 0 0-3.974 3.974l-1.246 2.164a1.372 1.372 0 0 1-2.292 0l-1.246-2.164a7.946 7.946 0 0 0-3.974-3.974l-2.164-1.246a1.372 1.372 0 0 1 0-2.292l2.164-1.246a7.946 7.946 0 0 0 3.974-3.974l1.246-2.164Z" />
-    <path opacity="0.5" d="M19.354 1.128a.8.8 0 0 1 1.292 0l.246.427a3.946 3.946 0 0 0 1.987 1.987l.427.246a.8.8 0 0 1 0 1.386l-.427.246a3.946 3.946 0 0 0-1.987 1.987l-.246.427a.8.8 0 0 1-1.292 0l-.246-.427a3.946 3.946 0 0 0-1.987-1.987l-.427-.246a.8.8 0 0 1 0-1.386l.427-.246a3.946 3.946 0 0 0 1.987-1.987l.246-.427Z" />
-  </svg>
-);
-
-const BrainIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
-    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
-  </svg>
-);
-
-const DataIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M12 2c-4.4 0-8 1.8-8 4v12c0 2.2 3.6 4 8 4s8-1.8 8-4V6c0-2.2-3.6-4-8-4Z" />
-    <path d="M20 12c0 2.2-3.6 4-8 4s-8-1.8-8-4" />
-    <path d="M20 6c0 2.2-3.6 4-8 4s-8-1.8-8-4" />
-  </svg>
-);
-
-const ChipIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect width="18" height="18" x="3" y="3" rx="2" />
-    <path d="M8.5 3v18" />
-    <path d="M15.5 3v18" />
-    <path d="M3 8.5h18" />
-    <path d="M3 15.5h18" />
-  </svg>
-);
-
-const SparkleIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M9.81 5.9a4 4 0 0 1 3.29-3.29 1.5 1.5 0 0 1 1.7 1.7 4 4 0 0 1-3.29 3.29 1.5 1.5 0 0 1-1.7-1.7Z" />
-    <path d="M16.19 13.9a4 4 0 0 1 3.29-3.29 1.5 1.5 0 0 1 1.7 1.7 4 4 0 0 1-3.29 3.29 1.5 1.5 0 0 1-1.7-1.7Z" />
-    <path d="M2 12s4-1 5-5 1-5 1-5 1 4 5 5-5 5-5 5-1-4-1-4-4-1-5-1Z" />
-  </svg>
-);
-
-// --- Sub-Components ---
-
-const Background = () => (
-  <>
-    <div className="fixed inset-0 pointer-events-none z-[-2] gridGlow" />
-    <div className="fixed inset-0 pointer-events-none z-[-1] softGrid" />
-    <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
-      
-      :root {
-        --font-tajawal: 'Tajawal', sans-serif;
-        --accent: 40 78 127; 
-        --accent2: 177 30 34; 
-        --fg: 40 78 127;
-        --bg: 226 232 240;
-      }
-
-      body {
-        margin: 0;
-        font-family: var(--font-tajawal) !important;
-        background-color: rgb(var(--bg));
-        background-attachment: fixed;
-        color: #284e7f;
-        overflow-x: hidden;
-      }
-
-      html, body, #root, #__next, * {
-        font-family: var(--font-tajawal) !important;
-      }
-
-      code, pre {
-        font-family: var(--font-tajawal) !important;
-      }
-
-      /* Force Tajawal everywhere (including Tailwind's) */
-      .font-mono { font-family: "Tajawal", sans-serif !important; }
-
-      .gridGlow {
-        background-image:
-          radial-gradient(900px 600px at 50% -20%, rgba(40, 78, 127, 0.1), transparent 70%),
-          radial-gradient(600px 400px at 90% 60%, rgba(177, 30, 34, 0.1), transparent 60%);
-        filter: saturate(1.2) contrast(1.1);
-        animation: drift 15s ease-in-out infinite alternate;
-      }
-
-      .softGrid {
-        background-image:
-          linear-gradient(rgba(40, 78, 127,0.07) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(40, 78, 127,0.07) 1px, transparent 1px);
-        background-size: 48px 48px;
-        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-        opacity: 0.6;
-      }
-
-      @keyframes drift {
-        0% { transform: translate3d(0,0,0) scale(1); }
-        50% { transform: translate3d(18px,-22px,0) scale(1.03); }
-        100% { transform: translate3d(0,0,0) scale(1); }
-      }
-
-      /* Floating Animations */
-      @keyframes float-slow {
-        0%, 100% { transform: translate(0, 0) rotate(0deg); }
-        50% { transform: translate(20px, -20px) rotate(5deg); }
-      }
-      
-      @keyframes float-medium {
-        0%, 100% { transform: translate(0, 0) rotate(0deg); }
-        50% { transform: translate(-15px, 25px) rotate(-5deg); }
-      }
-      
-      @keyframes float-fast {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        50% { transform: translate(10px, 10px) scale(1.1); }
-      }
-
-      @keyframes float-random {
-        0%, 100% { transform: translate(0, 0); opacity: 0.2; }
-        25% { transform: translate(30px, -30px); opacity: 0.4; }
-        50% { transform: translate(-20px, 20px); opacity: 0.2; }
-        75% { transform: translate(-40px, -10px); opacity: 0.4; }
-      }
-
-      @keyframes pulse-slow {
-        0%, 100% { opacity: 0.1; transform: scale(1); }
-        50% { opacity: 0.2; transform: scale(1.2); }
-      }
-
-      @keyframes pulse-slower {
-        0%, 100% { opacity: 0.05; transform: scale(1); }
-        50% { opacity: 0.15; transform: scale(1.3); }
-      }
-
-      .animate-float-slow { animation: float-slow 15s ease-in-out infinite; }
-      .animate-float-medium { animation: float-medium 12s ease-in-out infinite; }
-      .animate-float-fast { animation: float-fast 8s ease-in-out infinite; }
-      .animate-float-random { animation: float-random 20s linear infinite; }
-      .animate-pulse-slow { animation: pulse-slow 8s ease-in-out infinite; }
-      .animate-pulse-slower { animation: pulse-slower 12s ease-in-out infinite; }
-
-      .glass {
-        background: rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        border-top: 1px solid rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        box-shadow: 0 8px 32px rgba(40, 78, 127, 0.08);
-      }
-
-      .gradient-text {
-        background: linear-gradient(to left, #284e7f, #1e293b, #b11e22);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-
-      .dotPulse { animation: dotPulse 1.2s infinite ease-in-out; }
-      .dotPulse:nth-child(2) { animation-delay: .15s; }
-      .dotPulse:nth-child(3) { animation-delay: .30s; }
-      @keyframes dotPulse {
-        0%,80%,100% { transform: translateY(0); opacity:.4; }
-        40% { transform: translateY(-4px); opacity:1; }
-      }
-    `}</style>
-  </>
-);
-
-const FloatingParticles = () => {
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
-      {/* Light Orbs */}
-      <div className="absolute top-[10%] left-[10%] w-64 h-64 bg-[#284e7f]/10 rounded-full blur-[80px] animate-pulse-slow"></div>
-      <div className="absolute bottom-[20%] right-[10%] w-80 h-80 bg-[#b11e22]/5 rounded-full blur-[100px] animate-pulse-slower"></div>
-      
-      {/* Floating Icons */}
-      <div className="absolute top-[15%] left-[5%] opacity-30 animate-float-slow text-[#284e7f]">
-        <div className="relative">
-             <div className="absolute inset-0 bg-[#284e7f]/20 blur-xl rounded-full"></div>
-             <BrainIcon className="w-16 h-16 relative z-10" />
-        </div>
-      </div>
-      <div className="absolute top-[20%] right-[8%] opacity-20 animate-float-medium text-[#b11e22] delay-700">
-         <div className="relative">
-             <div className="absolute inset-0 bg-[#b11e22]/20 blur-xl rounded-full"></div>
-             <DataIcon className="w-12 h-12 relative z-10" />
-         </div>
-      </div>
-      <div className="absolute bottom-[30%] left-[15%] opacity-25 animate-float-fast text-[#284e7f] delay-1000">
-         <ChipIcon className="w-10 h-10" />
-      </div>
-      <div className="absolute bottom-[40%] right-[20%] opacity-30 animate-float-slow text-[#b11e22] delay-500">
-        <SparkleIcon className="w-8 h-8" />
-      </div>
-      
-      {/* Small Particles */}
-      <div className="absolute top-[40%] left-[30%] w-2 h-2 bg-[#284e7f]/40 rounded-full animate-float-random shadow-[0_0_10px_#284e7f]"></div>
-      <div className="absolute top-[60%] right-[40%] w-3 h-3 bg-[#b11e22]/30 rounded-full animate-float-random delay-1000 shadow-[0_0_10px_#b11e22]"></div>
-      <div className="absolute top-[25%] right-[25%] w-1.5 h-1.5 bg-[#284e7f]/50 rounded-full animate-float-random delay-2000"></div>
-    </div>
-  );
-};
-
-const FadeIn = ({ children, delay = 0, className = "" }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #0f172a; /* slate-900 */
         }
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-1000 ease-out transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-      } ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const AnimatedText = ({ text, interval = 3000, className = "" }) => {
-  const [currentText, setCurrentText] = useState(text[0]);
-  const [isVisible, setIsVisible] = useState(true);
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setIndex((prev) => (prev + 1) % text.length);
-        setIsVisible(true);
-      }, 300);
-    }, interval);
-    return () => clearInterval(timer);
-  }, [text, interval]);
-
-  useEffect(() => {
-    if (isVisible) setCurrentText(text[index]);
-  }, [isVisible, index, text]);
-
-  return (
-    <div className={`${className} transition-all duration-300 ease-in-out transform ${isVisible ? 'opacity-100 blur-0 translate-y-0' : 'opacity-0 blur-sm translate-y-1'}`}>
-      {currentText}
-    </div>
-  );
-};
-
-const FloatingWhatsApp = () => (
-  <a
-    href="https://wa.me/905337642450"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-transform duration-300 hover:shadow-green-500/50 group border border-white/20"
-    aria-label="تواصل معنا عبر واتساب"
-  >
-    <div className="absolute inset-0 rounded-full animate-ping bg-[#25D366] opacity-30"></div>
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-      <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
-    </svg>
-  </a>
-);
-
-const TrainersCarousel = () => {
-  const [active, setActive] = useState(0);
-  const [animating, setAnimating] = useState(false);
-
-  const switchTrainer = useCallback((index) => {
-    if (index === active || animating) return;
-    setAnimating(true);
-    setTimeout(() => {
-      setActive(index);
-      setAnimating(false);
-    }, 250); 
-  }, [active, animating]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!animating) {
-        setAnimating(true);
-        setTimeout(() => {
-          setActive((prev) => (prev + 1) % trainersData.length);
-          setAnimating(false);
-        }, 250);
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [animating]);
-
-  const t = trainersData[active];
-
-  return (
-    <div className="glass rounded-[22px] p-6 relative min-h-[380px] mt-6 shadow-xl shadow-[#284e7f]/10 border border-[#284e7f]/10">
-      <div className="md:grid md:grid-cols-[4fr_8fr] md:gap-6 md:items-center md:text-right">
-        <div className="order-1 relative mx-auto md:mx-0 mb-4 md:mb-0 aspect-[4/5] max-w-[300px] md:max-w-none rounded-[18px] overflow-hidden border border-white/60 bg-gradient-to-b from-white/40 to-white/10 shadow-lg">
-          <img 
-            src={t.image} 
-            alt={t.name}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-            loading="eager"
-            onError={(e) => {
-                e.target.onerror = null;
-                e.target.style.display = 'none';
-                e.target.parentNode.style.backgroundColor = '#cbd5e1'; 
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
-        </div>
-        <div className={`order-2 flex flex-col items-center md:items-start transition-all duration-300 ${animating ? 'opacity-0 blur-sm translate-y-2' : 'opacity-100 blur-0 translate-y-0'}`}>
-          <div className="text-xs text-[#b11e22] font-bold mb-2 tracking-wide uppercase">Team • Experts</div>
-          <div className="text-3xl font-black text-[#284e7f]">{t.name}</div>
-          <div className="text-[#284e7f]/80 mt-2 leading-relaxed max-w-full font-medium">{t.title}</div>
-          <div className="mt-4 p-4 rounded-2xl bg-white/40 border border-white/60 w-full text-center md:text-right shadow-sm">
-            <div className="text-xs text-[#284e7f]/60 mb-1 font-semibold">Bio & Vision</div>
-            <div className="text-[15px] leading-relaxed text-[#284e7f]">{t.bio}</div>
-          </div>
-        </div>
-      </div>
-      <div className="flex justify-center gap-2 mt-6">
-        {trainersData.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => switchTrainer(idx)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${active === idx ? 'bg-[#b11e22] scale-125' : 'bg-black/10 hover:bg-black/20'}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default function App() {
-  return (
-    <div dir="rtl" className="min-h-screen w-full overflow-x-hidden text-[#284e7f] selection:bg-[#b11e22]/20">
-      <Background />
-      <FloatingWhatsApp />
-
-      <main className="w-full relative flex flex-col items-center text-center mx-auto overflow-x-hidden">
         
-        {/* NEW HERO SECTION - SAAS STYLE */}
-        <section className="w-full relative flex flex-col items-center pt-24 pb-12 overflow-hidden">
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .glass-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Custom Scrollbar for the modal detail view */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- SETUP & UTILS ---
+        const { useState, useEffect, useRef } = React;
+        const { motion, AnimatePresence, useScroll, useTransform } = window.Motion;
+
+        function cn(...inputs) {
+            return inputs.filter(Boolean).join(" ");
+        }
+
+        // --- DATA ---
+        const VENUES = ["الكويت", "عمان", "تركيا"];
+
+        const TRAINERS = [
+            {
+                name: "د. رامي شاهين",
+                title: "خبير الذكاء الاصطناعي والتحول الرقمي",
+                role: "خبير عالمي في الذكاء الاصطناعي والتحول الرقمي، يقود مشاريع متعددة الدول. دكتوراه في إدارة الموارد البشرية الدولية.",
+                focus: "بناء الخوارزميات للتنبؤ بالفجوات المهارية",
+                initials: "RS",
+                color: "from-blue-500 to-blue-700",
+                image: "https://drive.google.com/thumbnail?id=1Agf19eCAbARzkPgKNQ13Rg2PoydTlo2-&sz=w800",
+            },
+            {
+                name: "د. سالم موسى",
+                title: "استشاري التطوير وجودة التدريب",
+                role: "استشاري التطوير وجودة التدريب. دكتوراه إدارة عامة وتطوير منظمات. MBA في علم النفس الإداري. استشاري جودة معتمد.",
+                focus: "تصميم سيناريوهات التقييم المعقدة",
+                initials: "SM",
+                color: "from-sky-500 to-blue-600",
+                image: "https://drive.google.com/thumbnail?id=12r7lppBDqCAX5oFBldy-7O77uREbwMVr&sz=w800",
+            },
+            {
+                name: "أ. أحمد الطويل",
+                title: "خبير التطوير المؤسسي والقيادة",
+                role: "خبير التطوير المؤسسي والقيادة بخبرة +18 عامًا في إدارة التغيير وبناء الكفاءات. مستشار لجهات محلية ودولية.",
+                focus: "تحويل البيانات إلى خطط تطوير تنفيذية",
+                initials: "AT",
+                color: "from-blue-400 to-sky-600",
+                image: "https://drive.google.com/thumbnail?id=1hG5wGbMOjcCvaWSSfeyWNLhrhcfA0Srq&sz=w800",
+            },
+        ];
+
+        const QUOTES = [
+            "التدريب بدون بيانات هدر للمال",
+            "الفجوات المهارية تنمو بصمت",
+            "العائد على الاستثمار قرار وليس صدفة",
+            "الذكاء الاصطناعي يرفع دقة الموارد البشرية",
+            "من التخمين إلى اليقين الرقمي",
+            "التطوير الشخصي هو المستقبل",
+            "مراكز التقييم أصبحت أنظمة حية",
+            "تحتاج تدريباً أذكى، لا أكثر",
+        ];
+
+        const IMAGINE_CARDS = [
+            {
+                text: "يقرأ الأداء الحالي",
+                color: "text-blue-600",
+                bg: "bg-blue-50",
+                icon: (
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+                </svg>
+                ),
+            },
+            {
+                text: "يكشف الفجوات الخفية",
+                color: "text-sky-600",
+                bg: "bg-sky-50",
+                icon: (
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                ),
+            },
+            {
+                text: "يقترح خطط تطوير فورية",
+                color: "text-cyan-600",
+                bg: "bg-cyan-50",
+                icon: (
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                ),
+            },
+            {
+                text: "يحسب العائد قبل الصرف",
+                color: "text-blue-500",
+                bg: "bg-blue-50",
+                icon: (
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                ),
+            },
+            {
+                text: "يحاكي مراكز التقييم",
+                color: "text-slate-600",
+                bg: "bg-slate-100",
+                icon: (
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                ),
+            },
+        ];
+
+        const OUTPUTS = [
+            { title: "قياس ROI", desc: "أدوات دقيقة لحساب العائد المالي" },
+            { title: "TNA مدفوع بالبيانات", desc: "تحديد احتياجات مبني على حقائق" },
+            { title: "تحول تدريبي ذكي", desc: "خارطة طريق لرقمنة القسم" },
+            { title: "دعم قرار بالـ AI", desc: "لوحات مؤشرات لاتخاذ القرار" },
+            { title: "AI Assessment Blueprint", desc: "مخطط بناء مركز تقييم آلي" },
+            { title: "خريطة فجوات الكفاءات", desc: "تحديد دقيق لنقاط الضعف والقوة" },
+        ];
+
+        const AUDIENCE_LIST = [
+            {
+                id: "hr-lead",
+                label: "قائد موارد بشرية",
+                desc: "حوّل قسمك من مركز تكلفة إلى شريك استراتيجي يثبت عوائده بالأرقام.",
+            },
+            {
+                id: "ld-mgr",
+                label: "مدير تدريب وتطوير",
+                desc: "توقف عن تخمين الدورات التدريبية؛ صمم برامج تعالج احتياجات فعلية بدقة متناهية.",
+            },
+            {
+                id: "dx-mgr",
+                label: "مدير تحول رقمي",
+                desc: "أضف الذكاء الاصطناعي لمحفظة مشاريعك عبر تطبيق عملي يمس كل موظف.",
+            },
+            {
+                id: "ceo",
+                label: "قائد تنفيذي",
+                desc: "اضمن أن كل دولار يُصرف في التدريب يصب مباشرة في تحقيق أهداف المنظمة.",
+            },
+            {
+                id: "perf-off",
+                label: "مسؤول أداء وكفاءات",
+                desc: "اربط تقييم الأداء بخطط التطوير آلياً وأغلق دائرة الكفاءة المفقودة.",
+            },
+        ];
+
+        // --- COMPONENTS ---
+
+        function Navbar() {
+            const [isModalOpen, setIsModalOpen] = useState(false);
+
+            return (
+                <React.Fragment>
+                <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200/50 h-24 transition-all duration-300">
+                    <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
+                    {/* Logo / Brand */}
+                    <div className="flex items-center gap-3">
+                        <img 
+                        src="https://drive.google.com/thumbnail?id=1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G&sz=w400" 
+                        alt="Reference Academy" 
+                        className="h-16 w-auto object-contain"
+                        />
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-3">
+                        <button
+                        className="hidden sm:block px-4 py-2 text-sm text-slate-500 bg-slate-100 rounded-full cursor-not-allowed hover:bg-slate-200 transition-colors border border-slate-200"
+                        disabled
+                        >
+                        تحميل الكتيّب (قريباً)
+                        </button>
+                        <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="px-6 py-2.5 text-sm font-bold text-white bg-blue-700 hover:bg-blue-600 rounded-full shadow-lg shadow-blue-500/20 transition-all active:scale-95"
+                        >
+                        احجز مقعدك
+                        </button>
+                    </div>
+                    </div>
+                </nav>
+
+                {/* Simple Modal */}
+                <AnimatePresence>
+                    {isModalOpen && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4" dir="rtl">
+                        <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsModalOpen(false)}
+                        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+                        />
+                        <motion.div
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.95, opacity: 0 }}
+                        className="relative w-full max-w-md p-8 bg-white rounded-2xl text-center border border-slate-200 shadow-2xl"
+                        >
+                        <h3 className="text-2xl font-bold mb-2 text-slate-900">التسجيل يفتح قريباً</h3>
+                        <p className="text-slate-500 mb-6">
+                            رابط التسجيل المباشر سيكون متاحاً خلال أيام. شكراً لاهتمامك.
+                        </p>
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-xl transition-colors font-medium"
+                        >
+                            حسناً
+                        </button>
+                        </motion.div>
+                    </div>
+                    )}
+                </AnimatePresence>
+                </React.Fragment>
+            );
+        }
+
+        function RefeAIWidget() {
+            const [typedText, setTypedText] = useState("");
+            const fullText = "بناءً على تحليل البيانات، يوصى بتركيز ميزانية التدريب على المهارات الرقمية لتقليل الفجوة بنسبة 35%.";
             
-            {/* Scrollable Navbar (Absolute) */}
-            <nav className="absolute top-6 left-0 right-0 z-50 w-[92%] max-w-7xl mx-auto px-4 py-2 rounded-full flex flex-col md:flex-row justify-between items-center glass shadow-lg shadow-[#284e7f]/5 transition-all">
-                <div className="flex items-center mb-2 md:mb-0">
-                    <img 
-                      src="https://lh3.googleusercontent.com/d/1-SLAi3PFnVcRKY54w97J4H3sYQ2Prj3G" 
-                      alt="Company Logo" 
-                      className="h-9 sm:h-10 object-contain filter drop-shadow-sm" 
+            useEffect(() => {
+                let i = 0;
+                const typingInterval = setInterval(() => {
+                if (i < fullText.length) {
+                    setTypedText(fullText.slice(0, i + 1));
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+                }, 40); // Typing speed
+                
+                return () => clearInterval(typingInterval);
+            }, []);
+
+            return (
+                <div className="relative h-[450px] w-full hidden lg:block perspective-1000" dir="rtl">
+                {/* Floating Elements */}
+                <motion.div 
+                    animate={{ y: [0, -10, 0] }} 
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-10 -right-8 z-20 bg-white p-3 rounded-2xl shadow-xl border border-white/40 backdrop-blur-md"
+                >
+                    <div className="text-2xl">🤖</div>
+                </motion.div>
+                <motion.div 
+                    animate={{ y: [0, 15, 0] }} 
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute bottom-20 -left-8 z-20 bg-white p-3 rounded-2xl shadow-xl border border-white/40 backdrop-blur-md"
+                >
+                    <div className="text-2xl">📊</div>
+                </motion.div>
+
+                {/* Main Glass Dashboard */}
+                <motion.div
+                    initial={{ opacity: 0, rotateX: 10, y: 50 }}
+                    animate={{ opacity: 1, rotateX: 0, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="relative w-full h-full bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl shadow-[0_20px_60px_-15px_rgba(37,99,235,0.2)] overflow-hidden flex flex-col"
+                >
+                    {/* Glass Header */}
+                    <div className="h-16 border-b border-white/10 bg-white/10 flex items-center justify-between px-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/40">
+                            <span className="text-white font-bold text-xs">AI</span>
+                        </div>
+                        <span className="text-slate-800 font-bold tracking-wide">RefeAI</span>
+                    </div>
+                    <div className="flex gap-2">
+                        <div className="w-3 h-3 rounded-full bg-red-400/80" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
+                        <div className="w-3 h-3 rounded-full bg-green-400/80" />
+                    </div>
+                    </div>
+
+                    {/* Chat Area */}
+                    <div className="flex-1 p-6 space-y-6 overflow-hidden relative">
+                    {/* Decor Gradient */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-400/20 blur-[80px] rounded-full pointer-events-none" />
+
+                    {/* User Message */}
+                    <motion.div 
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="flex justify-start"
+                    >
+                        <div className="bg-white/60 backdrop-blur-md text-slate-700 px-5 py-3 rounded-2xl rounded-br-none shadow-sm border border-white/40 max-w-[80%]">
+                            <p className="text-sm font-medium">ما هي التوصية الحالية لرفع الكفاءة؟</p>
+                        </div>
+                    </motion.div>
+
+                    {/* Bot Message */}
+                    <div className="flex justify-end w-full">
+                        <div className="flex gap-3 max-w-[90%] flex-row-reverse">
+                            <div className="w-8 h-8 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white text-xs">
+                                🤖
+                            </div>
+                            <div className="bg-blue-600 text-white px-5 py-4 rounded-2xl rounded-bl-none shadow-lg shadow-blue-500/20">
+                                <p className="text-sm leading-relaxed min-h-[40px]">
+                                {typedText}
+                                <span className="animate-pulse inline-block w-1.5 h-4 bg-blue-300 align-middle mr-1" />
+                                </p>
+                                {/* Mini Chart Mockup inside chat */}
+                                <motion.div 
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                transition={{ delay: 2.5 }}
+                                className="mt-4 bg-white/10 rounded-lg p-3 border border-white/10"
+                                >
+                                <div className="flex items-end gap-2 h-16 pb-1">
+                                    <div className="w-full bg-white/20 rounded-t h-[40%]" />
+                                    <div className="w-full bg-white/40 rounded-t h-[60%]" />
+                                    <div className="w-full bg-white/80 rounded-t h-[85%]" />
+                                    <div className="w-full bg-blue-300 rounded-t h-[50%]" />
+                                </div>
+                                <div className="text-[10px] text-blue-100 mt-1 text-center">تحليل الفجوات المتوقع</div>
+                                </motion.div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </motion.div>
+                </div>
+            )
+        }
+
+        function Hero() {
+            return (
+                <section className="relative pt-40 pb-20 min-h-[90vh] flex flex-col justify-center overflow-hidden">
+                {/* Background Ambience */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <motion.div
+                    animate={{
+                        rotate: 360,
+                        scale: [1, 1.1, 1],
+                    }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-blue-200/40 rounded-full blur-[100px]"
+                    />
+                    <motion.div
+                    animate={{
+                        rotate: -360,
+                        scale: [1, 1.2, 1],
+                    }}
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-sky-200/40 rounded-full blur-[100px]"
                     />
                 </div>
-                <div className="flex items-center gap-3">
-                    <button className="px-5 py-2 rounded-full bg-white/40 hover:bg-white/60 border border-white/60 text-[#284e7f] text-xs sm:text-sm font-bold transition-all shadow-sm">
-                        تحميل الكتيب
-                    </button>
-                    <button className="px-5 py-2 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] hover:scale-105 text-white text-xs sm:text-sm font-bold transition-transform shadow-lg shadow-[#b11e22]/20">
-                        احجز مقعدك
-                    </button>
-                </div>
-            </nav>
 
-            {/* Hero Content Area */}
-            <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center mt-8">
-                
-                <FloatingParticles />
+                <div className="max-w-7xl mx-auto px-4 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+                    
+                    {/* Content Side */}
+                    <div className="space-y-8 text-center lg:text-start">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-xs font-medium text-blue-700 mx-auto lg:mx-0 shadow-sm"
+                    >
+                        <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+                        توقف عن التخمين. دع الذكاء الاصطناعي يقرر.
+                    </motion.div>
 
-                {/* Date Announcement - Prominent & Glowing (Replaced "AI Assessment Center" Pill) */}
-                <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/90 border border-[#b11e22]/30 shadow-[0_0_25px_rgba(177,30,34,0.15)] mb-8 backdrop-blur-xl animate-[fadeIn_1s_ease-out] relative z-10 hover:scale-105 transition-transform duration-300">
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#b11e22] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#b11e22]"></span>
-                    </span>
-                    <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-[#284e7f] to-[#b11e22] tracking-wide">19–23 يناير 2026</span>
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#284e7f] leading-tight tracking-tight mb-4 text-center relative z-10">
-                    تحديد الاحتياجات التدريبية
-                    <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#284e7f] via-[#284e7f] to-[#b11e22] drop-shadow-sm filter pb-2">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight space-y-2 md:space-y-4"
+                    >
+                        <span className="block text-slate-900">تحديد الاحتياجات التدريبية</span>
+                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-sky-600">
                         باستخدام الذكاء الاصطناعي
-                    </span>
-                </h1>
+                        </span>
+                        <span className="block text-slate-900">AI Assessment Center</span>
+                    </motion.h1>
 
-                {/* Subheadline */}
-                <p className="text-lg sm:text-xl text-zinc-600 leading-relaxed max-w-2xl mb-10 font-medium text-center relative z-10">
-                    كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي،{' '}
-                    <span className="font-bold text-zinc-900">
-                        أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.
-                    </span>
-                </p>
-
-                {/* Primary CTAs */}
-                <div className="flex flex-wrap justify-center gap-4 mb-12 relative z-10">
-                    <button className="px-8 py-4 rounded-full bg-gradient-to-l from-[#284e7f] to-[#b11e22] text-white font-black text-lg hover:-translate-y-1 transition-all shadow-xl shadow-[#b11e22]/30 flex items-center gap-2">
-                        <span>سجل الآن</span>
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                    </button>
-                    <button className="px-8 py-4 rounded-full bg-white/60 hover:bg-white/80 border border-[#284e7f]/30 text-[#284e7f] font-bold text-lg transition-all shadow-lg backdrop-blur-sm">
-                        عرض التفاصيل
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        {/* DASHBOARD PRODUCT SHOT - Standalone Section (Moved Up & Centered) */}
-        <section className="w-full pb-20 relative z-20">
-            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-                <div className="glass rounded-[24px] p-2 shadow-2xl shadow-[#284e7f]/20 overflow-hidden border border-white/60 ring-1 ring-[#284e7f]/5 bg-white/50 backdrop-blur-xl">
-                    <div className="h-8 bg-[#284e7f]/5 border-b border-[#284e7f]/5 flex items-center px-4 gap-2 relative">
-                        <div className="w-2.5 h-2.5 rounded-full bg-red-400/60"></div>
-                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60"></div>
-                        <div className="w-2.5 h-2.5 rounded-full bg-green-400/60"></div>
-
-                        {/* Version Pill */}
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-[#284e7f]/10 border border-[#284e7f]/10 text-[10px] font-bold text-[#284e7f]/60">
-                          AI Assessment Center v2.0
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-sm md:text-base text-slate-600"
+                    >
+                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm">
+                        <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span>19 – 23 يناير، 2026</span>
                         </div>
+                        <div className="flex gap-2">
+                        {VENUES.map((venue) => (
+                            <span key={venue} className="px-3 py-2 rounded-lg bg-white border border-slate-200 text-xs text-slate-600 select-none shadow-sm">
+                            {venue}
+                            </span>
+                        ))}
+                        </div>
+                    </motion.div>
+
+                    <motion.p 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-sm text-red-500 font-medium"
+                    >
+                        * المقاعد محدودة جداً لضمان جودة التطبيق العملي
+                    </motion.p>
+                    </div>
+
+                    {/* Visual Side (Chat Mock) */}
+                    <RefeAIWidget />
+                </div>
+                </section>
+            );
+        }
+
+        function DashboardDemo() {
+            return (
+                <section className="py-20 bg-slate-50 relative z-20">
+                <div className="max-w-6xl mx-auto px-4">
+                    {/* Dashboard Container */}
+                    <motion.div 
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-white rounded-3xl shadow-2xl shadow-blue-200/50 border border-slate-200 overflow-hidden"
+                    >
+                        {/* Header */}
+                        <div className="bg-slate-50 border-b border-slate-200 p-6 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                            <div className="w-3 h-3 rounded-full bg-red-500" />
+                            <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                            <div className="w-3 h-3 rounded-full bg-green-500" />
+                            <span className="mr-4 text-sm font-bold text-slate-700 hidden md:inline">نظام تحليل الاحتياجات التدريبية - لوحة القيادة</span>
+                            <span className="mr-4 text-sm font-bold text-slate-700 md:hidden">لوحة القيادة</span>
+                            </div>
+                            <div className="text-xs text-slate-400 font-mono">LIVE DATA v2.4</div>
+                        </div>
+
+                        {/* Content Grid */}
+                        <div className="p-4 md:p-8 bg-slate-50/50">
+                            {/* Stats Row */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <StatCard title="الموظفون" value="1,240" sub="تم تحليلهم هذا الربع" trend="+12%" />
+                            <StatCard title="فجوات حرجة" value="18%" sub="تتطلب تدخلاً فورياً" trend="-5%" trendColor="text-red-500" />
+                            <StatCard title="توفير الميزانية" value="$42,500" sub="بفضل التخصيص الدقيق" trend="+8%" trendColor="text-green-600" />
+                            </div>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            {/* Main Chart Area (Mock) */}
+                            <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h3 className="font-bold text-slate-800">تحليل الفجوات حسب القسم</h3>
+                                    <div className="flex gap-2">
+                                        <span className="w-3 h-3 rounded-full bg-blue-600"></span> <span className="text-xs text-slate-500">مستهدف</span>
+                                        <span className="w-3 h-3 rounded-full bg-slate-300"></span> <span className="text-xs text-slate-500">حالي</span>
+                                    </div>
+                                </div>
+                                {/* Bars */}
+                                <div className="space-y-6">
+                                    <ChartBar label="المبيعات والتسويق" current={65} target={85} />
+                                    <ChartBar label="تكنولوجيا المعلومات" current={75} target={90} />
+                                    <ChartBar label="الموارد البشرية" current={80} target={85} />
+                                    <ChartBar label="العمليات والتشغيل" current={60} target={88} />
+                                </div>
+                            </div>
+
+                            {/* Recommendations List */}
+                            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                                <h3 className="font-bold text-slate-800 mb-4">التوصيات الذكية</h3>
+                                <div className="space-y-3">
+                                    <RecItem title="علم البيانات للقادة" type="ورشة عمل" priority="عالية" />
+                                    <RecItem title="إدارة التغيير الرقمي" type="دورة ذاتية" priority="متوسطة" />
+                                    <RecItem title="أساسيات AI" type="ندوة" priority="منخفضة" />
+                                    <RecItem title="التفكير التصميمي" type="تدريب عملي" priority="متوسطة" />
+                                </div>
+                                <div className="mt-6 pt-4 border-t border-slate-100">
+                                    <div className="flex items-center gap-3 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                        <span className="text-xl">💡</span>
+                                        <p className="text-xs text-blue-800 leading-tight">
+                                        يقترح النظام زيادة ميزانية التدريب التقني بنسبة 15% للربع القادم بناءً على اتجاهات السوق.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+                </section>
+            )
+        }
+
+        function StatCard({ title, value, sub, trend, trendColor = "text-green-600" }) {
+            return (
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex justify-between items-start mb-2">
+                        <span className="text-slate-500 text-sm font-medium">{title}</span>
+                        <span className={`text-xs font-bold bg-slate-100 px-2 py-1 rounded-full ${trendColor}`}>{trend}</span>
+                    </div>
+                    <div className="text-3xl font-bold text-slate-900 mb-1 font-mono tracking-tight">{value}</div>
+                    <div className="text-xs text-slate-400">{sub}</div>
+                </div>
+            )
+        }
+
+        function ChartBar({ label, current, target }) {
+            return (
+                <div>
+                    <div className="flex justify-between text-xs mb-2">
+                        <span className="font-medium text-slate-700">{label}</span>
+                        <span className="text-slate-400 font-mono">{current}% / {target}%</span>
+                    </div>
+                    <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden relative">
+                        <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${target}%` }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        className="absolute top-0 right-0 h-full bg-blue-200 rounded-full" 
+                        />
+                        <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${current}%` }}
+                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                        className="absolute top-0 right-0 h-full bg-blue-600 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.3)]" 
+                        />
+                    </div>
+                </div>
+            )
+        }
+
+        function RecItem({ title, type, priority }) {
+            const priorityColors = {
+                "عالية": "bg-red-100 text-red-700 border-red-200",
+                "متوسطة": "bg-amber-100 text-amber-700 border-amber-200",
+                "منخفضة": "bg-green-100 text-green-700 border-green-200"
+            }
+            return (
+                <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors border border-transparent hover:border-slate-100 cursor-pointer group">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-white group-hover:shadow-sm flex items-center justify-center text-lg transition-all">📚</div>
+                        <div>
+                        <div className="text-sm font-bold text-slate-800">{title}</div>
+                        <div className="text-xs text-slate-500">{type}</div>
+                        </div>
+                    </div>
+                    <span className={`text-[10px] font-bold px-2 py-1 rounded-md border ${priorityColors[priority] || "bg-slate-100"}`}>
+                        {priority}
+                    </span>
+                </div>
+            )
+        }
+
+        function Countdown() {
+            const TARGET_DATE = new Date("2026-01-19T09:00:00");
+            const [timeLeft, setTimeLeft] = useState({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0,
+            });
+            const [mounted, setMounted] = useState(false);
+
+            useEffect(() => {
+                setMounted(true);
+                const interval = setInterval(() => {
+                const now = new Date();
+                const diff = TARGET_DATE.getTime() - now.getTime();
+
+                if (diff <= 0) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                setTimeLeft({
+                    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+                    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+                    minutes: Math.floor((diff / 1000 / 60) % 60),
+                    seconds: Math.floor((diff / 1000) % 60),
+                });
+                }, 1000);
+
+                return () => clearInterval(interval);
+            }, []);
+
+            if (!mounted) return <div className="h-32 bg-slate-50" />;
+
+            return (
+                <section className="py-12 border-y border-slate-200 bg-white">
+                <div className="max-w-7xl mx-auto px-4 text-center">
+                    <p className="text-slate-500 mb-8 text-sm md:text-base font-light">
+                    الوقت يمضي… والقرارات التدريبية الخاطئة تُتخذ يومياً
+                    </p>
+                    
+                    <div className="flex flex-wrap justify-center gap-4 md:gap-8" dir="ltr">
+                    <TimeBlock value={timeLeft.days} label="Days" />
+                    <div className="text-4xl font-thin text-slate-300 self-center hidden md:block">:</div>
+                    <TimeBlock value={timeLeft.hours} label="Hours" />
+                    <div className="text-4xl font-thin text-slate-300 self-center hidden md:block">:</div>
+                    <TimeBlock value={timeLeft.minutes} label="Minutes" />
+                    <div className="text-4xl font-thin text-slate-300 self-center hidden md:block">:</div>
+                    <TimeBlock value={timeLeft.seconds} label="Seconds" />
+                    </div>
+                </div>
+                </section>
+            );
+        }
+
+        function TimeBlock({ value, label }) {
+            return (
+                <div className="flex flex-col items-center">
+                <motion.div 
+                    key={value}
+                    initial={{ opacity: 0.5, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-3xl md:text-5xl font-bold text-slate-900 shadow-xl shadow-slate-200"
+                >
+                    {String(value).padStart(2, "0")}
+                </motion.div>
+                <span className="text-xs text-slate-500 mt-2 uppercase tracking-widest">{label}</span>
+                </div>
+            );
+        }
+
+        function ImagineSection() {
+            const [index, setIndex] = useState(0);
+
+            useEffect(() => {
+                const timer = setInterval(() => {
+                setIndex((prev) => (prev + 1) % IMAGINE_CARDS.length);
+                }, 3000); // Change card every 3 seconds
+                return () => clearInterval(timer);
+            }, []);
+
+            return (
+                <section className="py-24 relative overflow-hidden bg-slate-50">
+                {/* Background Decor */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-blue-200/20 blur-[100px] rounded-full pointer-events-none" />
+
+                <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
+                    <div className="mb-12">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
+                    >
+                        تخيل نظام تقييم ذكي داخل مؤسستك…
+                    </motion.h2>
+                    <div className="w-16 h-1 bg-blue-600 mx-auto rounded-full" />
+                    </div>
+
+                    {/* Carousel Container */}
+                    <div className="h-[300px] flex items-center justify-center relative">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: 20, scale: 0.95 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: -20, scale: 0.95 }}
+                        transition={{ duration: 0.5 }}
+                        className="bg-white border border-slate-200 p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow w-full max-w-lg mx-auto flex flex-col items-center gap-6"
+                        >
+                            <div className={cn("w-20 h-20 rounded-2xl flex items-center justify-center mb-2 shadow-lg", IMAGINE_CARDS[index].bg, IMAGINE_CARDS[index].color)}>
+                            {IMAGINE_CARDS[index].icon}
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-800">{IMAGINE_CARDS[index].text}</h3>
+                            
+                            {/* Progress Indicators */}
+                            <div className="flex gap-2 mt-4">
+                            {IMAGINE_CARDS.map((_, i) => (
+                                <div 
+                                key={i} 
+                                className={cn(
+                                    "w-2 h-2 rounded-full transition-colors duration-300", 
+                                    i === index ? "bg-blue-600" : "bg-slate-200"
+                                )} 
+                                />
+                            ))}
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                    </div>
+                </div>
+                </section>
+            );
+        }
+
+        function StickyQuotes() {
+            const [index, setIndex] = useState(0);
+
+            useEffect(() => {
+                const timer = setInterval(() => {
+                setIndex((prev) => (prev + 1) % QUOTES.length);
+                }, 4000); // Slower cycle for reading
+                return () => clearInterval(timer);
+            }, []);
+
+            return (
+                <section className="py-24 bg-slate-900 overflow-hidden relative">
+                {/* Background Masks for fade effect at edges */}
+                <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none" />
+
+                <div className="max-w-4xl mx-auto px-4 mb-12 text-center relative z-20">
+                    <h2 className="text-3xl font-bold text-white mb-6">حقيقة التحول الرقمي</h2>
+                    <div className="w-20 h-1 bg-blue-600 mx-auto rounded-full" />
+                </div>
+
+                {/* Single Loop Container */}
+                <div className="h-[200px] flex items-center justify-center relative z-20">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.6 }}
+                        className="w-full max-w-2xl px-8 text-center"
+                        >
+                        <span className="text-6xl text-blue-500/20 font-serif block mb-6">"</span>
+                        <p className="text-2xl md:text-3xl font-medium text-slate-100 leading-relaxed">
+                            {QUOTES[index]}
+                        </p>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+                
+                {/* Navigation Dots */}
+                <div className="flex justify-center gap-2 mt-8 relative z-20">
+                    {QUOTES.map((_, i) => (
+                        <button 
+                        key={i}
+                        onClick={() => setIndex(i)}
+                        className={cn(
+                            "w-1.5 h-1.5 rounded-full transition-all duration-300",
+                            i === index ? "bg-blue-500 w-4" : "bg-slate-700 hover:bg-slate-500"
+                        )}
+                        />
+                    ))}
+                </div>
+                </section>
+            );
+        }
+
+        function Outputs() {
+            return (
+                <section className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">
+                        نتائج <span className="text-blue-600">فورية</span> ستخرج بها
+                    </h2>
+                    <div className="w-20 h-1 bg-blue-600 mx-auto rounded-full" />
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {OUTPUTS.map((output, idx) => (
+                        <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        viewport={{ once: true }}
+                        className="group glass-card p-8 rounded-2xl hover:bg-slate-50 transition-all duration-300 border-r-2 border-r-transparent hover:border-r-blue-600"
+                        >
+                        <div className="mb-4 w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 font-bold">
+                            {idx + 1}
+                        </div>
+                        <h3 className="text-xl font-bold mb-2 text-slate-900 group-hover:text-blue-700 transition-colors">
+                            {output.title}
+                        </h3>
+                        <p className="text-slate-500 text-sm leading-relaxed">
+                            {output.desc}
+                        </p>
+                        </motion.div>
+                    ))}
+                    </div>
+                </div>
+                </section>
+            );
+        }
+
+        function AudienceChips() {
+            const [selectedId, setSelectedId] = useState(AUDIENCE_LIST[0].id);
+
+            const selectedAudience = AUDIENCE_LIST.find((a) => a.id === selectedId);
+
+            return (
+                <section className="py-24 bg-gradient-to-b from-slate-50 to-slate-100">
+                <div className="max-w-4xl mx-auto px-4 text-center">
+                    <h2 className="text-3xl font-bold mb-10 text-slate-900">اختر وصفك… وسنريك لماذا تهمك</h2>
+
+                    {/* Chips */}
+                    <div className="flex flex-wrap justify-center gap-3 mb-12">
+                    {AUDIENCE_LIST.map((item) => (
+                        <button
+                        key={item.id}
+                        onClick={() => setSelectedId(item.id)}
+                        className={cn(
+                            "px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 border",
+                            selectedId === item.id
+                            ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-200 scale-105"
+                            : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                        )}
+                        >
+                        {item.label}
+                        </button>
+                    ))}
+                    </div>
+
+                    {/* Dynamic Content */}
+                    <div className="min-h-[100px] flex items-center justify-center">
+                        <AnimatePresence mode="wait">
+                        <motion.div
+                            key={selectedId}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="text-xl md:text-2xl text-slate-700 font-light max-w-2xl leading-relaxed"
+                        >
+                            "{selectedAudience?.desc}"
+                        </motion.div>
+                        </AnimatePresence>
+                    </div>
+                </div>
+                </section>
+            );
+        }
+
+        function TrainersCarousel() {
+            const [activeIndex, setActiveIndex] = useState(0);
+            const [isDetailOpen, setIsDetailOpen] = useState(false);
+
+            // Auto-rotate logic
+            useEffect(() => {
+                const timer = setInterval(() => {
+                // Pause rotation if user is viewing details
+                if (!isDetailOpen) {
+                    setActiveIndex((prev) => (prev + 1) % TRAINERS.length);
+                }
+                }, 4000); // 4 seconds
+
+                return () => clearInterval(timer);
+            }, [isDetailOpen]);
+
+            const nextTrainer = () => {
+                setActiveIndex((prev) => (prev + 1) % TRAINERS.length);
+                setIsDetailOpen(false); // Reset detail view on change
+            };
+
+            const prevTrainer = () => {
+                setActiveIndex((prev) => (prev - 1 + TRAINERS.length) % TRAINERS.length);
+                setIsDetailOpen(false);
+            };
+
+            const activeTrainer = TRAINERS[activeIndex];
+
+            return (
+                <section className="py-24 bg-white relative">
+                {/* Background */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-slate-100 rounded-full blur-[80px]" />
+                </div>
+
+                <div className="max-w-7xl mx-auto px-4 relative z-10">
+                    <div className="mb-16 text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                            مدربونا ليسوا متحدثين؛ بل هم مهندسوا التحول
+                        </h2>
+                        <p className="text-slate-500 max-w-3xl mx-auto leading-relaxed text-lg">
+                            من الذكاء الاصطناعي إلى تحليل البيانات الضخمة، ومن استراتيجيات الأداء إلى مراكز التقييم المتقدمة، كل مدرب يجمع بين المعرفة العميقة والخبرة العملية ليضمن لك تجربة تدريبية ذكية، ملموسة، ومؤثرة
+                        </p>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-4 md:gap-12">
+                        {/* Nav Prev */}
+                        <button 
+                            onClick={prevTrainer}
+                            className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all"
+                        >
+                            <svg className="w-6 h-6 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                        </button>
+
+                        {/* Card Area */}
+                        <div className="relative w-full max-w-md h-[550px]">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={activeIndex}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="w-full h-full relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer group bg-slate-200"
+                                    onClick={() => setIsDetailOpen(true)}
+                                >
+                                    {/* Image */}
+                                    <div className="absolute inset-0">
+                                        <img 
+                                            src={activeTrainer.image} 
+                                            alt={activeTrainer.name}
+                                            className="w-full h-full object-cover object-top"
+                                            onError={(e) => {
+                                                // Fallback if image fails
+                                                e.target.src = "https://placehold.co/600x800?text=Trainer+Image";
+                                            }}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
+                                    </div>
+
+                                    {/* Text Overlay (Default) */}
+                                    <motion.div 
+                                        className="absolute bottom-0 left-0 right-0 p-8 text-white z-10"
+                                        animate={{ opacity: isDetailOpen ? 0 : 1, y: isDetailOpen ? 20 : 0 }}
+                                    >
+                                        <h3 className="text-3xl font-bold mb-2">{activeTrainer.name}</h3>
+                                        <p className="text-white/90 font-bold text-lg border-l-4 border-blue-500 pl-3">
+                                            {activeTrainer.title}
+                                        </p>
+                                    </motion.div>
+
+                                    {/* Full Detail Overlay (On Click) */}
+                                    <motion.div 
+                                        initial={false}
+                                        animate={{ 
+                                            opacity: isDetailOpen ? 1 : 0,
+                                            y: isDetailOpen ? 0 : "100%"
+                                        }}
+                                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                        className="absolute inset-0 bg-slate-900/95 backdrop-blur-md p-8 flex flex-col justify-center text-center z-20"
+                                        onClick={(e) => {
+                                            e.stopPropagation(); 
+                                            setIsDetailOpen(false);
+                                        }}
+                                    >
+                                        <div className="w-20 h-20 mx-auto rounded-full border-2 border-blue-500 overflow-hidden mb-6 shadow-lg shadow-blue-500/20">
+                                            <img src={activeTrainer.image} className="w-full h-full object-cover" />
+                                        </div>
+                                        
+                                        <h3 className="text-2xl font-bold text-white mb-4">{activeTrainer.name}</h3>
+                                        
+                                        <div className="space-y-6 overflow-y-auto max-h-[60%] custom-scrollbar">
+                                            <div>
+                                                <p className="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">النبذة المختصرة</p>
+                                                <p className="text-sm text-slate-300 leading-relaxed">
+                                                    {activeTrainer.role}
+                                                </p>
+                                            </div>
+                                            
+                                            <div>
+                                                <p className="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">التركيز في الورشة</p>
+                                                <p className="text-base text-white font-medium">
+                                                    {activeTrainer.focus}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <button className="mt-auto text-sm text-blue-300 hover:text-white transition-colors flex items-center justify-center gap-2 pt-6">
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                            إغلاق
+                                        </button>
+                                    </motion.div>
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Nav Next */}
+                        <button 
+                            onClick={nextTrainer}
+                            className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all"
+                        >
+                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                        </button>
                     </div>
                     
-                    <div className="p-5 sm:p-6 bg-white/40">
-                        {/* KPI Cards Row - New Feature */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
-                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">الموظفون قيد التقييم</div>
-                                <div className="text-xl sm:text-2xl font-black text-[#284e7f]">1,240</div>
-                            </div>
-                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
-                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">معدل اكتمال المهارات</div>
-                                <div className="text-xl sm:text-2xl font-black text-green-600">87%</div>
-                            </div>
-                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
-                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">الفجوات المكتشفة</div>
-                                <div className="text-xl sm:text-2xl font-black text-[#b11e22]">342</div>
-                            </div>
-                            <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
-                                <div className="text-xs text-[#284e7f]/60 font-bold mb-1">دقة التنبؤ</div>
-                                <div className="text-xl sm:text-2xl font-black text-[#284e7f]">98.5%</div>
-                            </div>
-                        </div>
-
-                        {/* Text Header Inside Dashboard */}
-                        <div className="text-center mb-6">
-                            <p className="text-lg sm:text-xl font-bold text-[#284e7f] leading-snug">
-                                من بيانات خام إلى قرارات تدريبية ذكية خلال ثوانٍ
-                            </p>
-                            <p className="text-base sm:text-lg font-bold text-[#b11e22] mt-2">
-                                هذا هو الفرق بين التقييم التقليدي، ومركز التقييم الذكي
-                            </p>
-                        </div>
-
-                        {/* Main Dashboards Grid (2 Columns - Compacted) */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            
-                            {/* Col 1: Skill Analysis Simulator */}
-                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-4 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
-                                <div className="flex justify-between items-start mb-3">
-                                    <div className="text-right">
-                                        <div className="text-xs text-[#284e7f]/60 font-bold mb-0.5">تحليل الكفاءات الحية</div>
-                                        <div className="text-sm font-black text-[#284e7f]">
-                                            الموظف: <span className="text-[#b11e22]">#8492</span>
-                                        </div>
-                                    </div>
-                                    <div className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-[9px] font-bold border border-green-200">نشط الآن</div>
-                                </div>
-                                <div className="space-y-3">
-                                    <div>
-                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-bold mb-1">
-                                            <span>القيادة الاستراتيجية</span>
-                                            <span>85%</span>
-                                        </div>
-                                        <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
-                                            <div className="h-full bg-[#284e7f] w-[85%] rounded-full"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="flex items-center justify-between text-[10px] text-[#284e7f] font-bold mb-1">
-                                            <span>التحليل الرقمي</span>
-                                            <span className="text-[#b11e22]">42% (فجوة)</span>
-                                        </div>
-                                        <div className="h-1.5 bg-[#284e7f]/10 rounded-full overflow-hidden">
-                                            <div className="h-full bg-[#b11e22] w-[42%] rounded-full"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mt-3 pt-2 border-t border-zinc-200/50 flex justify-end items-center">
-                                    <span className="text-[9px] bg-[#284e7f]/10 text-[#284e7f] px-1.5 py-0.5 rounded border border-[#284e7f]/20 font-bold">جاري المعالجة</span>
-                                </div>
-                            </div>
-
-                            {/* Col 2: Recommended Path (New) */}
-                            <div className="bg-white/70 border border-[#284e7f]/10 rounded-xl p-4 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow">
-                                <div className="flex justify-between items-center mb-3 border-b border-[#284e7f]/10 pb-2">
-                                    <div className="text-xs text-[#284e7f]/60 font-bold uppercase">مسار التطوير المقترح</div>
-                                    <BrainIcon className="w-4 h-4 text-[#284e7f]" />
-                                </div>
-                                <div className="space-y-2">
-                                    <div className="flex items-start gap-2">
-                                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#284e7f]"></div>
-                                        <div>
-                                            <div className="text-xs font-bold text-[#284e7f]">ورشة اتخاذ القرار</div>
-                                            <div className="text-[9px] text-[#284e7f]/60">الأولوية: عالية • 3 أيام</div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-start gap-2">
-                                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#b11e22]"></div>
-                                        <div>
-                                            <div className="text-xs font-bold text-[#284e7f]">برنامج القيادة الرقمية</div>
-                                            <div className="text-[9px] text-[#284e7f]/60">لسد الفجوة • 5 أسابيع</div>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 p-1.5 bg-[#284e7f]/5 rounded text-[9px] text-[#284e7f] font-medium text-center">
-                                        توصية AI: المسار ب سيوفر 15% من الوقت
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div className="mt-4 pt-3 border-t border-[#284e7f]/10 text-center">
-                            <span className="text-[9px] text-[#284e7f]/50 font-bold tracking-wide flex items-center justify-center gap-1">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40"></span>
-                                مثال حي من نظام التقييم الذكي
-                            </span>
-                        </div>
+                    {/* Indicators */}
+                    <div className="flex justify-center gap-2 mt-8">
+                        {TRAINERS.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => {
+                                    setActiveIndex(idx);
+                                    setIsDetailOpen(false);
+                                }}
+                                className={cn(
+                                    "w-2 h-2 rounded-full transition-all duration-300",
+                                    idx === activeIndex ? "bg-blue-600 w-6" : "bg-slate-300 hover:bg-slate-400"
+                                )}
+                            />
+                        ))}
                     </div>
                 </div>
-            </FadeIn>
-            </div>
-        </section>
+                </section>
+            );
+        }
 
-        {/* TRAINERS - Moved Here */}
-        <section id="trainers" className="w-full pb-12">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn delay={200}>
-            <h2 className="text-xl md:text-2xl font-black mb-4 text-[#284e7f]">
-              مدربونا ليسوا متحدثين؛ بل هم مهندسوا التحول
-            </h2>
-            <p className="text-base md:text-lg text-zinc-600 font-bold mb-8 max-w-4xl mx-auto leading-relaxed">
-              من الذكاء الاصطناعي إلى تحليل البيانات الضخمة، ومن استراتيجيات الأداء إلى مراكز التقييم المتقدمة، كل مدرب يجمع بين المعرفة العميقة والخبرة العملية ليضمن لك تجربة تدريبية ذكية، ملموسة، ومؤثرة
-            </p>
-            <TrainersCarousel />
-          </FadeIn>
-          </div>
-        </section>
-
-        {/* REFE AI Chat (MOVED HERE) */}
-        <section id="refeai" className="w-full pb-12">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn delay={300}>
-            <h2 className="text-3xl md:text-4xl font-black mb-2 text-[#284e7f] flex items-center justify-center gap-3">
-              <GeminiIcon className="w-8 h-8 text-[#284e7f] animate-pulse" />
-              <span className="font-mono bg-clip-text text-transparent bg-gradient-to-r from-[#284e7f] to-[#b11e22]">RefeAI</span>
-            </h2>
-            <span className="block text-[#284e7f]/80 font-extrabold text-sm mb-6">مساعد قرار التدريب الذكي</span>
-            
-            <div className="glass rounded-[22px] overflow-hidden text-right shadow-xl shadow-[#284e7f]/20 border border-[#284e7f]/20">
-              {/* Header */}
-              <div className="px-4 py-3 bg-white/40 border-b border-white/60 flex items-center justify-between backdrop-blur-sm">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-white/60 border border-white/60 flex items-center justify-center shadow-sm">
-                    <GeminiIcon className="text-[#284e7f] w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="font-mono font-bold leading-none text-[#284e7f]">RefeAI</div>
-                    <div className="text-[10px] text-[#284e7f]/60 mt-1 font-semibold">AI Decision Support</div>
-                  </div>
+        function WhyNow() {
+            return (
+                <section className="py-20 bg-white">
+                <div className="max-w-4xl mx-auto px-4 text-center">
+                    <h2 className="text-3xl font-bold mb-10 text-slate-900">لماذا الآن؟ لأن التدريب تغيّر…</h2>
+                    
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <Item text="الميزانيات تتقلص وتطلب دليلاً رقمياً" delay={0} />
+                        <Item text="الموظفون يتوقعون مسارات مخصصة لهم" delay={0.1} />
+                        <Item text="الذكاء الاصطناعي جعل التقييم فورياً" delay={0.2} />
+                    </div>
                 </div>
-                <div className="px-2.5 py-1 rounded-full bg-emerald-100/50 border border-emerald-200/60 text-xs text-emerald-700 font-bold">Active</div>
-              </div>
+                </section>
+            );
+        }
 
-              {/* Body */}
-              <div className="p-4 min-h-[240px] flex flex-col gap-3">
-                <div className="flex justify-start">
-                  <div className="max-w-[85%] p-3 rounded-2xl rounded-tr-sm border border-white/60 bg-white/40 text-sm text-[#284e7f] font-medium shadow-sm">
-                    من يحتاج تدريبًا فعلًا؟
-                  </div>
+        function Item({ text, delay }) {
+            return (
+                <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay }}
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center gap-4"
+                >
+                    <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-transparent opacity-50" />
+                    <p className="text-lg font-medium text-slate-700">{text}</p>
+                </motion.div>
+            )
+        }
+
+        function FinalCTA() {
+            const [isModalOpen, setIsModalOpen] = useState(false);
+
+            return (
+                <React.Fragment>
+                <section className="py-32 relative overflow-hidden text-center bg-slate-50">
+                    {/* Glow */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-200/40 blur-[120px] rounded-full pointer-events-none" />
+
+                    <div className="relative z-10 max-w-4xl mx-auto px-4">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
+                        كن ضمن نخبة القادة الذين يبنون التدريب الذكي
+                    </h2>
+                    <p className="text-red-500 font-medium mb-10 bg-red-50 inline-block px-4 py-2 rounded-lg border border-red-200">
+                        ⚠️ المقاعد محدودة لضمان التطبيق العملي
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="w-full sm:w-auto px-10 py-4 text-lg font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-full shadow-lg shadow-blue-200 transition-all active:scale-95"
+                        >
+                        احجز مقعدك الآن
+                        </button>
+                        <button
+                        disabled
+                        className="w-full sm:w-auto px-10 py-4 text-lg font-medium text-slate-400 bg-slate-100 rounded-full cursor-not-allowed border border-slate-200"
+                        >
+                        تحميل الكتيّب (قريباً)
+                        </button>
+                    </div>
+                    </div>
+                </section>
+
+                {/* Sticky Bottom Bar for Mobile */}
+                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-lg border-t border-slate-200 z-40 md:hidden">
+                    <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="w-full py-3 font-bold text-white bg-blue-600 rounded-xl shadow-lg"
+                    >
+                    احجز مقعدك الآن
+                    </button>
                 </div>
-                
-                <div className="flex justify-end">
-                  <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-[#284e7f]/30 bg-gradient-to-l from-[#284e7f]/10 to-white/40 text-sm text-[#284e7f] font-medium shadow-sm">
-                    دعني أحلل فجوات الأداء والكفاءات…
-                  </div>
+
+                {/* Reused Modal Logic */}
+                <AnimatePresence>
+                    {isModalOpen && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4" dir="rtl">
+                        <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsModalOpen(false)}
+                        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+                        />
+                        <motion.div
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.95, opacity: 0 }}
+                        className="relative w-full max-w-md p-8 bg-white rounded-2xl text-center border border-slate-200 shadow-2xl"
+                        >
+                        <h3 className="text-2xl font-bold mb-2 text-slate-900">التسجيل يفتح قريباً</h3>
+                        <p className="text-slate-500 mb-6">
+                            رابط التسجيل المباشر سيكون متاحاً خلال أيام.
+                        </p>
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-xl transition-colors font-medium"
+                        >
+                            إغلاق
+                        </button>
+                        </motion.div>
+                    </div>
+                    )}
+                </AnimatePresence>
+                </React.Fragment>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer className="py-8 border-t border-slate-200 text-center text-sm text-slate-500 pb-24 md:pb-8 bg-slate-50">
+                <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="font-bold text-slate-900">Reference Academy</div>
+                    <div dir="ltr">contact@reference-academy.com</div>
+                    <div>جميع الحقوق محفوظة © 2026</div>
                 </div>
+                </footer>
+            );
+        }
 
-                <div className="flex justify-end">
-                  <div className="max-w-[85%] p-3 rounded-2xl rounded-tl-sm border border-[#284e7f]/30 bg-gradient-to-l from-[#284e7f]/10 to-white/40 text-sm text-[#284e7f] font-medium shadow-sm">
-                    تم رصد 3 فجوات حرجة. أولوية: إدارة الأداء + قيادة الفرق + تحليل البيانات.
-                  </div>
+        function App() {
+            return (
+                <div className="min-h-screen bg-slate-50 text-slate-900 overflow-hidden font-tajawal" dir="rtl">
+                    <Navbar />
+                    <Hero />
+                    <DashboardDemo />
+                    <TrainersCarousel />
+                    <Countdown />
+                    <ImagineSection />
+                    <StickyQuotes />
+                    <Outputs />
+                    <AudienceChips />
+                    <WhyNow />
+                    <FinalCTA />
+                    <Footer />
                 </div>
+            );
+        }
 
-                <div className="flex justify-end mt-2">
-                  <div className="px-3 py-2 rounded-2xl bg-white/40 border border-white/60 flex gap-1 items-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40 dotPulse"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40 dotPulse"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#284e7f]/40 dotPulse"></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Input */}
-              <div className="p-3 border-t border-white/60 bg-white/30 flex gap-2">
-                <input disabled placeholder="اكتب سؤالك…" className="flex-1 px-3 py-3 rounded-xl bg-white/50 border border-white/60 text-sm text-[#284e7f] placeholder-[#284e7f]/40 focus:outline-none focus:bg-white/70 transition-all" />
-                <button disabled className="px-4 py-2 rounded-xl bg-white/40 border border-white/60 text-[#284e7f]/40 font-bold text-sm cursor-not-allowed">إرسال</button>
-              </div>
-            </div>
-          </FadeIn>
-          </div>
-        </section>
-
-        {/* QUOTES */}
-        <section className="w-full pb-12">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn delay={100}>
-            <div className="glass rounded-[22px] p-6 text-center shadow-lg shadow-[#b11e22]/20 border border-[#b11e22]/20">
-              <div className="flex items-center justify-center gap-2 text-xs text-[#284e7f]/60 mb-2 font-bold uppercase tracking-wider">
-                 <StarIcon className="w-4 h-4 text-[#b11e22]" /> RefeAI Says
-              </div>
-              <div className="min-h-[60px] flex items-center justify-center">
-                <AnimatedText text={quotesData} interval={4000} className="text-lg md:text-xl font-black gradient-text leading-tight" />
-              </div>
-            </div>
-          </FadeIn>
-          </div>
-        </section>
-
-        {/* FINAL CTA */}
-        <section className="w-full pb-16">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn delay={400}>
-            <div className="glass rounded-[26px] p-8 shadow-2xl shadow-[#b11e22]/20 border border-[#b11e22]/20">
-              <h3 className="text-2xl md:text-4xl font-black mb-3 text-[#284e7f]">كن جزءًا من مستقبل التدريب الذكي</h3>
-              <p className="text-[#284e7f]/80 max-w-[700px] mx-auto leading-relaxed mb-6 font-medium">
-                مقاعد محدودة لضمان تجربة عالية الجودة — التحول يبدأ عندما يصبح التدريب قرارًا.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <button className="px-6 py-3 rounded-xl bg-gradient-to-l from-[#284e7f] to-[#b11e22] text-white font-black hover:-translate-y-px transition-transform shadow-lg shadow-[#b11e22]/20">
-                  سجّل الآن
-                </button>
-                <button className="px-6 py-3 rounded-xl bg-white/40 border border-white/60 text-[#284e7f] font-bold hover:bg-white/60 transition-colors">
-                  تحميل الكتيّب
-                </button>
-              </div>
-            </div>
-          </FadeIn>
-          </div>
-        </section>
-
-        <footer className="text-xs text-[#284e7f]/60 pb-10 font-semibold">
-           © Reference Academy - All Reserved - 2026
-        </footer>
-
-      </main>
-    </div>
-  );
-}
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
