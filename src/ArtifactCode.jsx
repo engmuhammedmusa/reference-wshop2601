@@ -97,6 +97,15 @@ const IMAGINE_CARDS = [
   },
 ];
 
+const NEW_OUTPUTS = [
+  { title: "كشف العائد الحقيقي للتدريب (ROI)", desc: "تبدأ الرحلة بتعلّم أدوات دقيقة لحساب العائد المالي من البرامج التدريبية وربطها بالأداء الفعلي للمؤسسة." },
+  { title: "تحديد الاحتياجات التدريبية بالبيانات (Data-Driven TNA)", desc: "ننتقل من التخمين إلى الدقة، حيث تُستخدم التحليلات لاكتشاف الاحتياجات الحقيقية لكل قسم وموظف." },
+  { title: "التحول الذكي في التدريب", desc: "تصميم خارطة طريق رقمية تعيد هيكلة قسم التدريب بالكامل ليواكب الثورة الرقمية ويزيد من كفاءته." },
+  { title: "دعم القرار باستخدام الذكاء الاصطناعي", desc: "نظام لوحات مؤشرات ذكية يمكّنك من اتخاذ قرارات فورية ومدعومة بالبيانات." },
+  { title: "تصميم مركز تقييم آلي (AI Assessment Blueprint)", desc: "مخطط عملي لبناء مركز تقييم رقمي داخل المؤسسة يعمل تلقائيًا على تحليل الأداء وتوليد التوصيات." },
+  { title: "رسم خريطة فجوات الكفاءات", desc: "تحليل دقيق يرسم صورة واضحة لمواطن القوة والضعف داخل الفريق، ويحدد بدقة أين يجب أن يُستثمر التدريب." }
+];
+
 const AUDIENCE_LIST = [
   {
     id: "hr-lead",
@@ -188,9 +197,9 @@ function Navbar() {
 
   return (
     <React.Fragment>
-      {/* Updated Navbar: Gradient from Dark Right to Light Left */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pb-4 pointer-events-none">
-        <nav className="pointer-events-auto w-full max-w-7xl bg-gradient-to-l from-indigo-900 via-purple-100 to-white backdrop-blur-2xl border border-white/20 rounded-2xl h-20 px-4 md:px-8 flex items-center justify-between shadow-xl shadow-indigo-900/10 transition-all duration-300">
+      {/* Updated Navbar: Full Width with Gradient */}
+      <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-l from-indigo-900 via-purple-100 to-white backdrop-blur-2xl border-b border-white/20 h-24 shadow-xl shadow-indigo-900/10 transition-all duration-300">
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-full">
           {/* Logo / Brand */}
           <div className="flex items-center gap-3">
             {/* Logo adapted to be white to contrast with the dark gradient on the right */}
@@ -217,8 +226,8 @@ function Navbar() {
               احجز مقعدك
             </button>
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
 
       {/* Simple Modal */}
       {isModalOpen && (
@@ -1028,227 +1037,6 @@ function WhyNow() {
   );
 }
 
-function TrainersCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-
-  // Auto-rotate logic
-  useEffect(() => {
-    const timer = setInterval(() => {
-      // Pause rotation if user is viewing details
-      if (!isDetailOpen) {
-        setActiveIndex((prev) => (prev + 1) % TRAINERS.length);
-      }
-    }, 4000); // 4 seconds
-
-    return () => clearInterval(timer);
-  }, [isDetailOpen]);
-
-  const nextTrainer = () => {
-    setActiveIndex((prev) => (prev + 1) % TRAINERS.length);
-    setIsDetailOpen(false); // Reset detail view on change
-  };
-
-  const prevTrainer = () => {
-    setActiveIndex((prev) => (prev - 1 + TRAINERS.length) % TRAINERS.length);
-    setIsDetailOpen(false);
-  };
-
-  const activeTrainer = TRAINERS[activeIndex];
-
-  return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-slate-100 rounded-full blur-[80px]" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-50 rounded-full blur-[60px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <FadeInUp>
-            <div className="mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                مدربونا ليسوا متحدثين؛ بل هم مهندسوا التحول
-            </h2>
-            <p className="text-slate-500 max-w-3xl mx-auto leading-relaxed text-lg">
-                من الذكاء الاصطناعي إلى تحليل البيانات الضخمة، ومن استراتيجيات الأداء إلى مراكز التقييم المتقدمة.
-            </p>
-            </div>
-        </FadeInUp>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-            
-            {/* Side 1: The Carousel (Right side in RTL) */}
-            <div className="flex flex-col items-center">
-                <div className="flex items-center justify-center gap-4 w-full">
-                    {/* Nav Prev */}
-                    <button 
-                        onClick={prevTrainer}
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all flex-shrink-0 z-20 shadow-sm"
-                    >
-                        <svg className="w-5 h-5 md:w-6 md:h-6 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                    </button>
-
-                    {/* Card Area */}
-                    <div className="relative w-full max-w-sm h-[480px]">
-                        {TRAINERS.map((trainer, idx) => (
-                            <div
-                                key={idx}
-                                className={cn(
-                                    "absolute inset-0 w-full h-full rounded-3xl overflow-hidden shadow-2xl cursor-pointer group bg-slate-200 transition-all duration-500",
-                                    idx === activeIndex ? "opacity-100 translate-x-0 z-10 scale-100" : "opacity-0 translate-x-10 z-0 scale-95 pointer-events-none"
-                                )}
-                                onClick={() => setIsDetailOpen(true)}
-                            >
-                                {/* Image */}
-                                <div className="absolute inset-0">
-                                <img 
-                                    src={trainer.image} 
-                                    alt={trainer.name}
-                                    className="w-full h-full object-cover object-top"
-                                    onError={(e) => {
-                                    // Fallback if image fails
-                                    e.target.src = "https://placehold.co/600x800?text=Trainer+Image";
-                                    }}
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90" />
-                                </div>
-
-                                {/* Text Overlay (Default) */}
-                                <div 
-                                    className={cn(
-                                        "absolute bottom-0 left-0 right-0 p-6 text-white z-10 transition-all duration-300",
-                                        isDetailOpen ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-                                    )}
-                                >
-                                <h3 className="text-2xl font-bold mb-1">{trainer.name}</h3>
-                                <p className="text-white/80 font-medium text-sm border-l-4 border-blue-500 pl-3">
-                                    {trainer.title}
-                                </p>
-                                </div>
-
-                                {/* Full Detail Overlay (On Click) */}
-                                <div 
-                                    className={cn(
-                                        "absolute inset-0 bg-slate-900/95 backdrop-blur-md p-6 flex flex-col justify-center text-center z-20 transition-all duration-300",
-                                        isDetailOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"
-                                    )}
-                                    onClick={(e) => {
-                                        e.stopPropagation(); 
-                                        setIsDetailOpen(false);
-                                    }}
-                                >
-                                <div className="w-16 h-16 mx-auto rounded-full border-2 border-blue-500 overflow-hidden mb-4 shadow-lg shadow-blue-500/20">
-                                    <img src={trainer.image} className="w-full h-full object-cover" />
-                                </div>
-                                
-                                <h3 className="text-xl font-bold text-white mb-3">{trainer.name}</h3>
-                                
-                                <div className="space-y-4 overflow-y-auto max-h-[60%] custom-scrollbar">
-                                    <div>
-                                    <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider mb-1">النبذة المختصرة</p>
-                                    <p className="text-xs text-slate-300 leading-relaxed">
-                                        {trainer.role}
-                                    </p>
-                                    </div>
-                                    
-                                    <div>
-                                    <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider mb-1">التركيز في الورشة</p>
-                                    <p className="text-sm text-white font-medium">
-                                        {trainer.focus}
-                                    </p>
-                                    </div>
-                                </div>
-
-                                <button className="mt-auto text-xs text-blue-300 hover:text-white transition-colors flex items-center justify-center gap-2 pt-4">
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                                    إغلاق
-                                </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Nav Next */}
-                    <button 
-                        onClick={nextTrainer}
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all flex-shrink-0 z-20 shadow-sm"
-                    >
-                        <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                    </button>
-                </div>
-                
-                {/* Indicators */}
-                <div className="flex justify-center gap-2 mt-6">
-                {TRAINERS.map((_, idx) => (
-                    <button
-                    key={idx}
-                    onClick={() => {
-                        setActiveIndex(idx);
-                        setIsDetailOpen(false);
-                    }}
-                    className={cn(
-                        "w-2 h-2 rounded-full transition-all duration-300",
-                        idx === activeIndex ? "bg-blue-600 w-6" : "bg-slate-300 hover:bg-slate-400"
-                    )}
-                    />
-                ))}
-                </div>
-            </div>
-
-            {/* Side 2: New Content (Left side in RTL) */}
-            <div className="hidden lg:block relative">
-                <FadeInUp delay={200}>
-                    <div className="relative bg-slate-900 rounded-[2rem] p-8 border border-slate-800 overflow-hidden group">
-                        {/* Ambient Glow */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-600/30 transition-colors duration-1000" />
-                        
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white">
-                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                </div>
-                                <h3 className="text-xl font-bold text-white">مصفوفة الكفاءات المتكاملة</h3>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div>
-                                    <p className="text-slate-400 text-sm mb-3 font-mono">CORE_EXPERTISE_MODULES:</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {["تحليل الفجوات الرقمية", "هندسة التدريب", "علم النفس المؤسسي", "تطبيقات AI"].map((tag, i) => (
-                                            <span key={i} className="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-xs hover:border-blue-500/50 hover:text-blue-300 transition-colors cursor-default">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 relative">
-                                    <div className="absolute top-4 left-4 text-blue-500/20 text-4xl font-serif">"</div>
-                                    <p className="text-slate-300 text-sm leading-relaxed relative z-10">
-                                        ما يميز هذا البرنامج هو التزامن الدقيق بين <span className="text-blue-400 font-bold">الرؤية التقنية</span> للذكاء الاصطناعي و <span className="text-blue-400 font-bold">البعد الإنساني</span> لتطوير المواهب.
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-                                    <div className="text-xs text-slate-500">معدل رضا المشاركين</div>
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-xl font-bold text-white font-mono">4.9/5.0</span>
-                                        <div className="flex text-yellow-500 text-xs">★★★★★</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </FadeInUp>
-            </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function FinalCTA() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -1356,7 +1144,7 @@ function Footer() {
 // --- MAIN APP COMPONENT ---
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans" dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif" }}>
+    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden w-full font-tajawal" dir="rtl">
       {/* Include Styles */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
