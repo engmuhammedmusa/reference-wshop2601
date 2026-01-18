@@ -146,8 +146,8 @@ function Navbar() {
 
   return (
     <React.Fragment>
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200/50 h-24 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200/50 h-24 transition-all duration-300 w-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           {/* Logo / Brand */}
           <div className="flex items-center gap-3">
             <img 
@@ -318,7 +318,7 @@ function Hero() {
   }, []);
 
   return (
-    <section className="relative pt-40 pb-20 min-h-[90vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative pt-40 pb-20 min-h-[90vh] flex flex-col justify-center overflow-hidden w-full">
       {/* Background Ambience */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
@@ -329,7 +329,7 @@ function Hero() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
         
         {/* Content Side */}
         <div className={`space-y-8 text-center lg:text-start transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -376,8 +376,8 @@ function Hero() {
 
 function DashboardDemo() {
   return (
-    <section className="py-20 bg-slate-50 relative z-20">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="py-20 bg-slate-50 relative z-20 w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Dashboard Container */}
         <div 
           className="bg-white rounded-3xl shadow-2xl shadow-blue-200/50 border border-slate-200 overflow-hidden animate-fade-in-up"
@@ -539,8 +539,8 @@ function Countdown() {
   if (!mounted) return <div className="h-32 bg-slate-50" />;
 
   return (
-    <section className="py-12 border-y border-slate-200 bg-white">
-      <div className="max-w-7xl mx-auto px-4 text-center">
+    <section className="py-12 border-y border-slate-200 bg-white w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-slate-500 mb-8 text-sm md:text-base font-light">
           الوقت يمضي… والقرارات التدريبية الخاطئة تُتخذ يومياً
         </p>
@@ -579,16 +579,15 @@ function ImagineSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % IMAGINE_CARDS.length);
-    }, 3000); // Change card every 3 seconds
+    }, 3000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-slate-50">
-      {/* Background Decor */}
+    <section className="py-24 relative overflow-hidden bg-slate-50 w-full">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-blue-200/20 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 animate-fade-in">
             تخيل نظام تقييم ذكي داخل مؤسستك…
@@ -596,7 +595,6 @@ function ImagineSection() {
           <div className="w-16 h-1 bg-blue-600 mx-auto rounded-full" />
         </div>
 
-        {/* Carousel Container */}
         <div className="h-[300px] flex items-center justify-center relative">
             <div
                 key={index}
@@ -607,7 +605,6 @@ function ImagineSection() {
                 </div>
                 <h3 className="text-2xl font-bold text-slate-800">{IMAGINE_CARDS[index].text}</h3>
                 
-                {/* Progress Indicators */}
                 <div className="flex gap-2 mt-4">
                     {IMAGINE_CARDS.map((_, i) => (
                     <div 
@@ -632,22 +629,20 @@ function StickyQuotes() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % QUOTES.length);
-    }, 4000); // Slower cycle for reading
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <section className="py-24 bg-slate-900 overflow-hidden relative">
-      {/* Background Masks for fade effect at edges */}
+    <section className="py-24 bg-slate-900 overflow-hidden relative w-full">
       <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none" />
       <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 mb-12 text-center relative z-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center relative z-20">
         <h2 className="text-3xl font-bold text-white mb-6">حقيقة التحول الرقمي</h2>
         <div className="w-20 h-1 bg-blue-600 mx-auto rounded-full" />
       </div>
 
-      {/* Single Loop Container */}
       <div className="h-[200px] flex items-center justify-center relative z-20">
         <div
             key={index}
@@ -660,7 +655,6 @@ function StickyQuotes() {
         </div>
       </div>
       
-      {/* Navigation Dots */}
       <div className="flex justify-center gap-2 mt-8 relative z-20">
         {QUOTES.map((_, i) => (
           <button 
@@ -679,8 +673,8 @@ function StickyQuotes() {
 
 function Outputs() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-24 bg-white w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">
             نتائج <span className="text-blue-600">فورية</span> ستخرج بها
@@ -718,11 +712,10 @@ function AudienceChips() {
   const selectedAudience = AUDIENCE_LIST.find((a) => a.id === selectedId);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-50 to-slate-100">
-      <div className="max-w-4xl mx-auto px-4 text-center">
+    <section className="py-24 bg-gradient-to-b from-slate-50 to-slate-100 w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-bold mb-10 text-slate-900">اختر وصفك… وسنريك لماذا تهمك</h2>
 
-        {/* Chips */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {AUDIENCE_LIST.map((item) => (
             <button
@@ -740,7 +733,6 @@ function AudienceChips() {
           ))}
         </div>
 
-        {/* Dynamic Content */}
         <div className="min-h-[100px] flex items-center justify-center">
           <div
             key={selectedId}
@@ -758,21 +750,19 @@ function TrainersCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-  // Auto-rotate logic
   useEffect(() => {
     const timer = setInterval(() => {
-      // Pause rotation if user is viewing details
       if (!isDetailOpen) {
         setActiveIndex((prev) => (prev + 1) % TRAINERS.length);
       }
-    }, 4000); // 4 seconds
+    }, 4000);
 
     return () => clearInterval(timer);
   }, [isDetailOpen]);
 
   const nextTrainer = () => {
     setActiveIndex((prev) => (prev + 1) % TRAINERS.length);
-    setIsDetailOpen(false); // Reset detail view on change
+    setIsDetailOpen(false);
   };
 
   const prevTrainer = () => {
@@ -783,13 +773,12 @@ function TrainersCarousel() {
   const activeTrainer = TRAINERS[activeIndex];
 
   return (
-    <section className="py-24 bg-white relative">
-      {/* Background */}
+    <section className="py-24 bg-white relative w-full">
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-slate-100 rounded-full blur-[80px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mb-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
             مدربونا ليسوا متحدثين؛ بل هم مهندسوا التحول
@@ -800,7 +789,6 @@ function TrainersCarousel() {
         </div>
 
         <div className="flex items-center justify-center gap-4 md:gap-12">
-          {/* Nav Prev */}
           <button 
             onClick={prevTrainer}
             className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all"
@@ -808,28 +796,24 @@ function TrainersCarousel() {
             <svg className="w-6 h-6 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>
 
-          {/* Card Area */}
           <div className="relative w-full max-w-md h-[550px]">
                 <div
                     key={activeIndex}
                     className="w-full h-full relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer group bg-slate-200 animate-fade-in"
                     onClick={() => setIsDetailOpen(true)}
                 >
-                    {/* Image */}
                     <div className="absolute inset-0">
                         <img 
                             src={activeTrainer.image} 
                             alt={activeTrainer.name}
                             className="w-full h-full object-cover object-top"
                             onError={(e) => {
-                                // Fallback if image fails
                                 e.target.src = "https://placehold.co/600x800?text=Trainer+Image";
                             }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
                     </div>
 
-                    {/* Text Overlay (Default) */}
                     <div 
                         className={`absolute bottom-0 left-0 right-0 p-8 text-white z-10 transition-all duration-300 ${isDetailOpen ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
                     >
@@ -839,7 +823,6 @@ function TrainersCarousel() {
                         </p>
                     </div>
 
-                    {/* Full Detail Overlay (On Click) */}
                     <div 
                         className={`absolute inset-0 bg-slate-900/95 backdrop-blur-md p-8 flex flex-col justify-center text-center z-20 transition-all duration-300 ${isDetailOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'}`}
                         onClick={(e) => {
@@ -877,7 +860,6 @@ function TrainersCarousel() {
                 </div>
           </div>
 
-          {/* Nav Next */}
           <button 
             onClick={nextTrainer}
             className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all"
@@ -886,7 +868,6 @@ function TrainersCarousel() {
           </button>
         </div>
         
-        {/* Indicators */}
         <div className="flex justify-center gap-2 mt-8">
           {TRAINERS.map((_, idx) => (
             <button
@@ -909,8 +890,8 @@ function TrainersCarousel() {
 
 function WhyNow() {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4 text-center">
+    <section className="py-20 bg-white w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-bold mb-10 text-slate-900">لماذا الآن؟ لأن التدريب تغيّر…</h2>
         
         <div className="grid md:grid-cols-3 gap-8">
@@ -940,11 +921,10 @@ function FinalCTA() {
 
   return (
     <React.Fragment>
-      <section className="py-32 relative overflow-hidden text-center bg-slate-50">
-        {/* Glow */}
+      <section className="py-32 relative overflow-hidden text-center bg-slate-50 w-full">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-200/40 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
             كن ضمن نخبة القادة الذين يبنون التدريب الذكي
           </h2>
@@ -969,7 +949,6 @@ function FinalCTA() {
         </div>
       </section>
 
-      {/* Sticky Bottom Bar for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-lg border-t border-slate-200 z-40 md:hidden">
         <button
           onClick={() => setIsModalOpen(true)}
@@ -979,7 +958,6 @@ function FinalCTA() {
         </button>
       </div>
 
-      {/* Reused Modal Logic */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center px-4" dir="rtl">
           <div
@@ -1008,8 +986,8 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="py-8 border-t border-slate-200 text-center text-sm text-slate-500 pb-24 md:pb-8 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer className="py-8 border-t border-slate-200 text-center text-sm text-slate-500 pb-24 md:pb-8 bg-slate-50 w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="font-bold text-slate-900">Reference Academy</div>
         <div dir="ltr">contact@reference-academy.com</div>
         <div>جميع الحقوق محفوظة © 2026</div>
@@ -1018,11 +996,9 @@ function Footer() {
   );
 }
 
-// --- MAIN APP COMPONENT ---
 export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans" dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif" }}>
-      {/* Styles for animation replacements */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
         
@@ -1039,7 +1015,6 @@ export default function App() {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
-        /* Animations */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
