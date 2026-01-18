@@ -384,6 +384,15 @@
         }
 
         function Hero() {
+            const [venueIndex, setVenueIndex] = useState(0);
+
+            useEffect(() => {
+                const timer = setInterval(() => {
+                    setVenueIndex((prev) => (prev + 1) % VENUES.length);
+                }, 2500);
+                return () => clearInterval(timer);
+            }, []);
+
             return (
                 <section className="relative pt-40 pb-20 min-h-[90vh] flex flex-col justify-center overflow-hidden">
                 {/* Background Ambience */}
@@ -415,8 +424,8 @@
                         animate={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-xs font-medium text-blue-700 mx-auto lg:mx-0 shadow-sm"
                     >
-                        <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                        توقف عن التخمين. دع الذكاء الاصطناعي يقرر.
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span>19 – 23 يناير، 2026</span>
                     </motion.div>
 
                     <motion.h1
@@ -436,18 +445,24 @@
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-sm md:text-base text-slate-600"
+                        className="flex flex-col items-center lg:items-start gap-4 text-sm md:text-base text-slate-600"
                     >
-                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm">
-                        <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        <span>19 – 23 يناير، 2026</span>
-                        </div>
-                        <div className="flex gap-2">
-                        {VENUES.map((venue) => (
-                            <span key={venue} className="px-3 py-2 rounded-lg bg-white border border-slate-200 text-xs text-slate-600 select-none shadow-sm">
-                            {venue}
-                            </span>
-                        ))}
+                        <div className="flex items-center gap-4">
+                            <span className="font-bold text-slate-400">يقام في:</span>
+                            <div className="relative h-10 w-32">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={VENUES[venueIndex]}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        className="absolute inset-0 flex items-center justify-center gap-2 bg-white px-2 py-2 rounded-lg border border-slate-200 shadow-sm text-blue-700 font-bold"
+                                    >
+                                        <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
+                                        <span>{VENUES[venueIndex]}</span>
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
                         </div>
                     </motion.div>
 
@@ -470,136 +485,174 @@
 
         function DashboardDemo() {
             return (
-                <section className="py-20 bg-slate-50 relative z-20">
-                <div className="max-w-6xl mx-auto px-4">
-                    {/* Dashboard Container */}
-                    <motion.div 
-                        initial={{ opacity: 0, y: 60 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="bg-white rounded-3xl shadow-2xl shadow-blue-200/50 border border-slate-200 overflow-hidden"
-                    >
-                        {/* Header */}
-                        <div className="bg-slate-50 border-b border-slate-200 p-6 flex justify-between items-center">
-                            <div className="flex items-center gap-3">
-                            <div className="w-3 h-3 rounded-full bg-red-500" />
-                            <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                            <div className="w-3 h-3 rounded-full bg-green-500" />
-                            <span className="mr-4 text-sm font-bold text-slate-700 hidden md:inline">نظام تحليل الاحتياجات التدريبية - لوحة القيادة</span>
-                            <span className="mr-4 text-sm font-bold text-slate-700 md:hidden">لوحة القيادة</span>
-                            </div>
-                            <div className="text-xs text-slate-400 font-mono">LIVE DATA v2.4</div>
-                        </div>
+                <section className="py-16 bg-slate-50 relative z-20">
+                    <div className="max-w-5xl mx-auto px-4">
+                        
+                        {/* New Title */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-10"
+                        >
+                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+                                هكذا يُدار التدريب بالبيانات، لا بالحدس
+                            </h2>
+                            <div className="w-20 h-1 bg-blue-600 mx-auto rounded-full" />
+                        </motion.div>
 
-                        {/* Content Grid */}
-                        <div className="p-4 md:p-8 bg-slate-50/50">
-                            {/* Stats Row */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <StatCard title="الموظفون" value="1,240" sub="تم تحليلهم هذا الربع" trend="+12%" />
-                            <StatCard title="فجوات حرجة" value="18%" sub="تتطلب تدخلاً فورياً" trend="-5%" trendColor="text-red-500" />
-                            <StatCard title="توفير الميزانية" value="$42,500" sub="بفضل التخصيص الدقيق" trend="+8%" trendColor="text-green-600" />
+                        {/* Dashboard Container - Made Compact & Dense */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="bg-white rounded-xl shadow-2xl shadow-blue-900/5 border border-slate-200 overflow-hidden"
+                        >
+                            {/* Header */}
+                            <div className="bg-slate-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex gap-1.5">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                                    </div>
+                                    <span className="mr-3 text-xs font-bold text-slate-700 tracking-wider">TNA-OS v4.1 PRO</span>
+                                </div>
+                                <div className="flex gap-4 text-[10px] font-mono text-slate-400">
+                                    <span className="hidden sm:inline">DATA_STREAM: ACTIVE</span>
+                                    <span className="text-emerald-600 font-bold">● CONNECTED</span>
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                            {/* Main Chart Area (Mock) */}
-                            <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                                <div className="flex justify-between items-center mb-6">
-                                    <h3 className="font-bold text-slate-800">تحليل الفجوات حسب القسم</h3>
-                                    <div className="flex gap-2">
-                                        <span className="w-3 h-3 rounded-full bg-blue-600"></span> <span className="text-xs text-slate-500">مستهدف</span>
-                                        <span className="w-3 h-3 rounded-full bg-slate-300"></span> <span className="text-xs text-slate-500">حالي</span>
+                            {/* Content Grid */}
+                            <div className="p-4 bg-slate-100/50">
+                                {/* Stats Row - 4 Cols for density */}
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                                    <StatCardCompact title="الموظفون" value="1,240" trend="+12%" icon="👥" />
+                                    <StatCardCompact title="الفجوات الحرجة" value="18%" trend="-5%" trendColor="text-red-500" icon="⚡" />
+                                    <StatCardCompact title="وفر الميزانية" value="$42.5k" trend="+8%" trendColor="text-emerald-600" icon="💰" />
+                                    <StatCardCompact title="ساعات التعلم" value="3,200h" trend="+15%" icon="⏱️" />
+                                </div>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                    {/* Main Chart Area - 2 Cols - Dense Layout */}
+                                    <div className="lg:col-span-2 bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+                                        <div className="flex justify-between items-center mb-5">
+                                            <h3 className="font-bold text-slate-800 text-xs flex items-center gap-2">
+                                                <span className="w-1.5 h-4 bg-blue-600 rounded-full"/>
+                                                تحليل الفجوات (Live Data)
+                                            </h3>
+                                            <div className="flex gap-3">
+                                                <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-medium"><span className="w-2 h-2 rounded-sm bg-blue-100"></span>مستهدف</span>
+                                                <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-medium"><span className="w-2 h-2 rounded-sm bg-blue-600"></span>حالي</span>
+                                            </div>
+                                        </div>
+                                        {/* Compact Bars */}
+                                        <div className="space-y-4 flex-1 justify-center flex flex-col">
+                                            <ChartBarCompact label="المبيعات والتسويق" current={65} target={85} />
+                                            <ChartBarCompact label="تكنولوجيا المعلومات" current={75} target={90} />
+                                            <ChartBarCompact label="الموارد البشرية" current={80} target={85} />
+                                            <ChartBarCompact label="العمليات والتشغيل" current={60} target={88} />
+                                            <ChartBarCompact label="القيادة والإدارة" current={72} target={92} />
+                                        </div>
+                                    </div>
+
+                                    {/* Right Col: Recs + AI Insight */}
+                                    <div className="space-y-3 flex flex-col">
+                                        {/* Recs */}
+                                        <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex-1">
+                                            <div className="flex justify-between items-center mb-3">
+                                                <h3 className="font-bold text-slate-800 text-xs">توصيات النظام</h3>
+                                                <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Auto</span>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <RecItemCompact title="علم البيانات للقادة" priority="عالية" />
+                                                <RecItemCompact title="إدارة التغيير الرقمي" priority="متوسطة" />
+                                                <RecItemCompact title="تحليل الأعمال" priority="عالية" />
+                                                <RecItemCompact title="الذكاء العاطفي" priority="منخفضة" />
+                                            </div>
+                                        </div>
+
+                                        {/* Extra Dense Info Box - AI Insight */}
+                                        <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-3 rounded-xl border border-slate-700 shadow-md text-white relative overflow-hidden group">
+                                            <div className="absolute -right-2 -top-2 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">🤖</div>
+                                            <div className="relative z-10">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="text-[10px] font-bold text-blue-300 uppercase tracking-widest">AI INSIGHT</span>
+                                                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                                                </div>
+                                                <p className="text-[11px] font-light leading-relaxed text-slate-300">
+                                                    توجيه <span className="text-white font-bold">15%</span> من الميزانية للتدريب التقني سيرفع العائد بنسبة <span className="text-white font-bold">22%</span>.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                {/* Bars */}
-                                <div className="space-y-6">
-                                    <ChartBar label="المبيعات والتسويق" current={65} target={85} />
-                                    <ChartBar label="تكنولوجيا المعلومات" current={75} target={90} />
-                                    <ChartBar label="الموارد البشرية" current={80} target={85} />
-                                    <ChartBar label="العمليات والتشغيل" current={60} target={88} />
-                                </div>
                             </div>
-
-                            {/* Recommendations List */}
-                            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                                <h3 className="font-bold text-slate-800 mb-4">التوصيات الذكية</h3>
-                                <div className="space-y-3">
-                                    <RecItem title="علم البيانات للقادة" type="ورشة عمل" priority="عالية" />
-                                    <RecItem title="إدارة التغيير الرقمي" type="دورة ذاتية" priority="متوسطة" />
-                                    <RecItem title="أساسيات AI" type="ندوة" priority="منخفضة" />
-                                    <RecItem title="التفكير التصميمي" type="تدريب عملي" priority="متوسطة" />
-                                </div>
-                                <div className="mt-6 pt-4 border-t border-slate-100">
-                                    <div className="flex items-center gap-3 bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                        <span className="text-xl">💡</span>
-                                        <p className="text-xs text-blue-800 leading-tight">
-                                        يقترح النظام زيادة ميزانية التدريب التقني بنسبة 15% للربع القادم بناءً على اتجاهات السوق.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
+                        </motion.div>
+                    </div>
                 </section>
             )
         }
 
-        function StatCard({ title, value, sub, trend, trendColor = "text-green-600" }) {
-            return (
-                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="flex justify-between items-start mb-2">
-                        <span className="text-slate-500 text-sm font-medium">{title}</span>
-                        <span className={`text-xs font-bold bg-slate-100 px-2 py-1 rounded-full ${trendColor}`}>{trend}</span>
-                    </div>
-                    <div className="text-3xl font-bold text-slate-900 mb-1 font-mono tracking-tight">{value}</div>
-                    <div className="text-xs text-slate-400">{sub}</div>
-                </div>
-            )
-        }
+        // --- Compact Helper Components for Dashboard ---
 
-        function ChartBar({ label, current, target }) {
+        function StatCardCompact({ title, value, trend, trendColor = "text-emerald-600", icon }) {
             return (
-                <div>
-                    <div className="flex justify-between text-xs mb-2">
-                        <span className="font-medium text-slate-700">{label}</span>
-                        <span className="text-slate-400 font-mono">{current}% / {target}%</span>
+                <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] hover:border-blue-200 transition-colors">
+                    <div className="flex justify-between items-start mb-1">
+                        <span className="text-slate-400 text-[9px] font-bold uppercase tracking-wide">{title}</span>
+                        <span className="text-sm opacity-50 grayscale">{icon}</span>
                     </div>
-                    <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden relative">
-                        <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${target}%` }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="absolute top-0 right-0 h-full bg-blue-200 rounded-full" 
-                        />
-                        <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${current}%` }}
-                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                        className="absolute top-0 right-0 h-full bg-blue-600 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.3)]" 
-                        />
+                    <div className="flex items-end justify-between">
+                        <div className="text-lg font-bold text-slate-800 font-mono leading-none">{value}</div>
+                        <span className={`text-[10px] font-bold ${trendColor} bg-slate-50 px-1 rounded`}>{trend}</span>
                     </div>
                 </div>
             )
         }
 
-        function RecItem({ title, type, priority }) {
-            const priorityColors = {
-                "عالية": "bg-red-100 text-red-700 border-red-200",
-                "متوسطة": "bg-amber-100 text-amber-700 border-amber-200",
-                "منخفضة": "bg-green-100 text-green-700 border-green-200"
+        function ChartBarCompact({ label, current, target }) {
+            return (
+                <div className="flex items-center gap-3">
+                    <span className="w-28 text-[10px] font-bold text-slate-600 truncate text-left pl-2">{label}</span>
+                    <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden relative">
+                        {/* Target Background */}
+                        <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${target}%` }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="absolute top-0 right-0 h-full bg-blue-100 rounded-full" 
+                        />
+                        {/* Current Value */}
+                        <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${current}%` }}
+                            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                            className="absolute top-0 right-0 h-full bg-blue-600 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.4)]" 
+                        />
+                    </div>
+                    <div className="w-8 text-right">
+                        <span className="text-[10px] font-mono font-bold text-slate-700">{current}%</span>
+                    </div>
+                </div>
+            )
+        }
+
+        function RecItemCompact({ title, priority }) {
+            const colors = {
+                "عالية": "text-red-600 bg-red-50 border-red-100",
+                "متوسطة": "text-amber-600 bg-amber-50 border-amber-100",
+                "منخفضة": "text-emerald-600 bg-emerald-50 border-emerald-100"
             }
             return (
-                <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors border border-transparent hover:border-slate-100 cursor-pointer group">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-white group-hover:shadow-sm flex items-center justify-center text-lg transition-all">📚</div>
-                        <div>
-                        <div className="text-sm font-bold text-slate-800">{title}</div>
-                        <div className="text-xs text-slate-500">{type}</div>
-                        </div>
+                <div className="flex items-center justify-between p-2 rounded-lg border border-slate-100 bg-slate-50 hover:bg-white transition-colors cursor-default">
+                    <div className="flex items-center gap-2 overflow-hidden">
+                        <div className="w-1 h-1 rounded-full bg-slate-300 flex-shrink-0" />
+                        <span className="text-[10px] font-bold text-slate-700 truncate">{title}</span>
                     </div>
-                    <span className={`text-[10px] font-bold px-2 py-1 rounded-md border ${priorityColors[priority] || "bg-slate-100"}`}>
+                    <span className={`text-[9px] px-1.5 py-0.5 rounded border ${colors[priority]}`}>
                         {priority}
                     </span>
                 </div>
