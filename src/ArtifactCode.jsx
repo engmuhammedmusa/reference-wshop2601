@@ -1365,11 +1365,24 @@ function Footer() {
 // --- MAIN APP COMPONENT ---
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden w-full font-tajawal" dir="rtl">
+    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden w-screen max-w-none m-0 p-0 font-tajawal" dir="rtl">
       {/* Include Styles */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
-        
+         html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+#root, #__next {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+* { box-sizing: border-box; }
+
         .glass {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(16px);
