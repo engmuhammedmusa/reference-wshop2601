@@ -471,6 +471,47 @@ export default function App() {
                     </div>
                     
                     <div className="p-5 sm:p-6 bg-white/40">
+                        {/* Active Dashboard Intro */}
+                        <div className="mb-6 rounded-2xl border border-[#284e7f]/10 bg-gradient-to-l from-white/70 to-white/30 p-4 shadow-sm">
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                <div>
+                                    <div className="text-xs font-black text-[#b11e22]">لوحة تحكم نشطة</div>
+                                    <div className="text-lg sm:text-xl font-black text-[#284e7f]">
+                                        نفهم الفكرة: تحويل تقييم الموظفين إلى قرارات تدريبية فورية
+                                    </div>
+                                    <p className="text-xs sm:text-sm text-[#284e7f]/70 font-semibold mt-1">
+                                        المنصة تربط بين البيانات، تحليل الفجوات، والتوصيات لتصميم برامج تدريب دقيقة خلال دقائق.
+                                    </p>
+                                </div>
+                                <div className="flex items-center gap-2 rounded-full bg-emerald-100/60 px-3 py-1 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    LIVE الآن
+                                </div>
+                            </div>
+                            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-right">
+                                <div className="rounded-xl bg-white/70 border border-[#284e7f]/10 p-3 flex items-center gap-3">
+                                    <DataIcon className="w-6 h-6 text-[#284e7f]" />
+                                    <div>
+                                        <div className="text-xs font-bold text-[#284e7f]">جمع بيانات الأداء</div>
+                                        <div className="text-[10px] text-[#284e7f]/60 font-semibold">تكامل مباشر مع HR + تقييمات 360</div>
+                                    </div>
+                                </div>
+                                <div className="rounded-xl bg-white/70 border border-[#284e7f]/10 p-3 flex items-center gap-3">
+                                    <BrainIcon className="w-6 h-6 text-[#b11e22]" />
+                                    <div>
+                                        <div className="text-xs font-bold text-[#284e7f]">تحليل الفجوات الذكي</div>
+                                        <div className="text-[10px] text-[#284e7f]/60 font-semibold">AI يصنف الأولويات خلال 30 ثانية</div>
+                                    </div>
+                                </div>
+                                <div className="rounded-xl bg-white/70 border border-[#284e7f]/10 p-3 flex items-center gap-3">
+                                    <SparkleIcon className="w-6 h-6 text-[#284e7f]" />
+                                    <div>
+                                        <div className="text-xs font-bold text-[#284e7f]">توصيات تنفيذية</div>
+                                        <div className="text-[10px] text-[#284e7f]/60 font-semibold">مسارات تدريب جاهزة للتنفيذ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {/* KPI Cards Row - New Feature */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                             <div className="bg-white/60 p-4 rounded-xl border border-[#284e7f]/10 shadow-sm text-center hover:shadow-md transition-all">
