@@ -465,7 +465,7 @@ function RecItemCompact({ title, priority }) {
 function DashboardDemo() {
   return (
     <section className="py-16 bg-slate-50 relative z-20">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="page-container">
         
         {/* New Title */}
         <FadeInUp>
@@ -711,7 +711,7 @@ function ImagineSection() {
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-purple-200/20 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="w-full max-w-[1920px] mx-auto px-6 lg:px-16 xl:px-28 2xl:px-40 relative z-10 text-center">
+      <div className="page-container relative z-10 text-center">
         <FadeInUp>
             <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
@@ -801,7 +801,7 @@ function StickyQuotes() {
       </div>
 
       <FadeInUp>
-        <div className="max-w-4xl mx-auto px-4 mb-12 text-center relative z-20">
+        <div className="page-container mb-12 text-center relative z-20">
             <h2 className="text-3xl font-bold text-white mb-6">حقيقة التحول الرقمي</h2>
             <div className="w-20 h-1 bg-purple-600 mx-auto rounded-full" />
         </div>
@@ -845,7 +845,7 @@ function StickyQuotes() {
 function Outputs() {
   return (
     <section className="py-24 bg-white relative">
-        <div className="max-w-5xl mx-auto px-4">
+        <div className="page-container">
             {/* Header */}
             <div className="text-center mb-16">
                 <FadeInUp>
@@ -892,7 +892,7 @@ function AudienceChips() {
 
   return (
     <section className="py-24 bg-gradient-to-b from-slate-50 to-slate-100">
-      <div className="max-w-4xl mx-auto px-4 text-center">
+      <div className="page-container text-center">
         <FadeInUp>
             <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-slate-900 tracking-tight leading-tight">
                 هل تقود؟ <span className="text-purple-600 inline-block transform hover:scale-110 transition-transform cursor-default">تطوّر؟</span> تُدرب؟
@@ -985,7 +985,7 @@ function WhyNow() {
           <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-purple-700 to-transparent" />
           <div className="absolute bottom-0 w-full h-px bg-gradient-to-r from-transparent via-purple-700 to-transparent" />
 
-          <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <div className="page-container text-center">
               <FadeInUp>
                   <div className="text-center mb-16">
                       <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">
@@ -1056,7 +1056,7 @@ function TrainersCarousel() {
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-50 rounded-full blur-[60px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="page-container text-center">
         <FadeInUp>
             <div className="mb-16 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
@@ -1330,7 +1330,7 @@ function WhatsAppButton() {
 function Footer() {
   return (
     <footer className="py-8 border-t border-slate-200 text-center text-sm text-slate-500 pb-24 md:pb-8 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="page-container text-center">
         {/* Updated Footer Logo Text to Gradient */}
         <div className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
             Reference Academy
@@ -1418,6 +1418,24 @@ export default function App() {
         @keyframes reverseSpinSlow { from { transform: rotate(0deg) scale(1); } to { transform: rotate(-360deg) scale(1.2); } }
         .animate-spin-slow { animation: spinSlow 20s linear infinite; }
         .animate-reverse-spin-slow { animation: reverseSpinSlow 25s linear infinite; }
+        
+        .page-container{
+        width: 100%;
+        max-width: 1920px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.5rem;  /* px-6 */
+        padding-right: 1.5rem;
+        }
+        @media (min-width:1024px){
+        .page-container{ padding-left:4rem; padding-right:4rem; } /* lg:px-16 */
+        }
+        @media (min-width:1280px){
+        .page-container{ padding-left:7rem; padding-right:7rem; } /* xl:px-28 */
+       }
+         @media (min-width:1536px){
+        .page-container{ padding-left:10rem; padding-right:10rem; } /* 2xl:px-40 */
+       }
       `}</style>
 
       <Hero />
