@@ -593,12 +593,7 @@ function DashboardDemo() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
               هكذا يُدار التدريب بالبيانات، لا بالحدس
             </h2>
-
             <div className="w-20 h-1 bg-purple-600 mx-auto rounded-full" />
-
-            <p className="text-xs md:text-sm text-slate-500 mt-3">
-              *مثال عن مركز التقييم الذكي
-            </p>
           </div>
         </FadeInUp>
 
