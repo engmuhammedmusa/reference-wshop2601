@@ -467,25 +467,13 @@ function SmartAssessmentDashboard() {
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-purple-900/10 overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-4 bg-gradient-to-r from-purple-50 to-blue-50 border-b border-slate-200 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 text-white flex items-center justify-center shadow-md">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div className="text-right">
-            <div className="text-base md:text-lg font-extrabold text-slate-900 leading-tight">Smart Assessment Center</div>
-            <div className="text-sm md:text-base text-slate-600">Live Snapshot</div>
-          </div>
-        </div>
-
-        <span className="text-sm md:text-base font-extrabold text-purple-700 bg-purple-100 px-4 py-2 rounded-full border border-purple-200">
-        *Example of Smart Assessment Center
-        </span>
-      </div>
-
+<div className="px-5 py-4 bg-gradient-to-r from-purple-50 to-blue-50 border-b border-slate-200">
+  <div className="w-full flex items-center justify-center">
+    <span className="text-sm md:text-base font-extrabold text-purple-700 bg-purple-100 px-5 py-2.5 rounded-full border border-purple-200">
+      *Example of Smart Assessment Center
+    </span>
+  </div>
+</div>
       {/* Body */}
       <div className="p-6 md:p-7 lg:p-8 bg-slate-50/60 text-base">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
