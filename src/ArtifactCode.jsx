@@ -604,13 +604,16 @@ function Countdown() {
             </p>
             
             <div className="flex flex-wrap justify-center gap-4 md:gap-8" dir="ltr">
-            <TimeBlock value={timeLeft.days} label="Days" />
-            <div className="text-4xl font-thin text-slate-300 self-center hidden md:block pt-4">:</div>
-            <TimeBlock value={timeLeft.hours} label="Hours" />
-            <div className="text-4xl font-thin text-slate-300 self-center hidden md:block pt-4">:</div>
-            <TimeBlock value={timeLeft.minutes} label="Minutes" />
-            <div className="text-4xl font-thin text-slate-300 self-center hidden md:block pt-4">:</div>
-            <TimeBlock value={timeLeft.seconds} label="Seconds" />
+            <TimeBlock value={timeLeft.days} label="Days" color="#845ec2" max={365} />
+<div className="text-4xl font-thin text-slate-300 self-center hidden md:block pt-4">:</div>
+
+<TimeBlock value={timeLeft.hours} label="Hours" color="#a178df" max={24} />
+<div className="text-4xl font-thin text-slate-300 self-center hidden md:block pt-4">:</div>
+
+<TimeBlock value={timeLeft.minutes} label="Minutes" color="#be93fd" max={60} />
+<div className="text-4xl font-thin text-slate-300 self-center hidden md:block pt-4">:</div>
+
+<TimeBlock value={timeLeft.seconds} label="Seconds" color="#dcb0ff" max={60} />
             </div>
         </div>
       </FadeInUp>
@@ -618,35 +621,71 @@ function Countdown() {
   );
 }
 
-function TimeBlock({ value, label }) {
+function TimeBlock({ value, label, color = "#845ec2", max = 60 }) {
   const { ref, isInView } = useInView();
-  return (
-    <div ref={ref} className="flex flex-col items-center group">
-      <div 
-        className={cn(
-          "w-20 h-24 md:w-24 md:h-28 rounded-lg bg-slate-900 border border-purple-500/30 flex flex-col items-center justify-center shadow-[0_0_20px_rgba(147,51,234,0.15)] transition-all duration-700 relative overflow-hidden",
-          isInView ? "opacity-100 translate-y-0" : "opacity-50 translate-y-5"
-        )}
-      >
-        {/* Tech decorative line */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50" />
-        
-        {/* Value */}
-        <div className="text-3xl md:text-5xl font-mono font-bold text-purple-400 tabular-nums tracking-tighter" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            {String(value).padStart(2, "0")}
-        </div>
-        
-        {/* Label */}
-        <div className="text-[9px] md:text-[10px] text-purple-500/60 mt-2 uppercase tracking-widest font-mono" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            {label}
-        </div>
 
-        {/* Scanline effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-purple-900/10 pointer-events-none" />
+  const size = 140;          // circle size
+  const stroke = 10;         // ring thickness
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+
+  const safeMax = Math.max(1, max);
+  const clamped = Math.min(Math.max(value, 0), safeMax);
+  const progress = clamped / safeMax;              // 0..1
+  const dash = c * progress;
+
+  return (
+    <div ref={ref} className="flex flex-col items-center">
+      <div
+        className={cn(
+          "relative flex items-center justify-center",
+          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        )}
+        style={{ transition: "all 700ms ease", width: size, height: size }}
+      >
+        <svg width={size} height={size} className="block">
+          {/* Track */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke="rgba(148,163,184,0.35)"   // slate track
+            strokeWidth={stroke}
+          />
+
+          {/* Progress */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke={color}
+            strokeWidth={stroke}
+            strokeLinecap="round"
+            strokeDasharray={`${dash} ${c - dash}`}
+            transform={`rotate(-90 ${size / 2} ${size / 2})`}
+            style={{
+              filter: `drop-shadow(0 0 10px ${color}55)`,
+              transition: "stroke-dasharray 900ms ease",
+            }}
+          />
+        </svg>
+
+        {/* Center text */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="text-3xl md:text-4xl font-bold text-slate-900 tabular-nums">
+            {String(value).padStart(2, "0")}
+          </div>
+          <div className="text-sm md:text-base text-slate-600 font-medium mt-1">
+            {label}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+
 
 function ImagineSection() {
   const [index, setIndex] = useState(0);
