@@ -326,7 +326,7 @@ function Hero() {
   playsInline
   preload="auto"
 >
-  <source src="/hero.mp4" type="video/mp4" />
+  <source src="/hero2.mp4" type="video/mp4" />
 </video>
 
   {/* overlay to keep components readable */}
