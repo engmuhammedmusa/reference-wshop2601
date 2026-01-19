@@ -351,7 +351,7 @@ function Hero() {
           <FadeInUp delay={100}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight space-y-2 md:space-y-4">
                 <span className="block text-white">تحديد الاحتياجات التدريبية</span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-white-600 to-indigo-600">
+                <span className="block text-white">
                 باستخدام الذكاء الاصطناعي
                 </span>
                 <span className="block text-white">AI Assessment Center</span>
