@@ -1301,10 +1301,14 @@ function Footer() {
 // --- MAIN APP COMPONENT ---
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden w-screen max-w-none m-0 p-0 font-tajawal" dir="rtl">
+    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden w-screen max-w-none m-0 p-0 dir="rtl" style={{ fontFamily: 'var(--font-ar)' }}>
       {/* Include Styles */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
+        :root { --font-ar: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; } 
+        html, body { 
+        font-family: var(--font-ar); 
+        }
          html, body {
   width: 100%;
   margin: 0;
