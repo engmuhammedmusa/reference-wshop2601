@@ -386,7 +386,7 @@ function Hero() {
         <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-blue-200/40 rounded-full blur-[100px] animate-reverse-spin-slow" />
       </div>
 
-      <div className="w-full max-w-none px-4 lg:px-12 xl:px-20 2xl:px-28 grid lg:grid-cols-2 gap-12 items-center relative z-10"/>
+      <div className="w-full max-w-none px-4 lg:px-12 xl:px-20 2xl:px-28 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         
         {/* Content Side */}
         <div className="space-y-8 text-center lg:text-start">
