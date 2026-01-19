@@ -849,7 +849,7 @@ function AudienceChips() {
         <FadeInUp>
             <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-slate-900 tracking-tight leading-tight">
                 هل تقود؟ <span className="text-purple-600 inline-block transform hover:scale-110 transition-transform cursor-default">تطوّر؟</span> تُدرب؟
-                <span className="block mt-3 text-xl md:text-2xl font-medium text-slate-500">هذا النظام يفهمك</span>
+                <span className="block mt-3 text-xl md:text-2xl font-medium text-slate-500">اختر وظيفتك وسترى أن هذا النظام يفهمك.</span>
             </h2>
         </FadeInUp>
 
