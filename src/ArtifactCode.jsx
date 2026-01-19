@@ -711,7 +711,7 @@ function ImagineSection() {
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-purple-200/20 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
+      <div className="w-full max-w-[1920px] mx-auto px-6 lg:px-16 xl:px-28 2xl:px-40 relative z-10 text-center">
         <FadeInUp>
             <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
@@ -734,7 +734,7 @@ function ImagineSection() {
                 <div
                     key={i}
                     className={cn(
-                        "absolute top-0 w-full max-w-lg mx-auto bg-white border border-slate-200 p-10 rounded-3xl shadow-xl flex flex-col items-center gap-6 transition-all duration-500",
+                        "absolute top-0 w-full max-w-2xlg mx-auto bg-white border border-slate-200 p-10 rounded-3xl shadow-xl flex flex-col items-center gap-6 transition-all duration-500",
                         i === index ? "opacity-100 scale-100 z-10" : "opacity-0 scale-95 z-0 pointer-events-none"
                     )}
                 >
