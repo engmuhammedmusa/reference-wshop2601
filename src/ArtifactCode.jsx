@@ -338,14 +338,13 @@ function Hero() {
       <div className="w-full max-w-[1920px] mx-auto px-6 lg:px-16 xl:px-28 2xl:px-40 relative z-10 text-white flex flex-col items-center justify-center text-center">
         <div className="space-y-8 text-center flex flex-col items-center">
           <FadeInUp delay={0}>
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 border border-white/25 text-sm md:text-base font-bold text-white mx-auto shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_0_30px_rgba(168,85,247,0.22)] backdrop-blur-md"
-              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span>01 – 05 فبراير، 2026</span>
-            </div>
-          </FadeInUp>
-
+  <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 border border-white/25 text-sm md:text-base font-bold text-white mx-auto shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_0_30px_rgba(168,85,247,0.22)] backdrop-blur-md">
+    <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+    <span>01 – 05 فبراير، 2026</span>
+  </div>
+</FadeInUp>
           <FadeInUp delay={100}>
             <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[1.05] space-y-3 md:space-y-5">
               <span className="block text-white">تحديد الاحتياجات التدريبية</span>
