@@ -319,13 +319,15 @@ function Hero() {
       {/* Background Video */}
 <div className="absolute inset-0 overflow-hidden pointer-events-none">
   <video
-    className="absolute inset-0 w-full h-full object-cover opacity-60"
-    src="https://drive.google.com/uc?export=download&id=1wTlwSrz2qYBjSWkNPf3cS8-hBk9rIUK-"
-    autoPlay
-    muted
-    loop
-    playsInline
-  />
+  className="absolute inset-0 w-full h-full object-cover opacity-60"
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+>
+  <source src="/hero.mp4" type="video/mp4" />
+</video>
 
   {/* overlay to keep components readable */}
   <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/35 to-slate-950/65" />
