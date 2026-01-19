@@ -319,7 +319,7 @@ function Hero() {
       {/* Background Video */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <video
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          className="absolute inset-0 w-full h-full object-cover opacity-85"
           autoPlay
           muted
           loop
@@ -1248,7 +1248,7 @@ function FinalCTA() {
     <React.Fragment>
       <section className="py-32 relative overflow-hidden text-center bg-slate-50">
         {/* Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-200/40 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-200/15 blur-[120px] rounded-full pointer-events-none" />
 
         <FadeInUp>
             <div className="relative z-10 max-w-4xl mx-auto px-4">
