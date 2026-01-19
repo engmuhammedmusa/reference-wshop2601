@@ -316,11 +316,24 @@ function Hero() {
 
   return (
     <section className="relative pt-40 pb-20 min-h-[90vh] flex flex-col justify-center overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-200/40 rounded-full blur-[100px] animate-spin-slow" />
-        <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-blue-200/40 rounded-full blur-[100px] animate-reverse-spin-slow" />
-      </div>
+      {/* Background Video */}
+<div className="absolute inset-0 overflow-hidden pointer-events-none">
+  <video
+    className="absolute inset-0 w-full h-full object-cover opacity-60"
+    src="https://drive.google.com/uc?export=download&id=1wTlwSrz2qYBjSWkNPf3cS8-hBk9rIUK-"
+    autoPlay
+    muted
+    loop
+    playsInline
+  />
+
+  {/* overlay to keep components readable */}
+  <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/35 to-slate-950/65" />
+
+  {/* optional glow blobs (keep the vibe) */}
+  <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[120px] animate-spin-slow" />
+  <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] animate-reverse-spin-slow" />
+</div>
 
       <div className="w-full max-w-none px-4 lg:px-12 xl:px-20 2xl:px-28 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         
