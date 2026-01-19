@@ -598,7 +598,7 @@ function Countdown() {
   return (
     <section className="py-12 border-y border-slate-200 bg-white">
       <FadeInUp>
-        <div className="max-w-7xl mx-auto px-4 text-center">
+        <div className="w-full max-w-[1920px] mx-auto px-6 lg:px-16 xl:px-28 2xl:px-40 text-center">
           <div className="flex justify-center mb-6">
   <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#845ec2]/20 border border-[#845ec2]/35 text-[#845ec2] text-sm md:text-base font-bold backdrop-blur-md shadow-[0_0_25px_rgba(132,94,194,0.18)]">
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -611,7 +611,7 @@ function Countdown() {
             الوقت يمضي… والقرارات التدريبية الخاطئة تُتخذ يومياً
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4 md:gap-8" dir="ltr">
+            <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-14" dir="ltr">
             <TimeBlock value={timeLeft.days} label="Days" color="#845ec2" max={365} />
 <div className="text-4xl font-thin text-slate-300 self-center hidden md:block pt-4">:</div>
 
