@@ -326,6 +326,44 @@ function Hero() {
         
         {/* Content Side */}
         <div className="space-y-8 text-center lg:text-start">
+          {/* Floating topic icons (above the date) */}
+<div className="relative h-20 w-full flex justify-center lg:justify-start">
+  <div className="absolute inset-0 pointer-events-none">
+    {/* AI */}
+    <div className="absolute top-0 right-6 animate-float">
+      <div className="w-12 h-12 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200 shadow-md flex items-center justify-center">
+        <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 3h6M10 3v4m4-4v4M6 10h12M8 10v4m8-4v4M9 18h6" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 14h8M7 10a3 3 0 013-3h4a3 3 0 013 3v6a3 3 0 01-3 3h-4a3 3 0 01-3-3v-6z" />
+        </svg>
+      </div>
+    </div>
+
+    {/* Data / Analytics */}
+    <div className="absolute bottom-0 right-28 animate-float-delayed">
+      <div className="w-12 h-12 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200 shadow-md flex items-center justify-center">
+        <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 19V5m0 14h16" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M7 15l3-3 3 2 4-6" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8h3" />
+        </svg>
+      </div>
+    </div>
+
+    {/* Assessment / Checklist */}
+    <div className="absolute top-3 right-52 animate-float" style={{ animationDuration: "7s" }}>
+      <div className="w-12 h-12 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200 shadow-md flex items-center justify-center">
+        <svg className="w-6 h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5h10M9 9h10M9 13h10M9 17h10" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6l1 1 2-2" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 10l1 1 2-2" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 14l1 1 2-2" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 18l1 1 2-2" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
           <FadeInUp delay={0}>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-100 text-xs font-medium text-purple-700 mx-auto lg:mx-0 shadow-sm">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
