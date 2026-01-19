@@ -337,7 +337,7 @@ function Hero() {
   <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] animate-reverse-spin-slow" />
 </div>
 
-      <div className="w-full max-w-none px-4 lg:px-12 xl:px-20 2xl:px-28 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+      <div className="w-full max-w-none px-4 lg:px-12 xl:px-20 2xl:px-28 grid lg:grid-cols-1 gap-12 items-center relative z-10">
         
         {/* Content Side */}
         <div className="space-y-8 text-center lg:text-start">
@@ -350,11 +350,11 @@ function Hero() {
 
           <FadeInUp delay={100}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight space-y-2 md:space-y-4">
-                <span className="block text-slate-900">تحديد الاحتياجات التدريبية</span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600">
+                <span className="block text-white">تحديد الاحتياجات التدريبية</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-white-600 to-indigo-600">
                 باستخدام الذكاء الاصطناعي
                 </span>
-                <span className="block text-slate-900">AI Assessment Center</span>
+                <span className="block text-white">AI Assessment Center</span>
             </h1>
           </FadeInUp>
 
@@ -392,15 +392,7 @@ function Hero() {
             </div>
           </FadeInUp>
 
-          <FadeInUp delay={300}>
-            <p className="text-sm text-red-500 font-medium">
-                * المقاعد محدودة جداً لضمان جودة التطبيق العملي
-            </p>
-          </FadeInUp>
-        </div>
-
         {/* Visual Side (Chat Mock) */}
-        <RefeAIWidget />
       </div>
     </section>
   );
