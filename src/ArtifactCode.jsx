@@ -315,84 +315,82 @@ function Hero() {
   }, []);
 
   return (
-    <section className="relative pt-40 pb-20 min-h-[90vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative w-full pt-40 pb-20 min-h-[90vh] flex flex-col justify-center overflow-hidden">
       {/* Background Video */}
-<div className="absolute inset-0 overflow-hidden pointer-events-none">
-  <video
-  className="absolute inset-0 w-full h-full object-cover opacity-60"
-  autoPlay
-  muted
-  loop
-  playsInline
-  preload="auto"
->
-  <source src="/hero4.mp4" type="video/mp4" />
-</video>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <video
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
 
-  {/* overlay to keep components readable */}
-  <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/35 to-slate-950/65" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/35 to-slate-950/65" />
+        <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[120px] animate-spin-slow" />
+        <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] animate-reverse-spin-slow" />
+      </div>
 
-  {/* optional glow blobs (keep the vibe) */}
-  <div className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[120px] animate-spin-slow" />
-  <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] animate-reverse-spin-slow" />
-</div>
-
-      <div className="w-full max-w-none px-4 lg:px-12 xl:px-20 2xl:px-28 grid lg:grid-cols-1 gap-12 items-center relative z-10">
-        
-        {/* Content Side */}
-        <div className="space-y-8 text-center lg:text-start">
+      {/* Content */}
+      <div className="w-full max-w-[1600px] mx-auto px-4 lg:px-12 xl:px-20 2xl:px-28 relative z-10 text-white flex flex-col items-center justify-center text-center">
+        <div className="space-y-8 text-center flex flex-col items-center">
           <FadeInUp delay={0}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-100 text-xs font-medium text-purple-700 mx-auto lg:mx-0 shadow-sm">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                <span>01 – 05 فبراير، 2026</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-medium text-white mx-auto shadow-sm backdrop-blur-md">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>01 – 05 فبراير، 2026</span>
             </div>
           </FadeInUp>
 
           <FadeInUp delay={100}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight space-y-2 md:space-y-4">
-                <span className="block text-white">تحديد الاحتياجات التدريبية</span>
-                <span className="block text-white">
+              <span className="block text-white">تحديد الاحتياجات التدريبية</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-white to-indigo-400">
                 باستخدام الذكاء الاصطناعي
-                </span>
-                <span className="block text-white">AI Assessment Center</span>
+              </span>
+              <span className="block text-white">AI Assessment Center</span>
             </h1>
           </FadeInUp>
 
-          {/* Data Theme Quotation */}
           <FadeInUp delay={150}>
-            <div className="relative py-5 px-6 border-r-4 border-purple-600 bg-slate-50/90 backdrop-blur-md rounded-l-xl max-w-3xl mx-auto text-center mt-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-                <div className="text-xs md:text-sm text-slate-800 leading-loose font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                    <span className="text-purple-700 block mb-3 text-sm md:text-base opacity-100 tracking-wide">
-                        ⚠️ تنبيه استراتيجي: التحوّل نحو التقييم الذكي لم يعد خيارًا
-                    </span>
-                    'كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي، أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.'
-                </div>
+            <div className="relative py-5 px-6 border-r-4 border-purple-400 bg-white/10 backdrop-blur-md rounded-l-xl max-w-3xl mx-auto text-center mt-8 shadow-md">
+              <div className="text-xs md:text-sm text-white/90 leading-loose font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                <span className="text-white block mb-3 text-sm md:text-base opacity-100 tracking-wide">
+                  ⚠️ تنبيه استراتيجي: التحوّل نحو التقييم الذكي لم يعد خيارًا
+                </span>
+                'كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي، أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.'
+              </div>
             </div>
           </FadeInUp>
 
           <FadeInUp delay={200}>
-            <div className="flex flex-col items-center gap-4 text-sm md:text-base text-slate-600 mt-8 w-full">
-                <div className="flex items-center justify-center gap-4">
-                <span className="font-bold text-slate-400">يقام في:</span>
+            <div className="flex flex-col items-center gap-4 text-sm md:text-base text-white/80 mt-8 w-full">
+              <div className="flex items-center justify-center gap-4">
+                <span className="font-bold text-white/70">يقام في:</span>
                 <div className="relative h-10 w-32 overflow-hidden">
-                    {VENUES.map((venue, idx) => (
-                        <div
-                            key={venue}
-                            className={cn(
-                                "absolute inset-0 flex items-center justify-center gap-2 bg-white px-2 py-2 rounded-lg border border-slate-200 shadow-sm text-purple-700 font-bold transition-all duration-500",
-                                idx === venueIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                            )}
-                        >
-                            <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
-                            <span>{venue}</span>
-                        </div>
-                    ))}
+                  {VENUES.map((venue, idx) => (
+                    <div
+                      key={venue}
+                      className={cn(
+                        "absolute inset-0 flex items-center justify-center gap-2 bg-white/10 px-2 py-2 rounded-lg border border-white/15 shadow-sm text-white font-bold transition-all duration-500 backdrop-blur-md",
+                        idx === venueIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                      )}
+                    >
+                      <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                      </svg>
+                      <span>{venue}</span>
+                    </div>
+                  ))}
                 </div>
-                </div>
+              </div>
             </div>
           </FadeInUp>
-
-        {/* Visual Side (Chat Mock) */}
+        </div>
       </div>
     </section>
   );
