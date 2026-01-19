@@ -1301,48 +1301,47 @@ function Footer() {
 // --- MAIN APP COMPONENT ---
 export default function App() {
   return (
- <div
-  className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden w-screen max-w-none m-0 p-0"
-  dir="rtl"
-  style={{ fontFamily: "var(--font-ar)" }}
->
-  <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
+    <div
+      className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden w-screen max-w-none m-0 p-0"
+      dir="rtl"
+      style={{ fontFamily: "var(--font-ar)" }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
 
-    :root {
-      --font-ar: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-    }
-
-    html, body {
-      font-family: var(--font-ar);
-    }
-  `}</style>
-   
-         html, body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-#root, #__next {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
-* { box-sizing: border-box; }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+        :root{
+          --font-ar: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
         }
 
-        .glass-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        html, body{
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+          font-family: var(--font-ar);
+        }
+
+        #root, #__next{
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        *{ box-sizing: border-box; }
+
+        /* keep your existing CSS below (glass, scrollbar, animations...) */
+        .glass{
+          background: rgba(255, 255, 255, 0.7);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .glass-card{
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
         /* Custom Scrollbar */
