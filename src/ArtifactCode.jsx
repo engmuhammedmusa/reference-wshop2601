@@ -463,6 +463,126 @@ function RecItemCompact({ title, priority }) {
   )
 }
 
+function SmartAssessmentDashboard() {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-xl shadow-purple-900/10 overflow-hidden">
+      {/* Header */}
+      <div className="px-5 py-4 bg-gradient-to-r from-purple-50 to-blue-50 border-b border-slate-200 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 text-white flex items-center justify-center shadow-md">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div className="text-right">
+            <div className="text-sm font-extrabold text-slate-900">Smart Assessment Center</div>
+            <div className="text-xs text-slate-500">Live Snapshot</div>
+          </div>
+        </div>
+
+        <span className="text-xs font-bold text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
+          *مثال عن Smart Assessment Center
+        </span>
+      </div>
+
+      {/* Body */}
+      <div className="p-5 md:p-6 bg-slate-50/60">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Radar (simple SVG) */}
+          <div className="bg-white rounded-xl border border-slate-200 p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-xs font-extrabold text-slate-800">خريطة الكفاءات</h4>
+              <span className="text-[10px] text-slate-500 font-mono">RADAR</span>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <svg width="170" height="170" viewBox="0 0 200 200">
+                {/* grid */}
+                <polygon points="100,20 170,60 160,140 100,180 40,140 30,60" fill="none" stroke="rgba(148,163,184,0.6)" strokeWidth="1" />
+                <polygon points="100,40 154,72 146,128 100,160 54,128 46,72" fill="none" stroke="rgba(148,163,184,0.45)" strokeWidth="1" />
+                <polygon points="100,60 138,84 132,116 100,140 68,116 62,84" fill="none" stroke="rgba(148,163,184,0.35)" strokeWidth="1" />
+                {/* axes */}
+                <line x1="100" y1="20" x2="100" y2="180" stroke="rgba(148,163,184,0.35)" />
+                <line x1="30" y1="60" x2="170" y2="140" stroke="rgba(148,163,184,0.35)" />
+                <line x1="170" y1="60" x2="30" y2="140" stroke="rgba(148,163,184,0.35)" />
+
+                {/* filled shape */}
+                <polygon
+                  points="100,55 150,78 140,128 100,150 70,118 60,86"
+                  fill="rgba(132,94,194,0.18)"
+                  stroke="rgba(132,94,194,0.85)"
+                  strokeWidth="2"
+                />
+              </svg>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 mt-3 text-[10px] text-slate-600 font-semibold">
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">قيادة</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">تحليل</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">رقمي</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">تواصل</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">أداء</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">مرونة</div>
+            </div>
+          </div>
+
+          {/* Pipeline */}
+          <div className="bg-white rounded-xl border border-slate-200 p-4 lg:col-span-2">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-xs font-extrabold text-slate-800">مسار التقييم</h4>
+              <span className="text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-full font-bold">
+                ACTIVE
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+              {[
+                { t: "جمع البيانات", s: "Connected", c: "bg-blue-50 text-blue-700 border-blue-100" },
+                { t: "تحليل الفجوات", s: "Running", c: "bg-purple-50 text-purple-700 border-purple-100" },
+                { t: "توليد التوصيات", s: "Queued", c: "bg-slate-50 text-slate-700 border-slate-200" },
+                { t: "خطة التطوير", s: "Draft", c: "bg-indigo-50 text-indigo-700 border-indigo-100" },
+              ].map((x, i) => (
+                <div key={i} className="rounded-xl border border-slate-200 p-3 bg-slate-50/40">
+                  <div className="text-[11px] font-extrabold text-slate-900">{x.t}</div>
+                  <div className={cn("mt-2 inline-flex items-center px-2 py-1 rounded-full border text-[10px] font-bold", x.c)}>
+                    {x.s}
+                  </div>
+                  <div className="mt-3 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: i === 0 ? "100%" : i === 1 ? "70%" : i === 2 ? "35%" : "15%",
+                        background: i === 0 ? "#3b82f6" : i === 1 ? "#845ec2" : i === 2 ? "#be93fd" : "#a5b4fc",
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* KPIs */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <div className="text-[10px] text-slate-500 font-bold">Readiness Score</div>
+                <div className="mt-1 text-2xl font-extrabold text-slate-900 font-mono">82%</div>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <div className="text-[10px] text-slate-500 font-bold">Gap Index</div>
+                <div className="mt-1 text-2xl font-extrabold text-slate-900 font-mono">18%</div>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <div className="text-[10px] text-slate-500 font-bold">ROI Forecast</div>
+                <div className="mt-1 text-2xl font-extrabold text-slate-900 font-mono">+22%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DashboardDemo() {
   return (
     <section className="py-20 lg:py-24 bg-slate-50 relative z-20">
@@ -484,75 +604,7 @@ function DashboardDemo() {
 
         {/* Dashboard Container - Made Compact & Dense */}
         <FadeInUp delay={100} className="w-full">
-          <div className="bg-white rounded-2xl shadow-2xl shadow-purple-900/10 border border-slate-200 overflow-hidden">
-            {/* Header */}
-            <div className="bg-slate-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                </div>
-                <span className="mr-3 text-xs font-bold text-slate-700 tracking-wider">TNA-OS v4.1 PRO</span>
-              </div>
-              <div className="flex gap-4 text-[10px] font-mono text-slate-400">
-                <span className="hidden sm:inline">DATA_STREAM: ACTIVE</span>
-                <span className="text-emerald-600 font-bold">● CONNECTED</span>
-              </div>
-            </div>
-
-            {/* Content Grid */}
-            <div className="p-7 md:p-9 lg:p-10 bg-slate-100/50">
-              {/* Stats Row - 4 Cols for density */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <StatCardCompact title="الموظفون" value="1,240" trend="+12%" icon="👥" />
-                <StatCardCompact title="الفجوات الحرجة" value="18%" trend="-5%" trendColor="text-red-500" icon="⚡" />
-                <StatCardCompact title="وفر الميزانية" value="$42.5k" trend="+8%" trendColor="text-emerald-600" icon="💰" />
-                <StatCardCompact title="ساعات التعلم" value="3,200h" trend="+15%" icon="⏱️" />
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {/* Main Chart Area - 2 Cols - Dense Layout */}
-                <div className="lg:col-span-2 bg-white p-5 lg:p-7 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
-                  <div className="flex justify-between items-center mb-5">
-                    <h3 className="font-bold text-slate-800 text-xs flex items-center gap-2">
-                      <span className="w-1.5 h-4 bg-purple-600 rounded-full"/>
-                      تحليل الفجوات (Live Data)
-                    </h3>
-                    <div className="flex gap-3">
-                      <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-medium"><span className="w-2 h-2 rounded-sm bg-purple-100"></span>مستهدف</span>
-                      <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-medium"><span className="w-2 h-2 rounded-sm bg-purple-600"></span>حالي</span>
-                    </div>
-                  </div>
-                  {/* Compact Bars */}
-                  <div className="space-y-4 flex-1 justify-center flex flex-col">
-                    <ChartBarCompact label="المبيعات والتسويق" current={65} target={85} />
-                    <ChartBarCompact label="تكنولوجيا المعلومات" current={75} target={90} />
-                    <ChartBarCompact label="الموارد البشرية" current={80} target={85} />
-                    <ChartBarCompact label="العمليات والتشغيل" current={60} target={88} />
-                    <ChartBarCompact label="القيادة والإدارة" current={72} target={92} />
-                  </div>
-                </div>
-
-                {/* Right Col: AI Insight */}
-                <div className="space-y-3 flex flex-col">
-                  {/* Extra Dense Info Box - AI Insight */}
-                  <div className="bg-gradient-to-br from-purple-900 to-slate-900 p-5 rounded-xl border border-slate-700 shadow-md text-white relative overflow-hidden group">
-                    <div className="absolute -right-2 -top-2 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">🤖</div>
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-[10px] font-bold text-purple-300 uppercase tracking-widest">AI INSIGHT</span>
-                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                      </div>
-                      <p className="text-[11px] font-light leading-relaxed text-slate-300">
-                        توجيه <span className="text-white font-bold">15%</span> من الميزانية للتدريب التقني سيرفع العائد بنسبة <span className="text-white font-bold">22%</span>.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <SmartAssessmentDashboard />
         </FadeInUp>
       </div>
     </section>
