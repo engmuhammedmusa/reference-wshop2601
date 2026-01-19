@@ -599,6 +599,14 @@ function Countdown() {
     <section className="py-12 border-y border-slate-200 bg-white">
       <FadeInUp>
         <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className="flex justify-center mb-6">
+  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#845ec2]/20 border border-[#845ec2]/35 text-white/90 text-sm md:text-base font-bold backdrop-blur-md shadow-[0_0_25px_rgba(132,94,194,0.18)]">
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+    <span>01 – 05 فبراير، 2026</span>
+  </div>
+</div>
             <p className="text-purple-600 mb-8 text-lg md:text-xl font-bold animate-pulse leading-relaxed">
             الوقت يمضي… والقرارات التدريبية الخاطئة تُتخذ يومياً
             </p>
