@@ -568,12 +568,12 @@ function SmartAssessmentDashboard() {
                 <div className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900 font-mono">82%</div>
               </div>
               <div className="rounded-xl border border-slate-200 bg-white p-4">
-                <div className="text-[10px] text-slate-500 font-bold">Gap Index</div>
-                <div className="mt-1 text-2xl font-extrabold text-slate-900 font-mono">18%</div>
+                <div className="text-xs md:text-sm text-slate-500 font-extrabold">Gap Index</div>
+               <div className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900 font-mono">18%</div>
               </div>
               <div className="rounded-xl border border-slate-200 bg-white p-4">
-                <div className="text-[10px] text-slate-500 font-bold">ROI Forecast</div>
-                <div className="mt-1 text-2xl font-extrabold text-slate-900 font-mono">+22%</div>
+                <div className="text-xs md:text-sm text-slate-500 font-extrabold">ROI Forecast</div>
+                <div className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900 font-mono">+22%</div>
               </div>
             </div>
           </div>
