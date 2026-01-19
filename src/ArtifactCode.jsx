@@ -358,7 +358,10 @@ function Hero() {
 
           <FadeInUp delay={150}>
             <div className="relative py-5 px-6 border-r-4 border-purple-400 bg-white/10 backdrop-blur-md rounded-l-xl max-w-5xl mx-auto text-center mt-8 shadow-md">
-              <div className="text-sm md:text-base text-white/90 leading-loose font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+              <div
+            className="text-sm md:text-base text-white/90 leading-loose font-medium"
+            style={{ fontFamily: "var(--font-playpen-ar)" }}
+            >
                 <span className="text-white block mb-3 text-sm md:text-base opacity-100 tracking-wide">
                   ⚠️ تنبيه استراتيجي: التحوّل نحو التقييم الذكي لم يعد خيارًا
                 </span>
@@ -1312,8 +1315,13 @@ export default function App() {
       style={{ fontFamily: "var(--font-ar)" }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Playpen+Sans+Arabic:wght@300;400;600;700&display=swap');
 
+      :root{
+        --font-playpen-ar: "Playpen Sans Arabic", "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
+        
         :root{
           --font-ar: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
         }
