@@ -476,24 +476,24 @@ function SmartAssessmentDashboard() {
             </svg>
           </div>
           <div className="text-right">
-            <div className="text-sm font-extrabold text-slate-900">Smart Assessment Center</div>
-            <div className="text-xs text-slate-500">Live Snapshot</div>
+            <div className="text-base md:text-lg font-extrabold text-slate-900 leading-tight">Smart Assessment Center</div>
+            <div className="text-sm md:text-base text-slate-600">Live Snapshot</div>
           </div>
         </div>
 
-        <span className="text-xs font-bold text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
-          *مثال عن Smart Assessment Center
+        <span className="text-sm md:text-base font-extrabold text-purple-700 bg-purple-100 px-4 py-2 rounded-full border border-purple-200">
+        *Example of Smart Assessment Center
         </span>
       </div>
 
       {/* Body */}
-      <div className="p-5 md:p-6 bg-slate-50/60">
+      <div className="p-6 md:p-7 lg:p-8 bg-slate-50/60 text-base">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Radar (simple SVG) */}
           <div className="bg-white rounded-xl border border-slate-200 p-4">
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-xs font-extrabold text-slate-800">خريطة الكفاءات</h4>
-              <span className="text-[10px] text-slate-500 font-mono">RADAR</span>
+              <h4 className="text-sm md:text-base font-extrabold text-slate-800">خريطة الكفاءات</h4>
+              <span className="text-xs md:text-sm text-slate-500 font-mono">RADAR</span>
             </div>
 
             <div className="flex items-center justify-center">
@@ -517,13 +517,13 @@ function SmartAssessmentDashboard() {
               </svg>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 mt-3 text-[10px] text-slate-600 font-semibold">
-              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">قيادة</div>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">تحليل</div>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">رقمي</div>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">تواصل</div>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">أداء</div>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2">مرونة</div>
+            <div className="grid grid-cols-3 gap-2 mt-4 text-xs md:text-sm text-slate-700 font-bold">
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2.5 md:py-3">قيادة</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2.5 md:py-3">تحليل</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2.5 md:py-3">رقمي</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2.5 md:py-3">تواصل</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2.5 md:py-3">أداء</div>
+              <div className="bg-slate-50 border border-slate-200 rounded-lg py-2.5 md:py-3">مرونة</div>
             </div>
           </div>
 
@@ -544,11 +544,11 @@ function SmartAssessmentDashboard() {
                 { t: "خطة التطوير", s: "Draft", c: "bg-indigo-50 text-indigo-700 border-indigo-100" },
               ].map((x, i) => (
                 <div key={i} className="rounded-xl border border-slate-200 p-3 bg-slate-50/40">
-                  <div className="text-[11px] font-extrabold text-slate-900">{x.t}</div>
-                  <div className={cn("mt-2 inline-flex items-center px-2 py-1 rounded-full border text-[10px] font-bold", x.c)}>
+                  <div className="text-sm md:text-base font-extrabold text-slate-900 leading-snug">{x.t}</div>
+                  <div className={cn("mt-2 inline-flex items-center px-3 py-1.5 rounded-full border text-xs md:text-sm font-extrabold", x.c)}>
                     {x.s}
                   </div>
-                  <div className="mt-3 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                  <div className="mt-4 h-2.5 rounded-full bg-slate-200 overflow-hidden">
                     <div
                       className="h-full rounded-full"
                       style={{
@@ -564,8 +564,8 @@ function SmartAssessmentDashboard() {
             {/* KPIs */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
               <div className="rounded-xl border border-slate-200 bg-white p-4">
-                <div className="text-[10px] text-slate-500 font-bold">Readiness Score</div>
-                <div className="mt-1 text-2xl font-extrabold text-slate-900 font-mono">82%</div>
+                <div className="text-xs md:text-sm text-slate-500 font-extrabold">Readiness Score</div>
+                <div className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900 font-mono">82%</div>
               </div>
               <div className="rounded-xl border border-slate-200 bg-white p-4">
                 <div className="text-[10px] text-slate-500 font-bold">Gap Index</div>
