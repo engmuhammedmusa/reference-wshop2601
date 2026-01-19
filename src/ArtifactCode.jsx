@@ -470,14 +470,17 @@ function DashboardDemo() {
         {/* New Title */}
         <FadeInUp>
             <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-                هكذا يُدار التدريب، بالبيانات، لا بالحدس
-            </h2>
-              <p className="text-xs md:text-sm text-slate-500 mt-2">
-                *مثال عن مركز التقييم الذكي
-                </p>
-                <div className="w-20 h-1 bg-purple-600 mx-auto rounded-full" />
-            </div>
+  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+    هكذا يُدار التدريب بالبيانات، لا بالحدس
+  </h2>
+
+  <div className="w-20 h-1 bg-purple-600 mx-auto rounded-full" />
+
+  <p className="text-xs md:text-sm text-slate-500 mt-3">
+    *مثال عن مركز التقييم الذكي
+  </p>
+</div>
+
         </FadeInUp>
 
         {/* Dashboard Container - Made Compact & Dense */}
