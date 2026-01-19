@@ -192,70 +192,6 @@ function FadeInUp({ children, className = "", delay = 0 }) {
 
 // --- COMPONENTS ---
 
-function Navbar() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  return (
-    <React.Fragment>
-      {/* Updated Navbar: Gradient from Dark Right to Light Left */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pb-4 pointer-events-none">
-        <nav className="pointer-events-auto w-full max-w-7xl bg-gradient-to-l from-indigo-900 via-purple-100 to-white backdrop-blur-2xl border border-white/20 rounded-2xl h-20 px-4 md:px-8 flex items-center justify-between shadow-xl shadow-indigo-900/10 transition-all duration-300">
-          {/* Logo / Brand */}
-          <div className="flex items-center gap-3">
-            {/* Logo adapted to be white to contrast with the dark gradient on the right */}
-            <img 
-              src="https://drive.google.com/thumbnail?id=1seyPWKdfudUSXXNQaJ8H3JBlr3YHSybP&sz=w400" 
-              alt="Reference Academy" 
-              className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-300"
-              style={{ filter: 'brightness(0) invert(1)' }}
-            />
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center gap-3">
-            <button
-              className="hidden sm:block px-5 py-2.5 text-xs md:text-sm font-medium text-slate-600 bg-white/60 rounded-full cursor-not-allowed hover:bg-white transition-all border border-slate-200 backdrop-blur-sm"
-              disabled
-            >
-              تحميل الكتيّب (قريباً)
-            </button>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="px-6 py-2.5 text-xs md:text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-full shadow-lg shadow-purple-500/20 transition-all hover:scale-105 active:scale-95 border border-white/20"
-            >
-              احجز مقعدك
-            </button>
-          </div>
-        </nav>
-      </div>
-
-      {/* Simple Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4" dir="rtl">
-          <div
-            onClick={() => setIsModalOpen(false)}
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300"
-          />
-          <div
-            className="relative w-full max-w-md p-8 bg-white rounded-2xl text-center border border-slate-200 shadow-2xl transform transition-all duration-300 scale-100"
-          >
-            <h3 className="text-2xl font-bold mb-2 text-slate-900">التسجيل يفتح قريباً</h3>
-            <p className="text-slate-500 mb-6">
-              رابط التسجيل المباشر سيكون متاحاً خلال أيام. شكراً لاهتمامك.
-            </p>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-xl transition-colors font-medium"
-            >
-              حسناً
-            </button>
-          </div>
-        </div>
-      )}
-    </React.Fragment>
-  );
-}
-
 function RefeAIWidget() {
   const [typedText, setTypedText] = useState("");
   const fullText = "بناءً على تحليل البيانات، يوصى بتركيز ميزانية التدريب على المهارات الرقمية لتقليل الفجوة بنسبة 35%.";
@@ -1426,7 +1362,6 @@ export default function App() {
         .animate-reverse-spin-slow { animation: reverseSpinSlow 25s linear infinite; }
       `}</style>
 
-      <Navbar />
       <Hero />
       <ImagineSection />
       <DashboardDemo />
