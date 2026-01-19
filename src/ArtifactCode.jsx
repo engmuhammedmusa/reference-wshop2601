@@ -335,10 +335,10 @@ function Hero() {
       </div>
 
       {/* Content */}
-      <div className="w-full max-w-[1600px] mx-auto px-4 lg:px-12 xl:px-20 2xl:px-28 relative z-10 text-white flex flex-col items-center justify-center text-center">
+      <div className="w-full max-w-[1920px] mx-auto px-6 lg:px-16 xl:px-28 2xl:px-40 relative z-10 text-white flex flex-col items-center justify-center text-center">
         <div className="space-y-8 text-center flex flex-col items-center">
           <FadeInUp delay={0}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-medium text-white mx-auto shadow-sm backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm font-medium text-white mx-auto shadow-sm backdrop-blur-md">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
@@ -347,7 +347,7 @@ function Hero() {
           </FadeInUp>
 
           <FadeInUp delay={100}>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight space-y-2 md:space-y-4">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[1.05] space-y-3 md:space-y-5">
               <span className="block text-white">تحديد الاحتياجات التدريبية</span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-white to-indigo-400">
                 باستخدام الذكاء الاصطناعي
@@ -357,8 +357,8 @@ function Hero() {
           </FadeInUp>
 
           <FadeInUp delay={150}>
-            <div className="relative py-5 px-6 border-r-4 border-purple-400 bg-white/10 backdrop-blur-md rounded-l-xl max-w-3xl mx-auto text-center mt-8 shadow-md">
-              <div className="text-xs md:text-sm text-white/90 leading-loose font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+            <div className="relative py-5 px-6 border-r-4 border-purple-400 bg-white/10 backdrop-blur-md rounded-l-xl max-w-5xl mx-auto text-center mt-8 shadow-md">
+              <div className="text-sm md:text-base text-white/90 leading-loose font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
                 <span className="text-white block mb-3 text-sm md:text-base opacity-100 tracking-wide">
                   ⚠️ تنبيه استراتيجي: التحوّل نحو التقييم الذكي لم يعد خيارًا
                 </span>
@@ -371,12 +371,12 @@ function Hero() {
             <div className="flex flex-col items-center gap-4 text-sm md:text-base text-white/80 mt-8 w-full">
               <div className="flex items-center justify-center gap-4">
                 <span className="font-bold text-white/70">يقام في:</span>
-                <div className="relative h-10 w-32 overflow-hidden">
+                <div className="relative h-12 w-44 overflow-hidden">
                   {VENUES.map((venue, idx) => (
                     <div
                       key={venue}
                       className={cn(
-                        "absolute inset-0 flex items-center justify-center gap-2 bg-white/10 px-2 py-2 rounded-lg border border-white/15 shadow-sm text-white font-bold transition-all duration-500 backdrop-blur-md",
+                        "absolute inset-0 flex items-center justify-center gap-2 bg-white/10 px-3 py-2.5 rounded-lg border border-white/15 shadow-sm text-white font-bold transition-all duration-500 backdrop-blur-md",
                         idx === venueIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                       )}
                     >
