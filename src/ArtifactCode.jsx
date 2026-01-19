@@ -599,7 +599,7 @@ function Countdown() {
     <section className="py-12 border-y border-slate-200 bg-white">
       <FadeInUp>
         <div className="max-w-7xl mx-auto px-4 text-center">
-            <p className="text-red-600 mb-8 text-lg md:text-xl font-bold animate-pulse leading-relaxed">
+            <p className="text-purple-600 mb-8 text-lg md:text-xl font-bold animate-pulse leading-relaxed">
             الوقت يمضي… والقرارات التدريبية الخاطئة تُتخذ يومياً
             </p>
             
