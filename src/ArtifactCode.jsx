@@ -1169,48 +1169,48 @@ function TrainersCarousel() {
                         {trainer.title}
                       </p>
                     </div>
+{/* Full Detail Overlay (On Click) */}
+<div
+  className={cn(
+    "absolute inset-0 bg-slate-900/95 backdrop-blur-md p-6 md:p-8 flex flex-col items-center justify-center text-center z-20 transition-all duration-300",
+    isDetailOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"
+  )}
+  onClick={(e) => {
+    e.stopPropagation();
+    setIsDetailOpen(false);
+  }}
+>
+  <div className="w-full max-w-[420px] mx-auto flex flex-col items-center justify-center">
+    <div className="w-20 h-20 mx-auto rounded-full border-2 border-blue-500 overflow-hidden mb-5 shadow-lg shadow-blue-500/20">
+      <img src={trainer.image} className="w-full h-full object-cover" />
+    </div>
 
-                    {/* Full Detail Overlay (On Click) */}
-                    <div 
-                      className={cn(
-                        "absolute inset-0 bg-slate-900/95 backdrop-blur-md p-6 flex flex-col justify-center text-center z-20 transition-all duration-300",
-                        isDetailOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"
-                      )}
-                      onClick={(e) => {
-                        e.stopPropagation(); 
-                        setIsDetailOpen(false);
-                      }}
-                    >
-                      <div className="w-16 h-16 mx-auto rounded-full border-2 border-blue-500 overflow-hidden mb-4 shadow-lg shadow-blue-500/20">
-                        <img src={trainer.image} className="w-full h-full object-cover" />
-                      </div>
-                      
-                      <h3 className="text-xl font-bold text-white mb-3">{trainer.name}</h3>
-                      
-                      <div className="space-y-4 overflow-y-auto max-h-[60%] custom-scrollbar">
-                        <div>
-                          <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider mb-1">النبذة المختصرة</p>
-                          <p className="text-xs text-slate-300 leading-relaxed">
-                            {trainer.role}
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider mb-1">التركيز في الورشة</p>
-                          <p className="text-sm text-white font-medium">
-                            {trainer.focus}
-                          </p>
-                        </div>
-                      </div>
+    <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">{trainer.name}</h3>
 
-                      <button className="mt-auto text-xs text-blue-300 hover:text-white transition-colors flex items-center justify-center gap-2 pt-4">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                        إغلاق
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+    <div className="space-y-5 overflow-y-auto max-h-[55vh] custom-scrollbar px-1">
+      <div>
+        <p className="text-xs md:text-sm text-blue-300 font-extrabold uppercase tracking-wider mb-2">النبذة المختصرة</p>
+        <p className="text-sm md:text-base text-slate-200 leading-relaxed">
+          {trainer.role}
+        </p>
+      </div>
+
+      <div>
+        <p className="text-xs md:text-sm text-blue-300 font-extrabold uppercase tracking-wider mb-2">التركيز في الورشة</p>
+        <p className="text-base md:text-lg text-white font-bold leading-relaxed">
+          {trainer.focus}
+        </p>
+      </div>
+    </div>
+
+    <button className="mt-6 text-sm text-blue-300 hover:text-white transition-colors flex items-center justify-center gap-2">
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+      </svg>
+      إغلاق
+    </button>
+  </div>
+</div>
 
               {/* Nav Next */}
               <button 
