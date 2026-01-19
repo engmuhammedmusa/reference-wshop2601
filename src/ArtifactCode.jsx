@@ -1132,84 +1132,95 @@ function TrainersCarousel() {
                 <svg className="w-5 h-5 md:w-6 md:h-6 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </button>
 
-              {/* Card Area */}
-              <div className="relative w-full max-w-md lg:max-w-lg h-[520px] lg:h-[620px]">
-                {TRAINERS.map((trainer, idx) => (
-                  <div
-                    key={idx}
-                    className={cn(
-                      "absolute inset-0 w-full h-full rounded-3xl overflow-hidden shadow-2xl cursor-pointer group bg-slate-200 transition-all duration-500",
-                      idx === activeIndex ? "opacity-100 translate-x-0 z-10 scale-100" : "opacity-0 translate-x-10 z-0 scale-95 pointer-events-none"
-                    )}
-                    onClick={() => setIsDetailOpen(true)}
-                  >
-                    {/* Image */}
-                    <div className="absolute inset-0">
-                      <img 
-                        src={trainer.image} 
-                        alt={trainer.name}
-                        className="w-full h-full object-cover object-top"
-                        onError={(e) => {
-                          // Fallback if image fails
-                          e.target.src = "https://placehold.co/600x800?text=Trainer+Image";
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90" />
-                    </div>
+             {/* Card Area */}
+<div className="relative w-full max-w-sm h-[480px]">
+  {TRAINERS.map((trainer, idx) => (
+    <div
+      key={idx}
+      className={cn(
+        "absolute inset-0 w-full h-full rounded-3xl overflow-hidden shadow-2xl cursor-pointer group bg-slate-200 transition-all duration-500",
+        idx === activeIndex
+          ? "opacity-100 translate-x-0 z-10 scale-100"
+          : "opacity-0 translate-x-10 z-0 scale-95 pointer-events-none"
+      )}
+      onClick={() => setIsDetailOpen(true)}
+    >
+      {/* Image */}
+      <div className="absolute inset-0">
+        <img
+          src={trainer.image}
+          alt={trainer.name}
+          className="w-full h-full object-cover object-top"
+          onError={(e) => {
+            e.target.src = "https://placehold.co/600x800?text=Trainer+Image";
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90" />
+      </div>
 
-                    {/* Text Overlay (Default) */}
-                    <div 
-                      className={cn(
-                        "absolute bottom-0 left-0 right-0 p-6 text-white z-10 transition-all duration-300",
-                        isDetailOpen ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-                      )}
-                    >
-                      <h3 className="text-2xl font-bold mb-1">{trainer.name}</h3>
-                      <p className="text-white/80 font-medium text-sm border-l-4 border-blue-500 pl-3">
-                        {trainer.title}
-                      </p>
-                    </div>
-{/* Full Detail Overlay (On Click) */}
-<div
-  className={cn(
-    "absolute inset-0 bg-slate-900/95 backdrop-blur-md p-6 md:p-8 flex flex-col items-center justify-center text-center z-20 transition-all duration-300",
-    isDetailOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"
-  )}
-  onClick={(e) => {
-    e.stopPropagation();
-    setIsDetailOpen(false);
-  }}
->
-  <div className="w-full max-w-[420px] mx-auto flex flex-col items-center justify-center">
-    <div className="w-20 h-20 mx-auto rounded-full border-2 border-blue-500 overflow-hidden mb-5 shadow-lg shadow-blue-500/20">
-      <img src={trainer.image} className="w-full h-full object-cover" />
-    </div>
-
-    <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">{trainer.name}</h3>
-
-    <div className="space-y-5 overflow-y-auto max-h-[55vh] custom-scrollbar px-1">
-      <div>
-        <p className="text-xs md:text-sm text-blue-300 font-extrabold uppercase tracking-wider mb-2">النبذة المختصرة</p>
-        <p className="text-sm md:text-base text-slate-200 leading-relaxed">
-          {trainer.role}
+      {/* Text Overlay (Default) */}
+      <div
+        className={cn(
+          "absolute bottom-0 left-0 right-0 p-6 text-white z-10 transition-all duration-300",
+          isDetailOpen ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+        )}
+      >
+        <h3 className="text-2xl font-bold mb-1">{trainer.name}</h3>
+        <p className="text-white/80 font-medium text-sm border-l-4 border-blue-500 pl-3">
+          {trainer.title}
         </p>
       </div>
 
-      <div>
-        <p className="text-xs md:text-sm text-blue-300 font-extrabold uppercase tracking-wider mb-2">التركيز في الورشة</p>
-        <p className="text-base md:text-lg text-white font-bold leading-relaxed">
-          {trainer.focus}
-        </p>
+      {/* Full Detail Overlay (On Click) */}
+      <div
+        className={cn(
+          "absolute inset-0 bg-slate-900/95 backdrop-blur-md p-6 md:p-8 flex flex-col items-center justify-center text-center z-20 transition-all duration-300",
+          isDetailOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"
+        )}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsDetailOpen(false);
+        }}
+      >
+        <div className="w-full max-w-[420px] mx-auto flex flex-col items-center justify-center">
+          <div className="w-20 h-20 mx-auto rounded-full border-2 border-blue-500 overflow-hidden mb-5 shadow-lg shadow-blue-500/20">
+            <img src={trainer.image} className="w-full h-full object-cover" />
+          </div>
+
+          <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+            {trainer.name}
+          </h3>
+
+          <div className="space-y-5 overflow-y-auto max-h-[55vh] custom-scrollbar px-1">
+            <div>
+              <p className="text-xs md:text-sm text-blue-300 font-extrabold uppercase tracking-wider mb-2">
+                النبذة المختصرة
+              </p>
+              <p className="text-sm md:text-base text-slate-200 leading-relaxed">
+                {trainer.role}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs md:text-sm text-blue-300 font-extrabold uppercase tracking-wider mb-2">
+                التركيز في الورشة
+              </p>
+              <p className="text-base md:text-lg text-white font-bold leading-relaxed">
+                {trainer.focus}
+              </p>
+            </div>
+          </div>
+
+          <button className="mt-6 text-sm text-blue-300 hover:text-white transition-colors flex items-center justify-center gap-2">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            إغلاق
+          </button>
+        </div>
       </div>
     </div>
-
-    <button className="mt-6 text-sm text-blue-300 hover:text-white transition-colors flex items-center justify-center gap-2">
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      إغلاق
-    </button>
-  </div>
+  ))}
 </div>
 
               {/* Nav Next */}
