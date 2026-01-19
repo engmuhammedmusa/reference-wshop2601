@@ -357,15 +357,16 @@ function Hero() {
           </FadeInUp>
 
           <FadeInUp delay={150}>
-            <div className="relative py-5 px-6 border-r-4 border-purple-400 bg-white/10 backdrop-blur-md rounded-l-xl max-w-5xl mx-auto text-center mt-8 shadow-md">
+            <div className="relative py-7 md:py-8 px-7 md:px-10 border-r-4 border-purple-400 bg-white/15 backdrop-blur-md rounded-l-2xl max-w-6xl mx-auto text-center mt-10 shadow-lg">
               <div
-            className="text-sm md:text-base text-white/90 leading-loose font-medium"
-            >
-                <span className="text-white block mb-3 text-sm md:text-base opacity-100 tracking-wide">
-                  ⚠️ تنبيه استراتيجي: التحوّل نحو التقييم الذكي لم يعد خيارًا
-                </span>
-                'كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي، أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.'
-              </div>
+  className="text-base md:text-lg lg:text-xl text-white/95 leading-[2.1] font-semibold"
+  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+>
+  <span className="text-white block mb-4 text-lg md:text-xl lg:text-2xl font-extrabold tracking-wide">
+    ⚠️ تنبيه استراتيجي: التحوّل نحو التقييم الذكي لم يعد خيارًا
+  </span>
+  'كل مؤسسة ناجحة اليوم تسابق الزمن لتحويل بيانات موظفيها من أرقام صامتة إلى خطط تطوير شاملة تعمل بالذكاء الاصطناعي. الفجوة تتسع كل ثانية. إما أن تقفز الآن إلى عصر التقييم الذكي، أو تستعد لمشاهدة مؤسستك تتآكل ببطء أمام من تحركوا قبلك.'
+</div>
             </div>
           </FadeInUp>
 
