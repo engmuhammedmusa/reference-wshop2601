@@ -1330,17 +1330,18 @@ function WhatsAppButton() {
 function Footer() {
   return (
     <footer className="py-8 border-t border-slate-200 text-center text-sm text-slate-500 pb-24 md:pb-8 bg-slate-50">
-      <div className="page-container text-center">
-        {/* Updated Footer Logo Text to Gradient */}
-        <div className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
-            Reference Academy
-        </div>
-        <div className="flex flex-col items-center md:items-end">
-            <div dir="ltr" className="font-medium text-slate-700">info@reference-rcb.com</div>
-            <div dir="ltr" className="text-slate-500">+90 533 764 24 50</div>
-        </div>
-        <div>جميع الحقوق محفوظة © 2026</div>
-      </div>
+      <div className="page-container flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between md:text-start">
+  <div className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
+    Reference Academy
+  </div>
+
+  <div className="flex flex-col items-center md:items-end">
+    <div dir="ltr" className="font-medium text-slate-700">info@reference-rcb.com</div>
+    <div dir="ltr" className="text-slate-500">+90 533 764 24 50</div>
+  </div>
+
+  <div className="text-center md:text-end">جميع الحقوق محفوظة © 2026</div>
+</div>
     </footer>
   );
 }
