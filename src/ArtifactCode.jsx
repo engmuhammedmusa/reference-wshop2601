@@ -465,7 +465,7 @@ function RecItemCompact({ title, priority }) {
 function DashboardDemo() {
   return (
     <section className="py-16 bg-slate-50 relative z-20">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         
         {/* New Title */}
         <FadeInUp>
@@ -485,7 +485,7 @@ function DashboardDemo() {
 
         {/* Dashboard Container - Made Compact & Dense */}
         <FadeInUp delay={100} className="w-full">
-            <div className="bg-white rounded-xl shadow-2xl shadow-purple-900/5 border border-slate-200 overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-2xl shadow-purple-900/10 border border-slate-200 overflow-hidden">
             {/* Header */}
             <div className="bg-slate-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center">
                 <div className="flex items-center gap-3">
@@ -503,9 +503,9 @@ function DashboardDemo() {
             </div>
 
             {/* Content Grid */}
-            <div className="p-4 bg-slate-100/50">
+            <div className="p-6 md:p-8 bg-slate-100/50">
                 {/* Stats Row - 4 Cols for density */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <StatCardCompact title="الموظفون" value="1,240" trend="+12%" icon="👥" />
                 <StatCardCompact title="الفجوات الحرجة" value="18%" trend="-5%" trendColor="text-red-500" icon="⚡" />
                 <StatCardCompact title="وفر الميزانية" value="$42.5k" trend="+8%" trendColor="text-emerald-600" icon="💰" />
@@ -537,22 +537,9 @@ function DashboardDemo() {
 
                 {/* Right Col: Recs + AI Insight */}
                 <div className="space-y-3 flex flex-col">
-                    {/* Recs */}
-                    <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex-1">
-                    <div className="flex justify-between items-center mb-3">
-                        <h3 className="font-bold text-slate-800 text-xs">توصيات النظام</h3>
-                        <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Auto</span>
-                    </div>
-                    <div className="space-y-2">
-                        <RecItemCompact title="علم البيانات للقادة" priority="عالية" />
-                        <RecItemCompact title="إدارة التغيير الرقمي" priority="متوسطة" />
-                        <RecItemCompact title="تحليل الأعمال" priority="عالية" />
-                        <RecItemCompact title="الذكاء العاطفي" priority="منخفضة" />
-                    </div>
-                    </div>
 
                     {/* Extra Dense Info Box - AI Insight */}
-                    <div className="bg-gradient-to-br from-purple-900 to-slate-900 p-3 rounded-xl border border-slate-700 shadow-md text-white relative overflow-hidden group">
+                    <div className="bg-gradient-to-br from-purple-900 to-slate-900 p-5 rounded-xl border border-slate-700 shadow-md text-white relative overflow-hidden group">
                     <div className="absolute -right-2 -top-2 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">🤖</div>
                     <div className="relative z-10">
                         <div className="flex items-center justify-between mb-2">
